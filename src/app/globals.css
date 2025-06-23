@@ -24,6 +24,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.top-strip {
+  background-color: #FBBF24;
+}
+.foot{
+  background-color: #FBBF24;
+}
+
+
 * {
   box-sizing: border-box;
   padding: 0;

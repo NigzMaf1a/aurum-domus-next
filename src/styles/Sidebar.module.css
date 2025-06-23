@@ -1,0 +1,66 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -220px;
+  width: 220px;
+  height: 100vh;
+  background-image: url('/aurum-domus/public/aurum10.jpg');
+  color: white;
+  padding: 1rem;
+  transition: left 0.3s ease-in-out;
+  z-index: 1040;
+}
+
+/* Sidebar visible when open */
+.open {
+  left: 0;
+}
+
+/* Always show sidebar on medium+ screens */
+@media (min-width: 768px) {
+  .sidebar {
+    left: 0 !important;
+    position: fixed;
+  }
+}
+
+/* Overlay backdrop */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1039;
+}
+
+.list {
+  list-style: none;
+  padding-top: 2rem;
+  padding: 0;
+}
+
+.listItem {
+  margin: 1rem 0;
+}
+
+#link {
+  color: white;
+  text-decoration: none;
+}
+
+#link:hover {
+  text-decoration: underline;
+}
+.sidebarDiv {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  width: 100%;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 0.5rem;
+  background-color:slateblue;
+}
+
