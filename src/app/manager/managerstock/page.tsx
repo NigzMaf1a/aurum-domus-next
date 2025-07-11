@@ -1,10 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+// import axios from 'axios';                    //Live API (disabled in mock mode)
 import { Modal, Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import mockStock from '../../utilscripts/mockStock.json'; //Local mock data
 
+/* ---------- Types ---------- */
 interface StockItem {
   StockID: number;
   ItemName: string;
@@ -15,6 +18,7 @@ interface StockItem {
 }
 
 export default function ManagerStockPage() {
+  /* ---------- State ---------- */
   const [stock, setStock] = useState<StockItem[]>([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -22,31 +26,35 @@ export default function ManagerStockPage() {
   const [itemDescription, setItemDescription] = useState('');
   const [quantity, setQuantity] = useState<number>(0);
   const [cost, setCost] = useState<number>(0);
+  const { t } = useTranslation();
 
   const total = quantity * cost;
 
+  /* ---------- Fetch (mock) ---------- */
   const fetchStock = async () => {
+    /*LIVE ENDPOINT
     try {
       const response = await axios.get('/api/managerstock');
       setStock(response.data);
     } catch {
       alert('Failed to fetch stock.');
     }
+    */
+
+    // 🕹️ MOCK MODE: simply load local JSON
+    setStock(mockStock as StockItem[]);
   };
 
   useEffect(() => {
     fetchStock();
   }, []);
 
+  /* ---------- Add Stock ---------- */
   const handleAddStock = async () => {
+    /*LIVE ENDPOINT
     try {
-      const newStock = {
-        ItemName: itemName,
-        ItemDescription: itemDescription,
-        Quantity: quantity,
-        Cost: cost,
-        Total: total,
-      };
+      const newStock = { ItemName: itemName, ItemDescription: itemDescription,
+                         Quantity: quantity, Cost: cost, Total: total };
       await axios.post('/api/managerstock', newStock);
       alert('Stock added successfully!');
       setShowModal(false);
@@ -54,24 +62,38 @@ export default function ManagerStockPage() {
     } catch {
       alert('Failed to add stock.');
     }
+    */
+
+    //MOCK SUCCESS: update local state only
+    const newStock: StockItem = {
+      StockID: stock.length ? Math.max(...stock.map(s => s.StockID)) + 1 : 1,
+      ItemName: itemName,
+      ItemDescription: itemDescription,
+      Quantity: quantity,
+      Cost: cost,
+      Total: total
+    };
+    setStock(prev => [...prev, newStock]);
+    setShowModal(false);
   };
 
+  /* ---------- UI ---------- */
   return (
     <div className="container py-4">
-      <h2 className="text-center mb-4 textColorless">Manager Stock</h2>
+      <h2 className="text-center mb-4 textColorless">{t('managerStock')}</h2>
 
       <div style={{ maxHeight: '500px', overflowY: 'auto' }} className="mb-4">
         <div className="row g-3">
           {stock.map(item => (
             <div key={item.StockID} className="col-12">
-              <div className="card">
+              <div className="card shadow-sm">
                 <div className="card-body">
-                  <h5>Stock ID: {item.StockID}</h5>
-                  <p><strong>Name:</strong> {item.ItemName}</p>
-                  <p><strong>Description:</strong> {item.ItemDescription}</p>
-                  <p><strong>Quantity:</strong> {item.Quantity}</p>
-                  <p><strong>Cost per unit:</strong> KES {item.Cost.toFixed(2)}</p>
-                  <p><strong>Total:</strong> KES {item.Total.toFixed(2)}</p>
+                  <h5>{t('stockId')}: {item.StockID}</h5>
+                  <p><strong>{t('itemName')}:</strong> {item.ItemName}</p>
+                  <p><strong>{t('itemDescription')}:</strong> {item.ItemDescription}</p>
+                  <p><strong>{t('quantity')}:</strong> {item.Quantity}</p>
+                  <p><strong>{t('costPerUnit')}:</strong> KES {item.Cost.toFixed(2)}</p>
+                  <p><strong>{t('total')}:</strong> KES {item.Total.toFixed(2)}</p>
                 </div>
               </div>
             </div>
@@ -80,17 +102,20 @@ export default function ManagerStockPage() {
       </div>
 
       <div className="text-center">
-        <Button variant="primary" onClick={() => setShowModal(true)}>Add Stock</Button>
+        <Button variant="primary" onClick={() => setShowModal(true)}>
+          {t('addStock')}
+        </Button>
       </div>
 
+      {/* ---------- Modal ---------- */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Stock Item</Modal.Title>
+          <Modal.Title>{t('addStock')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3">
-              <Form.Label>Item Name</Form.Label>
+              <Form.Label>{t('itemName')}</Form.Label>
               <Form.Control
                 type="text"
                 value={itemName}
@@ -98,7 +123,7 @@ export default function ManagerStockPage() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Item Description</Form.Label>
+              <Form.Label>{t('itemDescription')}</Form.Label>
               <Form.Control
                 type="text"
                 value={itemDescription}
@@ -106,7 +131,7 @@ export default function ManagerStockPage() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Quantity</Form.Label>
+              <Form.Label>{t('quantity')}</Form.Label>
               <Form.Control
                 type="number"
                 value={quantity}
@@ -114,19 +139,23 @@ export default function ManagerStockPage() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Cost</Form.Label>
+              <Form.Label>{t('cost')}</Form.Label>
               <Form.Control
                 type="number"
                 value={cost}
                 onChange={e => setCost(Number(e.target.value))}
               />
             </Form.Group>
-            <p><strong>Total:</strong> KES {total.toFixed(2)}</p>
+            <p><strong>{t('total')}:</strong> {t('kshs')} {total.toFixed(2)}</p>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
-          <Button variant="success" onClick={handleAddStock}>Submit</Button>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            {t('cancel')}
+          </Button>
+          <Button variant="success" onClick={handleAddStock}>
+            {t('submit')}
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

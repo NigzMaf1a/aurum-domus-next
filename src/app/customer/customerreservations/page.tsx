@@ -1,11 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';          // ⬅️ commented out – no real API today
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button } from 'react-bootstrap';
 
-// Define types
+import reservationsData from '../../utilscripts/mockReservations.json'; // <-- mock data lives here
+
+// ---------- Types ----------
 type Reservation = {
   ReservationID: number;
   UnitID: number;
@@ -27,12 +29,23 @@ type Dish = {
   DishPrice: number;
 };
 
+// ---------- Mock Dish Catalog ----------
+const mockDishes: Dish[] = [
+  { DishID: 1, DishName: 'Beef Burger', DishPrice: 550 },
+  { DishID: 2, DishName: 'Sushi Combo', DishPrice: 850 },
+  { DishID: 3, DishName: 'Veggie Pizza', DishPrice: 700 },
+  { DishID: 4, DishName: 'Chicken Tikka', DishPrice: 650 },
+  { DishID: 5, DishName: 'Pasta Alfredo', DishPrice: 600 },
+];
+
+// ---------- Component ----------
 export default function CustomerReservationsPage() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
-  const [dishes, setDishes] = useState<Dish[]>([]);
+  const [dishes] = useState<Dish[]>(mockDishes);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
+  // form states
   const [unitID, setUnitID] = useState<number>(0);
   const [tableID, setTableID] = useState<number>(0);
   const [dishID, setDishID] = useState<number>(0);
@@ -41,63 +54,63 @@ export default function CustomerReservationsPage() {
   const [reservationDate, setReservationDate] = useState('');
   const [reservationTime, setReservationTime] = useState('');
 
-  // Fetch reservations and dishes
+  // ---------- Load mock reservations on mount ----------
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [resRes, resDish] = await Promise.all([
-          axios.get('/api/reservations'),
-          axios.get('/api/dishes'),
-        ]);
-        setReservations(resRes.data);
-        setDishes(resDish.data);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
+    // 🚫 Real API – taking the day off
+    // const fetchData = async () => {
+    //   try {
+    //     const [resRes, resDish] = await Promise.all([
+    //       axios.get('/api/reservations'),
+    //       axios.get('/api/dishes'),
+    //     ]);
+    //     setReservations(resRes.data);
+    //     setDishes(resDish.data);
+    //   } catch (e) {
+    //     console.error(e);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
+    // fetchData();
+
+    // 🪄 Instant mock load
+    setReservations(reservationsData as Reservation[]);
+    setLoading(false);
   }, []);
 
   const selectedDish = dishes.find(d => d.DishID === dishID);
   const totalPrice = selectedDish ? selectedDish.DishPrice * plates : 0;
 
-  // Simulate MPESA STK push before saving reservation
+  // ---------- Fake reserve handler ----------
   const handleReserve = async () => {
     if (!unitID || !tableID || !dishID || plates < 1 || !reservationDate || !reservationTime) {
       return alert('Please fill all fields.');
     }
 
-    try {
-      // simulate MPESA push
-      await axios.post('/api/pay', { amount: totalPrice });
-      setPaymentStatus('Paid');
+    // Pretend the MPESA push + DB save all succeed
+    // await axios.post('/api/pay', { amount: totalPrice });
 
-      const newRes: Omit<Reservation, 'ReservationID'> = {
-        UnitID: unitID,
-        TableID: tableID,
-        RegID: 0,
-        OrderID: 0,
-        DishID: dishID,
-        DishName: selectedDish!.DishName,
-        Plates: plates,
-        OrderPrice: totalPrice,
-        PaymentStatus: 'Paid',
-        ReservationDate: reservationDate,
-        ReservationTime: reservationTime,
-      };
+    const newReservation: Reservation = {
+      ReservationID: Date.now(), // quick‑n‑dirty unique ID
+      UnitID: unitID,
+      TableID: tableID,
+      RegID: 0,
+      OrderID: 0,
+      DishID: dishID,
+      DishName: selectedDish!.DishName,
+      Plates: plates,
+      OrderPrice: totalPrice,
+      PaymentStatus: 'Paid',
+      ReservationDate: reservationDate,
+      ReservationTime: reservationTime,
+    };
 
-      const res = await axios.post('/api/reservations', newRes);
-      setReservations([res.data, ...reservations]);
-
-      setShowModal(false);
-    } catch (e) {
-      alert('Payment or reservation failed.');
-      console.error(e);
-    }
+    // await axios.post('/api/reservations', newReservation);
+    setReservations([newReservation, ...reservations]);
+    setShowModal(false);
   };
 
+  // ---------- UI ----------
   return (
     <div className="container py-5">
       <h2 className="text-center mb-4 textColorless">Customer Reservations</h2>
@@ -119,13 +132,22 @@ export default function CustomerReservationsPage() {
                     <p>Dish: {res.DishName}</p>
                     <p>Plates: {res.Plates}</p>
                     <p>Price: {res.OrderPrice.toFixed(2)}</p>
-                    <p>Status: <span className={res.PaymentStatus === 'Paid' ? 'text-success' : 'text-danger'}>{res.PaymentStatus}</span></p>
-                    <p>Date/Time: {res.ReservationDate} {res.ReservationTime}</p>
+                    <p>
+                      Status:{' '}
+                      <span className={res.PaymentStatus === 'Paid' ? 'text-success' : 'text-danger'}>
+                        {res.PaymentStatus}
+                      </span>
+                    </p>
+                    <p>
+                      Date/Time: {res.ReservationDate} {res.ReservationTime}
+                    </p>
                   </div>
                 </div>
               </div>
             ))}
-            {reservations.length === 0 && <p className="text-center text-muted w-100">No reservations found.</p>}
+            {reservations.length === 0 && (
+              <p className="text-center text-muted w-100">No reservations found.</p>
+            )}
           </div>
         </div>
       )}
@@ -145,37 +167,75 @@ export default function CustomerReservationsPage() {
         <Modal.Body>
           <div className="mb-3">
             <label>UnitID</label>
-            <input type="number" className="form-control" value={unitID} onChange={e => setUnitID(+e.target.value)} />
+            <input
+              type="number"
+              className="form-control"
+              value={unitID}
+              onChange={e => setUnitID(+e.target.value)}
+            />
           </div>
           <div className="mb-3">
             <label>TableID</label>
-            <input type="number" className="form-control" value={tableID} onChange={e => setTableID(+e.target.value)} />
+            <input
+              type="number"
+              className="form-control"
+              value={tableID}
+              onChange={e => setTableID(+e.target.value)}
+            />
           </div>
           <div className="mb-3">
             <label>Dish</label>
             <select className="form-select" value={dishID} onChange={e => setDishID(+e.target.value)}>
               <option value={0}>-- Select --</option>
-              {dishes.map(d => <option key={d.DishID} value={d.DishID}>{d.DishName}</option>)}
+              {dishes.map(d => (
+                <option key={d.DishID} value={d.DishID}>
+                  {d.DishName}
+                </option>
+              ))}
             </select>
           </div>
           <div className="mb-3">
             <label>Plates</label>
-            <input type="number" min={1} className="form-control" value={plates} onChange={e => setPlates(+e.target.value)} />
+            <input
+              type="number"
+              min={1}
+              className="form-control"
+              value={plates}
+              onChange={e => setPlates(+e.target.value)}
+            />
           </div>
-          <p><strong>OrderPrice:</strong> {totalPrice.toFixed(2)}</p>
-          <p><strong>PaymentStatus:</strong> {paymentStatus}</p>
+          <p>
+            <strong>OrderPrice:</strong> {totalPrice.toFixed(2)}
+          </p>
+          <p>
+            <strong>PaymentStatus:</strong> {paymentStatus}
+          </p>
           <div className="mb-3">
             <label>Date</label>
-            <input type="date" className="form-control" value={reservationDate} onChange={e => setReservationDate(e.target.value)} />
+            <input
+              type="date"
+              className="form-control"
+              value={reservationDate}
+              onChange={e => setReservationDate(e.target.value)}
+            />
           </div>
           <div className="mb-3">
             <label>Time</label>
-            <input type="time" className="form-control" value={reservationTime} onChange={e => setReservationTime(e.target.value)} />
+            <input
+              type="time"
+              className="form-control"
+              value={reservationTime}
+              onChange={e => setReservationTime(e.target.value)}
+            />
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
-          <Button variant="primary" onClick={handleReserve}>Reserve & Pay</Button>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleReserve}>
+            Reserve & Pay
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

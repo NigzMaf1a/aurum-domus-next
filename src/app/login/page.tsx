@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [branch, setBranch] = useState('');
+  const { t } = useTranslation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,18 +21,18 @@ export default function LoginPage() {
       style={{ padding: '1rem' }}
     >
       <div className="card p-4 shadow" style={{ minWidth: '320px', maxWidth: '400px', width: '100%' }}>
-        <h2 className="mb-4 text-center">Login</h2>
+        <h2 className="mb-4 text-center">{t('login')}</h2>
         <form onSubmit={handleSubmit}>
           {/* Email */}
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
-              Email address
+              {t('emailAddress')}
             </label>
             <input
               type="email"
               id="email"
               className="form-control"
-              placeholder="you@example.com"
+              placeholder={t('exampleEmail')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -40,7 +42,7 @@ export default function LoginPage() {
           {/* Branch Dropdown */}
           <div className="mb-4">
             <label htmlFor="branch" className="form-label">
-              Select Branch
+              {t('selectBranch')}
             </label>
             <select
               id="branch"
@@ -50,7 +52,7 @@ export default function LoginPage() {
               required
             >
               <option value="" disabled>
-                Choose a branch...
+                {t('chooseBranch')}
               </option>
               <option value="north">North Branch</option>
               <option value="south">South Branch</option>
@@ -61,10 +63,10 @@ export default function LoginPage() {
 
           {/* Login Button */}
           <button type="submit" className="btn btn-primary w-100">
-            Login
+            {t('login')}
           </button>
           <p className="mt-3 text-center">
-            Don&apos;t have an account? <Link href="/register">Register here</Link>
+            {t('dontHaveAccount')} <Link href="/register">{t('registerHere')}</Link>
           </p>
         </form>
       </div>

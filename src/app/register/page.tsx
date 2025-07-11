@@ -3,8 +3,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import validateFields from '../utilscripts/validateFields';
+import { useTranslation } from 'react-i18next';
 
 export default function RegisterPage() {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     name1: '',
     name2: '',
@@ -57,11 +60,11 @@ export default function RegisterPage() {
           overflowY: 'auto',
         }}
       >
-        <h2 className="mb-4 text-center">Register</h2>
+        <h2 className="mb-4 text-center">{t('register')}</h2>
         <form onSubmit={handleSubmit}>
           {/* Name1 */}
           <div className="mb-3">
-            <label htmlFor="name1" className="form-label">First Name</label>
+            <label htmlFor="name1" className="form-label">{t('firstName')}</label>
             <input
               type="text"
               id="name1"
@@ -75,7 +78,7 @@ export default function RegisterPage() {
 
           {/* Name2 */}
           <div className="mb-3">
-            <label htmlFor="name2" className="form-label">Last Name</label>
+            <label htmlFor="name2" className="form-label">{t('lastName')}</label>
             <input
               type="text"
               id="name2"
@@ -89,7 +92,7 @@ export default function RegisterPage() {
 
           {/* Phone */}
           <div className="mb-3">
-            <label htmlFor="phone" className="form-label">Phone Number</label>
+            <label htmlFor="phone" className="form-label">{t('phoneNo')}</label>
             <input
               type="tel"
               id="phone"
@@ -103,7 +106,7 @@ export default function RegisterPage() {
 
           {/* Email */}
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email Address</label>
+            <label htmlFor="email" className="form-label">{t('emailAddress')}</label>
             <input
               type="email"
               id="email"
@@ -117,7 +120,7 @@ export default function RegisterPage() {
 
           {/* Password */}
           <div className="mb-3">
-            <label htmlFor="password" className="form-label">Password</label>
+            <label htmlFor="password" className="form-label">{t('password')}</label>
             <input
               type="password"
               id="password"
@@ -131,7 +134,7 @@ export default function RegisterPage() {
 
           {/* Confirm Password */}
           <div className="mb-3">
-            <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+            <label htmlFor="confirmPassword" className="form-label">{t('confirmPassword')}</label>
             <input
               type="password"
               id="confirmPassword"
@@ -145,7 +148,7 @@ export default function RegisterPage() {
 
           {/* Gender Dropdown */}
           <div className="mb-3">
-            <label htmlFor="gender" className="form-label">Gender</label>
+            <label htmlFor="gender" className="form-label">{t('gender')}</label>
             <select
               id="gender"
               name="gender"
@@ -154,15 +157,15 @@ export default function RegisterPage() {
               onChange={handleChange}
               required
             >
-              <option value="" disabled>Select gender...</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
+              <option value="" disabled>{t('selectGender')}</option>
+              <option value="male">{t('male')}</option>
+              <option value="female">{t('female')}</option>
             </select>
           </div>
 
           {/* RegType Dropdown */}
           <div className="mb-4">
-            <label htmlFor="regType" className="form-label">Registration Type</label>
+            <label htmlFor="regType" className="form-label">{t('registrationType')}</label>
             <select
               id="regType"
               name="regType"
@@ -171,16 +174,16 @@ export default function RegisterPage() {
               onChange={handleChange}
               required
             >
-              <option value="" disabled>Select role...</option>
-              <option value="admin">Admin</option>
-              <option value="manager">Manager</option>
-              <option value="customer">Customer</option>
+              <option value="" disabled>{t('selectRole')}</option>
+              <option value="admin">{t('admin')}</option>
+              <option value="manager">{t('manager')}</option>
+              <option value="customer">{t('customer')}</option>
             </select>
           </div>
 
-          <button type="submit" className="btn btn-success w-100">Register</button>
+          <button type="submit" className="btn btn-success w-100">{t('register')}</button>
           <p className="mt-3 text-center">
-            Already have an account? <Link href="/login">Login here</Link>
+            {t('alreadyHaveAccount')} <Link href="/login">{t('loginHere')}</Link>
           </p>
         </form>
       </div>

@@ -1,0 +1,82 @@
+[
+  {
+    "StockID": 1,
+    "ItemName": "Maize Flour (2kg)",
+    "ItemDescription": "Used for ugali and porridge",
+    "Quantity": 50,
+    "Cost": 130,
+    "Total": 6500
+  },
+  {
+    "StockID": 2,
+    "ItemName": "Cooking Oil (20L)",
+    "ItemDescription": "Sunflower oil for deep fry",
+    "Quantity": 3,
+    "Cost": 4500,
+    "Total": 13500
+  },
+  {
+    "StockID": 3,
+    "ItemName": "Beef (kg)",
+    "ItemDescription": "Fresh beef chunks",
+    "Quantity": 25,
+    "Cost": 700,
+    "Total": 17500
+  },
+  {
+    "StockID": 4,
+    "ItemName": "Tomatoes (crate)",
+    "ItemDescription": "Roma tomatoes for sauce",
+    "Quantity": 4,
+    "Cost": 1200,
+    "Total": 4800
+  },
+  {
+    "StockID": 5,
+    "ItemName": "Milk (L)",
+    "ItemDescription": "Whole milk for tea and lattes",
+    "Quantity": 30,
+    "Cost": 65,
+    "Total": 1950
+  },
+  {
+    "StockID": 6,
+    "ItemName": "Rice (50kg bag)",
+    "ItemDescription": "Pishori premium",
+    "Quantity": 2,
+    "Cost": 6500,
+    "Total": 13000
+  },
+  {
+    "StockID": 7,
+    "ItemName": "Chicken Breasts (kg)",
+    "ItemDescription": "Boneless, skinless",
+    "Quantity": 15,
+    "Cost": 800,
+    "Total": 12000
+  },
+  {
+    "StockID": 8,
+    "ItemName": "Wheat Flour (2kg)",
+    "ItemDescription": "Chapati & mandazi",
+    "Quantity": 40,
+    "Cost": 120,
+    "Total": 4800
+  },
+  {
+    "StockID": 9,
+    "ItemName": "Sugar (kg)",
+    "ItemDescription": "Brown sugar for bakery",
+    "Quantity": 20,
+    "Cost": 150,
+    "Total": 3000
+  },
+  {
+    "StockID": 10,
+    "ItemName": "Salt (1kg)",
+    "ItemDescription": "Iodised table salt",
+    "Quantity": 10,
+    "Cost": 30,
+    "Total": 300
+  }
+]

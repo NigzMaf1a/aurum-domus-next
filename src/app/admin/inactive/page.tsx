@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 // import axios from 'axios'; // ❌ Commented out for mock usage
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { inactiveUsers as mockInactiveUsers } from '../../utilscripts/mockUsers'; // ✅ Mock data import
@@ -18,6 +19,7 @@ interface InactiveUser {
 const InactivePage: React.FC = () => {
   const [inactiveUsers, setInactiveUsers] = useState<InactiveUser[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const { t } = useTranslation();
 
   // Load mock inactive users
   useEffect(() => {
@@ -42,7 +44,7 @@ const InactivePage: React.FC = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4 textColorless">Inactive Users</h2>
+      <h2 className="mb-4 textColorless">{t('inactiveUsers')}</h2>
       <div
         className="table-responsive"
         style={{
@@ -55,26 +57,26 @@ const InactivePage: React.FC = () => {
         <table className="table table-striped table-hover table-bordered mb-0">
           <thead className="table-danger sticky-top">
             <tr>
-              <th>First Name</th>
-              <th>Second Name</th>
-              <th>Phone No</th>
-              <th>Email</th>
-              <th>Gender</th>
-              <th>Reg Type</th>
-              <th>Action</th>
+              <th>{t('firstName')}</th>
+              <th>{t('secondName')}</th>
+              <th>{t('phoneNo')}</th>
+              <th>{t('email')}</th>
+              <th>{t('gender')}</th>
+              <th>{t('regType')}</th>
+              <th>{t('action')}</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
                 <td colSpan={7} className="text-center">
-                  Loading...
+                  {t('loading')}
                 </td>
               </tr>
             ) : inactiveUsers.length === 0 ? (
               <tr>
                 <td colSpan={7} className="text-center">
-                  No inactive users found.
+                  {t('noInactiveUsers')}
                 </td>
               </tr>
             ) : (
@@ -91,7 +93,7 @@ const InactivePage: React.FC = () => {
                       className="btn btn-warning btn-sm"
                       onClick={() => reactivateUser(user.id)}
                     >
-                      Reactivate
+                      {t('reactivate')}
                     </button>
                   </td>
                 </tr>

@@ -36,7 +36,7 @@ export default function ClientLayoutShell({
     PhoneNo: 123456789,
     Email: "nigel@aurumdomus.com",
     Gender: "Male",
-    RegType: "Admin", // ← switch this to "Manager" or "Customer" to test
+    RegType: "Manager", // ← switch this to "Manager" or "Customer" to test
     accStatus: "Approved",
   };
 

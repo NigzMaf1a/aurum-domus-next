@@ -1,0 +1,46 @@
+[
+  {
+    "title": "Orders",
+    "theme": "bg-warning text-dark",
+    "messages": [
+      "12 pending orders.",
+      "Table 4 is waiting on their meal.",
+      "Kitchen reported dish delays.",
+      "VIP reservation at 7:30 PM.",
+      "Restock alert for pasta ingredients."
+    ]
+  },
+  {
+    "title": "Payments",
+    "theme": "bg-success text-white",
+    "messages": [
+      "KES 12,000 collected today.",
+      "4 Mpesa transactions received.",
+      "Customer Julia paid KES 1,500.",
+      "Finance reports look solid.",
+      "No payment issues so far."
+    ]
+  },
+  {
+    "title": "Reservations",
+    "theme": "bg-danger text-white",
+    "messages": [
+      "3 no-shows yesterday.",
+      "Table 9 double-booked (fixed).",
+      "Group of 8 coming tomorrow.",
+      "System lag at check-in desk.",
+      "Staff reminded to confirm slots."
+    ]
+  },
+  {
+    "title": "Feedback",
+    "theme": "bg-info text-white",
+    "messages": [
+      "Positive review from carlos@example.com",
+      "Bianca wants faster service.",
+      "Eli praised breakfast again 🍳",
+      "Ivan liked the CBD view.",
+      "Haley had issues with the pool."
+    ]
+  }
+]

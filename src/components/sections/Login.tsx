@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function Login() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [branch, setBranch] = useState('');
   const [password, setPassword] = useState('');
@@ -68,7 +70,7 @@ function Login() {
           boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
         }}
       >
-        <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>Login</h2>
+        <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>{t('login')}</h2>
         {error && (
           <div
             style={{
@@ -85,13 +87,13 @@ function Login() {
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '1rem' }}>
             <label htmlFor="email" className="form-label">
-              Email:
+              {t('email')}
             </label>
             <input
               type="email"
               id="email"
               className="form-control"
-              placeholder="Please enter your email"
+              placeholder={t('email')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
@@ -100,7 +102,7 @@ function Login() {
           </div>
           <div style={{ marginBottom: '1rem' }}>
             <label htmlFor="selectBranch" className="form-label">
-              Branch
+              {t('branch')}
             </label>
             <select
               id="selectBranch"
@@ -126,7 +128,7 @@ function Login() {
               type="password"
               id="password"
               className="form-control"
-              placeholder="Please enter your password"
+              placeholder={t('pleasePassword')}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={loading}

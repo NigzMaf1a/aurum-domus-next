@@ -1,21 +1,20 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useTranslation} from 'react-i18next';
+// import axios from 'axios';                          
+import mockFeedback from '../../utilscripts/mockFeedback.json'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// Bootstrap Modal typing
 declare global {
   interface Window {
     bootstrap?: {
-      Modal: new (element: HTMLElement) => {
-        show: () => void;
-        hide: () => void;
-      };
+      Modal: new (el: HTMLElement) => { show: () => void; hide: () => void };
     };
   }
 }
 
+/* ----------  Types ---------- */
 interface Feedback {
   FeedbackID: number;
   Email: string;
@@ -26,51 +25,48 @@ interface Feedback {
 }
 
 const ManagerFeedbackPage: React.FC = () => {
+  /* ----------  State ---------- */
   const [feedbackList, setFeedbackList] = useState<Feedback[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedFeedback, setSelectedFeedback] = useState<Feedback | null>(null);
   const [responseInput, setResponseInput] = useState('');
+  const { t } = useTranslation();
 
+  /* ----------  Fetch (mock) ---------- */
   useEffect(() => {
-    const fetchFeedback = async () => {
+    /* 
+    (async () => {
       try {
         const res = await axios.get('/api/managerfeedback');
-        console.log("Fetched data:", res.data); // Debug log
-        if (Array.isArray(res.data)) {
-          setFeedbackList(res.data);
-        } else {
-          console.warn("Invalid feedback data:", res.data);
-          setFeedbackList([]);
-        }
+        setFeedbackList(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error('Failed to fetch feedback', err);
         setFeedbackList([]);
       } finally {
         setLoading(false);
       }
-    };
+    })();
+    */
 
-    fetchFeedback();
+    // MOCK MODE: instant load from local JSON
+    setFeedbackList(mockFeedback as Feedback[]);
+    setLoading(false);
   }, []);
 
-  const showModal = (modalId: string) => {
-    const modalEl = document.getElementById(modalId);
-    if (modalEl && window.bootstrap?.Modal) {
-      const modal = new window.bootstrap.Modal(modalEl);
-      modal.show();
-    }
+  /* ----------  Modal helpers ---------- */
+  const showModal = (id: string) => {
+    const el = document.getElementById(id);
+    if (el && window.bootstrap?.Modal) new window.bootstrap.Modal(el).show();
   };
 
-  const hideModal = (modalId: string) => {
-    const modalEl = document.getElementById(modalId);
-    if (modalEl && window.bootstrap?.Modal) {
-      const modal = new window.bootstrap.Modal(modalEl);
-      modal.hide();
-    }
+  const hideModal = (id: string) => {
+    const el = document.getElementById(id);
+    if (el && window.bootstrap?.Modal) new window.bootstrap.Modal(el).hide();
   };
 
-  const handleRespondClick = (feedback: Feedback) => {
-    setSelectedFeedback(feedback);
+  /* ----------  Respond ---------- */
+  const handleRespondClick = (fb: Feedback) => {
+    setSelectedFeedback(fb);
     setResponseInput('');
     showModal('responseModal');
   };
@@ -79,49 +75,53 @@ const ManagerFeedbackPage: React.FC = () => {
     if (!selectedFeedback) return;
 
     try {
+      /* 
       await axios.put(`/api/managerfeedback/${selectedFeedback.FeedbackID}`, {
         Response: responseInput,
       });
+      */
 
-      setFeedbackList((prev) =>
-        prev.map((fb) =>
+      // MOCK SUCCESS: update local state only
+      setFeedbackList(prev =>
+        prev.map(fb =>
           fb.FeedbackID === selectedFeedback.FeedbackID
             ? { ...fb, Response: responseInput }
             : fb
         )
       );
-
       hideModal('responseModal');
     } catch (err) {
       console.error('Failed to submit response', err);
     }
   };
 
+  /* ----------  Render ---------- */
   return (
     <div className="container my-5">
-      <h2 className="text-center mb-4 textColorless">Manager Feedback</h2>
+      <h2 className="text-center mb-4 textColorless">{t('managerFeed')}</h2>
 
       {loading ? (
-        <p className="text-center text-muted">Loading feedback...</p>
+        <p className="text-center text-muted">{t('loading')}</p>
       ) : feedbackList.length === 0 ? (
-        <p className="text-center text-muted">No feedback found.</p>
+        <p className="text-center text-muted">{t('noFeedback')}</p>
       ) : (
         <div className="overflow-auto" style={{ maxHeight: '70vh' }}>
-          {feedbackList.map((fb) => (
+          {feedbackList.map(fb => (
             <div key={fb.FeedbackID} className="card mb-3 shadow-sm">
               <div className="card-body">
                 <h5 className="card-title">{fb.Email}</h5>
                 <p className="card-text">
-                  <strong>Comments:</strong> {fb.Comments}
+                  <strong>{t('comments')}:</strong> {fb.Comments}
                 </p>
                 <p className="card-text">
-                  <strong>Rating:</strong> {fb.Rating}/5
+                  <strong>{t('rating')}:</strong> {fb.Rating}/5
                 </p>
                 <p className="card-text">
-                  <strong>Date:</strong> {new Date(fb.FeedbackDate).toLocaleString()}
+                  <strong>{t('date')}:</strong>{' '}
+                  {new Date(fb.FeedbackDate).toLocaleString()}
                 </p>
                 <p className="card-text">
-                  <strong>Response:</strong>{' '}
+                  <strong>{t('response')}:</strong>{' '}
                   {fb.Response ? (
                     <span>{fb.Response}</span>
                   ) : (
@@ -129,7 +129,7 @@ const ManagerFeedbackPage: React.FC = () => {
                       className="btn btn-sm btn-outline-primary"
                       onClick={() => handleRespondClick(fb)}
                     >
-                      Add Response
+                      {t('addResponse')}
                     </button>
                   )}
                 </p>
@@ -139,7 +139,7 @@ const ManagerFeedbackPage: React.FC = () => {
         </div>
       )}
 
-      {/* Modal */}
+      {/* ----------  Modal ---------- */}
       <div
         className="modal fade"
         id="responseModal"
@@ -150,36 +150,35 @@ const ManagerFeedbackPage: React.FC = () => {
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="responseModalLabel">Add Response</h5>
+              <h5 className="modal-title" id="responseModalLabel">
+                {t('addResponse')}
+              </h5>
               <button
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
-              ></button>
+              />
             </div>
             <div className="modal-body">
               <textarea
                 className="form-control"
                 rows={4}
-                placeholder="Type your response here..."
+                placeholder={t('typeResponse')}
                 value={responseInput}
-                onChange={(e) => setResponseInput(e.target.value)}
+                onChange={e => setResponseInput(e.target.value)}
               />
             </div>
             <div className="modal-footer">
-              <button
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cancel
+              <button className="btn btn-secondary" data-bs-dismiss="modal">
+                {t('cancel')}
               </button>
               <button
                 className="btn btn-primary"
                 onClick={handleSubmitResponse}
                 disabled={!responseInput.trim()}
               >
-                Submit Response
+                {t('addResponse')}
               </button>
             </div>
           </div>

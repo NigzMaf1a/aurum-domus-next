@@ -1,44 +1,53 @@
+/* SIDEBAR — always hidden until .open
+   ---------------------------------- */
+
 .sidebar {
   position: fixed;
   top: 0;
-  left: -220px;
+  left: -220px;                     /* start off‑screen */
   width: 220px;
   height: 100vh;
   background-image: url('/aurum-domus/public/aurum10.jpg');
+  background-size: cover;
+  background-position: center;
   color: white;
   padding: 1rem;
   transition: left 0.3s ease-in-out;
-  z-index: 1040;
+  z-index: 1040;                    /* sits above Header */
 }
 
-/* Sidebar visible when open */
+/* slide into view */
 .open {
   left: 0;
 }
 
-/* Always show sidebar on medium+ screens */
-@media (min-width: 768px) {
-  .sidebar {
-    left: 0 !important;
-    position: fixed;
-  }
-}
-
-/* Overlay backdrop */
+/* overlay backdrop */
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 1039;
+  z-index: 1039;                    /* below sidebar */
 }
 
+/* ⬆ burger button */
+.toggleBtn {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1060;                    /* floats over everything */
+  background-color: #0d6efd;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+}
+
+/* nav list styling */
 .list {
   list-style: none;
-  padding-top: 2rem;
   padding: 0;
+  padding-top: 4rem;                /* clears burger + header */
 }
 
 .listItem {
@@ -53,6 +62,8 @@
 #link:hover {
   text-decoration: underline;
 }
+
+/* blue item bar */
 .sidebarDiv {
   display: flex;
   align-items: center;
@@ -61,6 +72,5 @@
   border-radius: 0.25rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-top: 0.5rem;
-  background-color:slateblue;
+  background-color: slateblue;
 }
-

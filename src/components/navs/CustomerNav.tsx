@@ -1,63 +1,85 @@
 "use client";
 
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import styles from '@/styles/Sidebar.module.css';
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { usePathname } from "next/navigation";
+import styles from "@/styles/Sidebar.module.css";
 
 export default function CustomerNav() {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
+  const pathname           = usePathname();
+  const { t }              = useTranslation();
 
-  // Auto-close sidebar when navigating
-  useEffect(() => {
-    const handleRouteChange = () => setIsOpen(false);
-    router.events.on('routeChangeStart', handleRouteChange);
-    return () => {
-      router.events.off('routeChangeStart', handleRouteChange);
-    };
-  }, [router]);
+  /* close sidebar on route change */
+  useEffect(() => setIsOpen(false), [pathname]);
 
-  const toggleSidebar = () => setIsOpen(!isOpen);
+  const toggle = () => setIsOpen(v => !v);
 
   return (
     <>
-      <button onClick={toggleSidebar} className="btn btn-primary m-2 d-md-none">
-        ☰ Menu
+      {/* burger button (fixed above header) */}
+      <button
+        aria-label={t("menu")}
+        className={styles.toggleBtn}
+        onClick={toggle}
+      >
+        ☰ {t("menu")}
       </button>
 
-      <nav className={`${styles.sidebar} ${isOpen ? styles.open : ''} d-md-none`}>
+      {/* backdrop */}
+      {isOpen && <div className={styles.overlay} onClick={toggle} />}
+
+      {/* slide‑in nav */}
+      <nav id="sidebar" className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
         <ul className={styles.list}>
-          <li className={styles.listItem}>
-            <Link href="/customer/customerreservations" className={styles.link}>
-              Reservations
-            </Link>
-          </li>
-          <li className={styles.listItem}>
-            <Link href="/customer/customertables" className={styles.link}>
-              Tables
-            </Link>
-          </li>
-          <li className={styles.listItem}>
-            <Link href="/customer/customerorders" className={styles.link}>
-              Orders
-            </Link>
-          </li>
-          <li className={styles.listItem}>
-            <Link href="/customer/customerpayments" className={styles.link}>
-              Payments
-            </Link>
-          </li>
-          <li className={styles.listItem}>
-            <Link href="/customer/customerfeedback" className={styles.link}>
-              Feedback
-            </Link>
-          </li>
-          <li className={styles.listItem}>
-            <Link href="/customer/customerbio" className={styles.link}>
-              Bio
-            </Link>
-          </li>
+          <div className={styles.sidebarDiv}>
+            <li className={styles.listItem}>
+              <Link href="/customer/customerreservations" id={styles.link}>
+                {t("reservations")}
+              </Link>
+            </li>
+          </div>
+
+          <div className={styles.sidebarDiv}>
+            <li className={styles.listItem}>
+              <Link href="/customer/customertables" id={styles.link}>
+                {t("tables")}
+              </Link>
+            </li>
+          </div>
+
+          <div className={styles.sidebarDiv}>
+            <li className={styles.listItem}>
+              <Link href="/customer/customerorders" id={styles.link}>
+                {t("orders")}
+              </Link>
+            </li>
+          </div>
+
+          <div className={styles.sidebarDiv}>
+            <li className={styles.listItem}>
+              <Link href="/customer/customerpayments" id={styles.link}>
+                {t("payments")}
+              </Link>
+            </li>
+          </div>
+
+          <div className={styles.sidebarDiv}>
+            <li className={styles.listItem}>
+              <Link href="/customer/customerfeedback" id={styles.link}>
+                {t("feedback")}
+              </Link>
+            </li>
+          </div>
+
+          <div className={styles.sidebarDiv}>
+            <li className={styles.listItem}>
+              <Link href="/customer/customerbio" id={styles.link}>
+                {t("bio")}
+              </Link>
+            </li>
+          </div>
         </ul>
       </nav>
     </>

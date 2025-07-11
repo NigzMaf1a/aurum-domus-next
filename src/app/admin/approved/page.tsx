@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 // import axios from 'axios'; // ❌ Axios commented out for mock usage
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -19,6 +20,7 @@ interface ApprovedUser {
 const ApprovedPage: React.FC = () => {
   const [approvedUsers, setApprovedUsers] = useState<ApprovedUser[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const { t } = useTranslation();
 
   // Simulated fetch of approved users
   useEffect(() => {
@@ -42,7 +44,7 @@ const ApprovedPage: React.FC = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4 textColorless">Approved Users</h2>
+      <h2 className="mb-4 textColorless">{t('approvedUsers')}</h2>
       <div
         className="table-responsive"
         style={{
@@ -55,26 +57,26 @@ const ApprovedPage: React.FC = () => {
         <table className="table table-striped table-hover table-bordered mb-0">
           <thead className="table-warning sticky-top">
             <tr>
-              <th>First Name</th>
-              <th>Second Name</th>
-              <th>Phone No</th>
-              <th>Email</th>
-              <th>Gender</th>
-              <th>Reg Type</th>
-              <th>Action</th>
+              <th>{t('firstName')}</th>
+              <th>{t('secondName')}</th>
+              <th>{t('phoneNo')}</th>
+              <th>{t('email')}</th>
+              <th>{t('gender')}</th>
+              <th>{t('regType')}</th>
+              <th>{t('action')}</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
               <tr>
                 <td colSpan={7} className="text-center">
-                  Loading...
+                  {t('loading')}
                 </td>
               </tr>
             ) : approvedUsers.length === 0 ? (
               <tr>
                 <td colSpan={7} className="text-center">
-                  No approved users found.
+                  {t('noApprovedUsers')}
                 </td>
               </tr>
             ) : (
@@ -91,7 +93,7 @@ const ApprovedPage: React.FC = () => {
                       className="btn btn-danger btn-sm"
                       onClick={() => deactivateUser(user.id)}
                     >
-                      Deactivate
+                      {t('deactivate')}
                     </button>
                   </td>
                 </tr>

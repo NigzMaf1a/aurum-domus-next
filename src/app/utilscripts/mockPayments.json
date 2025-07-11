@@ -1,0 +1,102 @@
+[
+  {
+    "PaymentID": 201,
+    "FinanceID": 5001,
+    "Name1": "Alex",
+    "Name2": "Mutua",
+    "PaymentType": "Mpesa",
+    "PaymentAmount": 2400,
+    "PaymentDate": "2025-06-20",
+    "PaymentTime": "14:30:00"
+  },
+  {
+    "PaymentID": 202,
+    "FinanceID": 5002,
+    "Name1": "Bianca",
+    "Name2": "Kiptoo",
+    "PaymentType": "Mpesa",
+    "PaymentAmount": 900,
+    "PaymentDate": "2025-06-19",
+    "PaymentTime": "12:15:00"
+  },
+  {
+    "PaymentID": 203,
+    "FinanceID": 5003,
+    "Name1": "Carlos",
+    "Name2": "Ojwang",
+    "PaymentType": "Mpesa",
+    "PaymentAmount": 850,
+    "PaymentDate": "2025-06-18",
+    "PaymentTime": "19:35:00"
+  },
+  {
+    "PaymentID": 204,
+    "FinanceID": 5004,
+    "Name1": "Dana",
+    "Name2": "Njeri",
+    "PaymentType": "Mpesa",
+    "PaymentAmount": 1800,
+    "PaymentDate": "2025-06-18",
+    "PaymentTime": "14:10:00"
+  },
+  {
+    "PaymentID": 205,
+    "FinanceID": 5005,
+    "Name1": "Eli",
+    "Name2": "Omondi",
+    "PaymentType": "Mpesa",
+    "PaymentAmount": 1900,
+    "PaymentDate": "2025-06-17",
+    "PaymentTime": "18:25:00"
+  },
+  {
+    "PaymentID": 206,
+    "FinanceID": 5006,
+    "Name1": "Farah",
+    "Name2": "Musa",
+    "PaymentType": "Mpesa",
+    "PaymentAmount": 1000,
+    "PaymentDate": "2025-06-17",
+    "PaymentTime": "09:00:00"
+  },
+  {
+    "PaymentID": 207,
+    "FinanceID": 5007,
+    "Name1": "George",
+    "Name2": "Kariuki",
+    "PaymentType": "Mpesa",
+    "PaymentAmount": 780,
+    "PaymentDate": "2025-06-16",
+    "PaymentTime": "20:20:00"
+  },
+  {
+    "PaymentID": 208,
+    "FinanceID": 5008,
+    "Name1": "Haley",
+    "Name2": "Mwangi",
+    "PaymentType": "Mpesa",
+    "PaymentAmount": 900,
+    "PaymentDate": "2025-06-15",
+    "PaymentTime": "15:45:00"
+  },
+  {
+    "PaymentID": 209,
+    "FinanceID": 5009,
+    "Name1": "Ivan",
+    "Name2": "Otieno",
+    "PaymentType": "Mpesa",
+    "PaymentAmount": 1200,
+    "PaymentDate": "2025-06-14",
+    "PaymentTime": "11:35:00"
+  },
+  {
+    "PaymentID": 210,
+    "FinanceID": 5010,
+    "Name1": "Julia",
+    "Name2": "Kiplagat",
+    "PaymentType": "Mpesa",
+    "PaymentAmount": 1000,
+    "PaymentDate": "2025-06-13",
+    "PaymentTime": "17:10:00"
+  }
+]

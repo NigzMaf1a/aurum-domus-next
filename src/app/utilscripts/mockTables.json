@@ -1,0 +1,58 @@
+[
+  {
+    "TableID": 1,
+    "UnitID": 1,
+    "TableName": "Table 1",
+    "TableCapacity": 4,
+    "TableStatus": "Vacant"
+  },
+  {
+    "TableID": 2,
+    "UnitID": 1,
+    "TableName": "Table 2",
+    "TableCapacity": 2,
+    "TableStatus": "Occupied"
+  },
+  {
+    "TableID": 3,
+    "UnitID": 1,
+    "TableName": "Table 3",
+    "TableCapacity": 6,
+    "TableStatus": "Vacant"
+  },
+  {
+    "TableID": 4,
+    "UnitID": 1,
+    "TableName": "Table 4",
+    "TableCapacity": 8,
+    "TableStatus": "Vacant"
+  },
+  {
+    "TableID": 5,
+    "UnitID": 1,
+    "TableName": "Table 5",
+    "TableCapacity": 2,
+    "TableStatus": "Occupied"
+  },
+  {
+    "TableID": 6,
+    "UnitID": 1,
+    "TableName": "Table 6",
+    "TableCapacity": 4,
+    "TableStatus": "Vacant"
+  },
+  {
+    "TableID": 7,
+    "UnitID": 1,
+    "TableName": "Table 7",
+    "TableCapacity": 10,
+    "TableStatus": "Vacant"
+  },
+  {
+    "TableID": 8,
+    "UnitID": 1,
+    "TableName": "VIP Lounge",
+    "TableCapacity": 12,
+    "TableStatus": "Occupied"
+  }
+]
