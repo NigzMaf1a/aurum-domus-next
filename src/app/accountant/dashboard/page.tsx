@@ -24,7 +24,7 @@ function Dashboard() {
     };
 
     fetchData();
-  }, [data]);
+  }, []);
 
   return (
     <div className="container mt-4">
