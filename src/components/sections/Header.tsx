@@ -97,9 +97,11 @@ export default function Header({ user }: HeaderProps) {
     <header className="fixed-top shadow-sm" id="top-strip" style={{ zIndex: 1020 }}>
       {/* 🟦 Top bar with brand and language switcher */}
       <div className="container py-3 text-white position-relative">
-        <h2 className="m-0 text-center">
-          {t('brand', { defaultValue: 'Aurum Domus ✨' })}
-        </h2>
+        <div className='title mx-auto'>
+          <h2 className="m-0 text-center">
+            {t('brand', { defaultValue: 'Aurum Domus ✨' })}
+          </h2>
+        </div>
 
         <div className="position-absolute end-0 top-50 translate-middle-y me-2">
           <button
@@ -143,7 +145,7 @@ export default function Header({ user }: HeaderProps) {
         </div>
       </div>
 
-      {/* 🧩 Conditional nav based on route and user role */}
+      {/*  Conditional nav based on route and user role */}
       {renderNav()}
     </header>
   );
