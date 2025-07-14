@@ -22,18 +22,18 @@ function Pending() {
       setLoading(false);
     }, 2000);
   }, []);
-    const deactivatePayment = async (id: number) => {
+    const approvePayment = async (id: number) => {
     try {
       // await axios.put(`/api/deactivate/${id}`, { status: 'Inactive' }); // ❌ Disabled for mock
       setPendingPayments((prev) => prev.filter((pay) => pay.id !== id));
     } catch (err) {
-      console.error('Error deactivating payment:', err);
+      console.error('Error approving payment:', err);
     }
   };
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4 textColorless">Pending Payments</h2>
+      <h2 className="mb-4 textColorless">{t('pendingPayments')}</h2>
       <div
         className="table-responsive"
         style={{
@@ -46,12 +46,12 @@ function Pending() {
         <table className="table table-striped table-hover table-bordered mb-0">
           <thead className="table-warning sticky-top">
             <tr>
-              <th>Payment ID</th>
-              <th>Amount</th>
-              <th>Type</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th>{t('paymentID')}</th>
+              <th>{t('amount')}</th>
+              <th>{t('type')}</th>
+              <th>{t('date')}</th>
+              <th>{t('status')}</th>
+              <th>{t('status')}</th>
             </tr>
           </thead>
           <tbody>
@@ -64,7 +64,7 @@ function Pending() {
             ) : pendingPayments.length === 0 ? (
               <tr>
                 <td colSpan={7} className="text-center">
-                  {t('noApprovedUsers')}
+                  {t('noPendingPayments')}
                 </td>
               </tr>
             ) : (
@@ -78,9 +78,9 @@ function Pending() {
                   <td>
                     <button
                       className="btn btn-warning btn-sm"
-                      onClick={() => deactivatePayment(pay.id)}
+                      onClick={() => approvePayment(pay.id)}
                     >
-                      {t('deactivate')}
+                      {t('approve')}
                     </button>
                   </td>
                 </tr>

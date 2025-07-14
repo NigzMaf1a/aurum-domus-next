@@ -147,5 +147,15 @@
     "manager": "Manager",
     "customer": "Customer",
     "alreadyHaveAccount": "Already have an account?",
-    "loginHere": "Login here"
+    "loginHere": "Login here",
+    "rejectedPayments": "Rejected Payments",
+    "paymentID": "Payment ID",
+    "type": "Type",
+    "noRejectedPayments": "No rejected payments found.",
+    "reapprove": "Reapprove", 
+    "pendingPayments": "Pending Payments",
+    "noPendingPayments": "No pending payments found.",
+    "approvedPayments": "Approved Payments",
+    "noApprovedPayments": "No Approved Payments",
+    "reject": "Reject"
 }

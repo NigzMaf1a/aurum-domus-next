@@ -33,7 +33,7 @@ function Rejected() {
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4 textColorless">Pending Payments</h2>
+      <h2 className="mb-4 textColorless">{t('rejectedPayments')}</h2>
       <div
         className="table-responsive"
         style={{
@@ -46,12 +46,12 @@ function Rejected() {
         <table className="table table-striped table-hover table-bordered mb-0">
           <thead className="table-danger sticky-top">
             <tr>
-              <th>Payment ID</th>
-              <th>Amount</th>
-              <th>Type</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th>{t('paymentID')}</th>
+              <th>{t('amount')}</th>
+              <th>{t('type')}</th>
+              <th>{t('date')}</th>
+              <th>{t('status')}</th>
+              <th>{t('action')}</th>
             </tr>
           </thead>
           <tbody>
@@ -64,7 +64,7 @@ function Rejected() {
             ) : rejectedPayments.length === 0 ? (
               <tr>
                 <td colSpan={7} className="text-center">
-                  {t('noApprovedUsers')}
+                  {t('noRejectedPayments')}
                 </td>
               </tr>
             ) : (
@@ -80,7 +80,7 @@ function Rejected() {
                       className="btn btn-danger btn-sm"
                       onClick={() => rejectPayment(pay.id)}
                     >
-                      {t('deactivate')}
+                      {t('reapprove')}
                     </button>
                   </td>
                 </tr>

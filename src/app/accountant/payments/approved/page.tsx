@@ -27,13 +27,13 @@ function Approved() {
       // await axios.put(`/api/deactivate/${id}`, { status: 'Inactive' }); // ❌ Disabled for mock
       setApprovedPayments((prev) => prev.filter((pay) => pay.id !== id));
     } catch (err) {
-      console.error('Error approving payment:', err);
+      console.error('Error rejecting payment:', err);
     }
   };
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4 textColorless">Approved Payments</h2>
+      <h2 className="mb-4 textColorless">{t('approvedPayments')}</h2>
       <div
         className="table-responsive"
         style={{
@@ -46,12 +46,12 @@ function Approved() {
         <table className="table table-striped table-hover table-bordered mb-0">
           <thead className="table-success sticky-top">
             <tr>
-              <th>Payment ID</th>
-              <th>Amount</th>
-              <th>Type</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th>{t('paymentID')}</th>
+              <th>{t('amount')}</th>
+              <th>{t('type')}</th>
+              <th>{t('date')}</th>
+              <th>{t('status')}</th>
+              <th>{t('action')}</th>
             </tr>
           </thead>
           <tbody>
@@ -64,7 +64,7 @@ function Approved() {
             ) : approvedPayments.length === 0 ? (
               <tr>
                 <td colSpan={7} className="text-center">
-                  {t('noApprovedUsers')}
+                  {t('noApprovedPayments')}
                 </td>
               </tr>
             ) : (
@@ -80,7 +80,7 @@ function Approved() {
                       className="btn btn-success btn-sm"
                       onClick={() => approvePayment(pay.id)}
                     >
-                      {t('deactivate')}
+                      {t('reject')}
                     </button>
                   </td>
                 </tr>
