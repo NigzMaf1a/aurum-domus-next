@@ -7,6 +7,7 @@
   left: -220px;                     /* start off‑screen */
   width: 220px;
   height: 100vh;
+  overflow-y: auto;
   background-image: url('/aurum-domus/public/aurum10.jpg');
   background-size: cover;
   background-position: center;
@@ -35,7 +36,7 @@
   top: 0.75rem;
   left: 0.75rem;
   z-index: 1060;                    /* floats over everything */
-  background-color: #0d6efd;
+  background-color: slateblue;
   color: #ffffff;
   border: none;
   padding: 0.5rem 0.75rem;

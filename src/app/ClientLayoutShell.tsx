@@ -1,10 +1,11 @@
-// app/ClientLayoutShell.tsx
 "use client";
 
 import React, { useEffect } from "react";
 import Header from "@/components/sections/Header";
 import { startColorChange } from "./utilscripts/colorChange";
 import { startThemeCycle } from "./utilscripts/themeSwitcher";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // 🧠 Interface for user roles
 interface User {
@@ -43,6 +44,17 @@ export default function ClientLayoutShell({
   return (
     <>
       <Header user={mockUser} />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <main className="flex-grow-1">{children}</main>
     </>
   );

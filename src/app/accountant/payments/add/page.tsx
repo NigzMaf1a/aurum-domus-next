@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 function AddPayment() {
   const { t } = useTranslation();
@@ -10,6 +11,7 @@ function AddPayment() {
     e.preventDefault();
     console.log("Form submitted");
     // Add logic here
+    toast.success(t("paymentAddedSuccess"));
   }
 
   return (

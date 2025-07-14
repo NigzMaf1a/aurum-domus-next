@@ -1,5 +1,7 @@
 {
     "menu": "Menu",
+    "myProfile": "My Profile",
+    "logout": "Logout",
     "dashboard": "Dashboard",
     "approved": "Approved",
     "pending": "Pending",
@@ -158,5 +160,6 @@
     "approvedPayments": "Approved Payments",
     "noApprovedPayments": "No Approved Payments",
     "reject": "Reject",
-    "addPayment": "Add Payment"
+    "addPayment": "Add Payment",
+    "paymentAddedSuccess": "Payment successfully added!"
 }
