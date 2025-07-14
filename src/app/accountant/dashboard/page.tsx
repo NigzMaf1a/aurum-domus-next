@@ -1,6 +1,31 @@
+"use client";
 import React from 'react';
+import { useState, useEffect } from 'react';
 
 function Dashboard() {
+  const [data, setData] = useState({
+    pending: { number: 0, amount: 0 },
+    approved: { number: 0, amount: 0 },
+    rejected: { number: 0, amount: 0 },
+    total: { number: 0, amount: 0 },
+  });
+
+  useEffect(() => {
+    // Fetch data from API or perform calculations
+    const fetchData = async () => {
+      // Simulated API response
+      const response = {
+        pending: { number: 5, amount: 100 },
+        approved: { number: 10, amount: 200 },
+        rejected: { number: 2, amount: 50 },
+        total: { number: 17, amount: 350 },
+      };
+      setData(response);
+    };
+
+    fetchData();
+  }, [data]);
+
   return (
     <div className="container mt-4">
       <h1 className="mb-4 textColorless">Dashboard</h1>
