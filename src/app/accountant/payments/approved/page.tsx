@@ -44,7 +44,7 @@ function Approved() {
         }}
       >
         <table className="table table-striped table-hover table-bordered mb-0">
-          <thead className="table-success sticky-top">
+          <thead className="table-success sticky-top" style={{ zIndex: 1000 }}>
             <tr>
               <th>{t('paymentID')}</th>
               <th>{t('amount')}</th>
