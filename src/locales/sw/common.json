@@ -163,5 +163,6 @@
   "addPayment": "Ongeza Malipo",
   "paymentAddedSuccess": "Malipo yameongezwa kwa mafanikio!",
   "add": "Ongeza",
-  "rejected": "Imekataliwa"
+  "rejected": "Imekataliwa",
+  "paymentStatus": "Hali ya Malipo"
 }

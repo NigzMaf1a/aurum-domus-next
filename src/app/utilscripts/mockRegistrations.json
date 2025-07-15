@@ -1,0 +1,62 @@
+[
+  {
+    "RegID": 1,
+    "Name1": "John",
+    "Name2": "Doe",
+    "PhoneNo": 712345678,
+    "Email": "john.doe@example.com",
+    "Gender": "Male",
+    "RegType": "Customer",
+    "accStatus": "Approved"
+  },
+  {
+    "RegID": 2,
+    "Name1": "Jane",
+    "Name2": "Smith",
+    "PhoneNo": 723456789,
+    "Email": "jane.smith@example.com",
+    "Gender": "Female",
+    "RegType": "Manager",
+    "accStatus": "Approved"
+  },
+  {
+    "RegID": 3,
+    "Name1": "Samuel",
+    "Name2": "Adams",
+    "PhoneNo": 734567890,
+    "Email": "samuel.adams@example.com",
+    "Gender": "Male",
+    "RegType": "Admin",
+    "accStatus": "Pending"
+  },
+  {
+    "RegID": 4,
+    "Name1": "Linda",
+    "Name2": "Green",
+    "PhoneNo": 745678901,
+    "Email": "linda.green@example.com",
+    "Gender": "Female",
+    "RegType": "Accountant",
+    "accStatus": "Approved"
+  },
+  {
+    "RegID": 5,
+    "Name1": "Brian",
+    "Name2": "Otieno",
+    "PhoneNo": 756789012,
+    "Email": "brian.otieno@example.com",
+    "Gender": "Male",
+    "RegType": "Waiter",
+    "accStatus": "Inactive"
+  },
+  {
+    "RegID": 6,
+    "Name1": "Lucy",
+    "Name2": "Wangari",
+    "PhoneNo": 767890123,
+    "Email": "lucy.wangari@example.com",
+    "Gender": "Female",
+    "RegType": "Chef",
+    "accStatus": "Approved"
+  }
+]

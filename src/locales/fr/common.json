@@ -163,5 +163,6 @@
   "addPayment": "Ajouter un paiement",
   "paymentAddedSuccess": "Paiement ajouté avec succès !",
   "add": "Ajouter",
-  "rejected": "Rejeté"
+  "rejected": "Rejeté",
+  "paymentStatus": "Statut de Paiement"
 }

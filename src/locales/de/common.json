@@ -163,5 +163,6 @@
   "addPayment": "Zahlung hinzufügen",
   "paymentAddedSuccess": "Zahlung erfolgreich hinzugefügt!",
   "add": "Hinzufügen",
-  "rejected": "Abgelehnt"
+  "rejected": "Abgelehnt",
+  "paymentStatus": "Zahlungsstatus"
 }
