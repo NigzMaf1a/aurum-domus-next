@@ -161,5 +161,7 @@
   "noApprovedPayments": "Keine genehmigten Zahlungen",
   "reject": "Ablehnen",
   "addPayment": "Zahlung hinzufügen",
-  "paymentAddedSuccess": "Zahlung erfolgreich hinzugefügt!"
+  "paymentAddedSuccess": "Zahlung erfolgreich hinzugefügt!",
+  "add": "Hinzufügen",
+  "rejected": "Abgelehnt"
 }

@@ -8,6 +8,7 @@ import i18n, { locales, defaultLocale } from '@/lib/i18n';
 import AdminNav from '@/components/navs/AdminNav';
 import ManagerNav from '@/components/navs/ManagerNav';
 import CustomerNav from '@/components/navs/CustomerNav';
+import AccountantNav from '@/components/navs/AccountantNav';
 
 interface User {
   RegID: number;
@@ -105,6 +106,8 @@ export default function Header({ user }: HeaderProps) {
         return <ManagerNav />;
       case 'Customer':
         return <CustomerNav />;
+      case 'Accountant':
+        return <AccountantNav />
       default:
         return null;
     }

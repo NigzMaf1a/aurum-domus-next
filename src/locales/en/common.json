@@ -161,5 +161,7 @@
     "noApprovedPayments": "No Approved Payments",
     "reject": "Reject",
     "addPayment": "Add Payment",
-    "paymentAddedSuccess": "Payment successfully added!"
+    "paymentAddedSuccess": "Payment successfully added!",
+    "add": "Add",
+    "rejected": "Rejected"
 }

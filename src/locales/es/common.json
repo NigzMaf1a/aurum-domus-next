@@ -161,5 +161,7 @@
   "noApprovedPayments": "No se encontraron pagos aprobados.",
   "reject": "Rechazar",
   "addPayment": "Agregar pago",
-  "paymentAddedSuccess": "¡Pago agregado con éxito!"
+  "paymentAddedSuccess": "¡Pago agregado con éxito!",
+  "add": "Añadir",
+  "rejected": "Rechazado"
 }

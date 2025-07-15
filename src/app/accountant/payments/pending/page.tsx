@@ -51,7 +51,6 @@ function Pending() {
               <th>{t('type')}</th>
               <th>{t('date')}</th>
               <th>{t('status')}</th>
-              <th>{t('status')}</th>
             </tr>
           </thead>
           <tbody>

@@ -161,5 +161,7 @@
   "noApprovedPayments": "Hakuna malipo yaliyoidhinishwa.",
   "reject": "Kataa",
   "addPayment": "Ongeza Malipo",
-  "paymentAddedSuccess": "Malipo yameongezwa kwa mafanikio!"
+  "paymentAddedSuccess": "Malipo yameongezwa kwa mafanikio!",
+  "add": "Ongeza",
+  "rejected": "Imekataliwa"
 }

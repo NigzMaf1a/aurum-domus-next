@@ -161,5 +161,7 @@
   "noApprovedPayments": "Aucun paiement approuvé",
   "reject": "Rejeter",
   "addPayment": "Ajouter un paiement",
-  "paymentAddedSuccess": "Paiement ajouté avec succès !"
+  "paymentAddedSuccess": "Paiement ajouté avec succès !",
+  "add": "Ajouter",
+  "rejected": "Rejeté"
 }

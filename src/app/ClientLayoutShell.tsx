@@ -15,7 +15,7 @@ interface User {
   PhoneNo: number;
   Email: string;
   Gender: "Male" | "Female";
-  RegType: "Customer" | "Manager" | "Admin";
+  RegType: "Customer" | "Manager" | "Admin" | "Accountant";
   accStatus: "Pending" | "Approved" | "Inactive";
 }
 

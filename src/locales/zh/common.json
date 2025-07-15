@@ -161,5 +161,7 @@
   "noApprovedPayments": "未找到批准付款。",
   "reject": "拒绝",
   "addPayment": "添加付款",
-  "paymentAddedSuccess": "付款添加成功！"
+  "paymentAddedSuccess": "付款添加成功！",
+  "add": "添加",
+  "rejected": "被拒绝"
 }
