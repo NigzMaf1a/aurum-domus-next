@@ -5,21 +5,14 @@ import { useTranslation } from 'react-i18next';
 import { usePathname } from 'next/navigation';
 import i18n, { locales, defaultLocale } from '@/lib/i18n';
 
+//Navigation components
 import AdminNav from '@/components/navs/AdminNav';
 import ManagerNav from '@/components/navs/ManagerNav';
 import CustomerNav from '@/components/navs/CustomerNav';
 import AccountantNav from '@/components/navs/AccountantNav';
 
-interface User {
-  RegID: number;
-  Name1: string;
-  Name2: string;
-  PhoneNo: number;
-  Email: string;
-  Gender: 'Male' | 'Female';
-  RegType: "Customer" | "Manager" | "Admin" | "Accountant" | "Waiter" | "Chef";
-  accStatus: 'Pending' | 'Approved' | 'Inactive';
-}
+// Interfaces/Enums/Scripts
+import User from '@/interfaces/user';
 
 interface HeaderProps {
   user?: User;
@@ -89,8 +82,14 @@ export default function Header({ user }: HeaderProps) {
   }, [langOpen, profileOpen]);
 
   const handleSelect = (lng: typeof locales[number]) => {
-    i18n.changeLanguage(lng);
-    setLangOpen(false);
+    if (lng !== i18n.language) {
+      i18n.changeLanguage(lng).then(() => {
+        setLangOpen(false);
+        window.location.reload();
+      });
+    } else {
+      setLangOpen(false);
+    }
   };
 
   const hideNavRoutes = ['/login', '/register', '/auth/login', '/auth/register'];

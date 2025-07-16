@@ -1,10 +1,11 @@
 [
   {
     "RegID": 1,
-    "Name1": "John",
-    "Name2": "Doe",
+    "Name1": "Mista",
+    "Name2": "Tumbo",
     "PhoneNo": 712345678,
-    "Email": "john.doe@example.com",
+    "Email": "customer@gmail.com",
+    "Password": "customer123",
     "Gender": "Male",
     "RegType": "Customer",
     "accStatus": "Approved"
@@ -14,7 +15,8 @@
     "Name1": "Jane",
     "Name2": "Smith",
     "PhoneNo": 723456789,
-    "Email": "jane.smith@example.com",
+    "Email": "manager@gmail.com",
+    "Password": "manager123",
     "Gender": "Female",
     "RegType": "Manager",
     "accStatus": "Approved"
@@ -24,7 +26,8 @@
     "Name1": "Samuel",
     "Name2": "Adams",
     "PhoneNo": 734567890,
-    "Email": "samuel.adams@example.com",
+    "Email": "admin@gmail.com",
+    "Password": "admin123",
     "Gender": "Male",
     "RegType": "Admin",
     "accStatus": "Pending"
@@ -34,7 +37,8 @@
     "Name1": "Linda",
     "Name2": "Green",
     "PhoneNo": 745678901,
-    "Email": "linda.green@example.com",
+    "Email": "accountant@gmail.com",
+    "Password": "accountant123",
     "Gender": "Female",
     "RegType": "Accountant",
     "accStatus": "Approved"
@@ -44,7 +48,8 @@
     "Name1": "Brian",
     "Name2": "Otieno",
     "PhoneNo": 756789012,
-    "Email": "brian.otieno@example.com",
+    "Email": "waiter@gmail.com",
+    "Password": "waiter123",
     "Gender": "Male",
     "RegType": "Waiter",
     "accStatus": "Inactive"
@@ -54,7 +59,8 @@
     "Name1": "Lucy",
     "Name2": "Wangari",
     "PhoneNo": 767890123,
-    "Email": "lucy.wangari@example.com",
+    "Email": "chef@gmail.com",
+    "Password": "chef123",
     "Gender": "Female",
     "RegType": "Chef",
     "accStatus": "Approved"

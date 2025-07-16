@@ -1,1 +1,7 @@
-function login(email:string, password:string, branch:string):void{}
+import Unit from '../interfaces/unit';
+
+function returnUnitNames(mockUnits: Unit[]): string[] {
+  return mockUnits.map((unit) => unit.UnitName);
+}
+
+export { returnUnitNames};

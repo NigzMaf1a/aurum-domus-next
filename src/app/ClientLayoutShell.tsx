@@ -7,17 +7,8 @@ import { startThemeCycle } from "../utilscripts/themeSwitcher";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// 🧠 Interface for user roles
-interface User {
-  RegID: number;
-  Name1: string;
-  Name2: string;
-  PhoneNo: number;
-  Email: string;
-  Gender: "Male" | "Female";
-  RegType: "Customer" | "Manager" | "Admin" | "Accountant" | "Waiter" | "Chef";
-  accStatus: "Pending" | "Approved" | "Inactive";
-}
+// scripts/interfaces/enums
+import User from "../interfaces/user";
 
 export default function ClientLayoutShell({
   children,
@@ -37,7 +28,7 @@ export default function ClientLayoutShell({
     PhoneNo: 123456789,
     Email: "nigel@aurumdomus.com",
     Gender: "Male",
-    RegType: "Manager", // ← switch this to "Manager" or "Customer" to test
+    RegType: "Manager", // ← switch this to "Manager" or "Customer"
     accStatus: "Approved",
   };
 
