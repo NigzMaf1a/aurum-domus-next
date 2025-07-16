@@ -165,5 +165,6 @@
   "add": "Aggiungi",
   "rejected": "Respinto",
   "paymentStatus": "Stato del Pagamento",
-  "examplePassword": "********"
+  "examplePassword": "********",
+  "addNewUnit": "Aggiungi nuova unità"
 }

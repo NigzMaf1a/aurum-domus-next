@@ -165,5 +165,6 @@
   "add": "添加",
   "rejected": "被拒绝",
   "paymentStatus": "付款状态",
-  "examplePassword": "********"
+  "examplePassword": "********",
+  "addNewUnit": "添加新单元"
 }
