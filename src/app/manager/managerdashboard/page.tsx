@@ -4,11 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-interface ManagerCardData {
-  title: string;
-  theme: string;
-  messages: string[];
-}
+// Interfaces/enums/scripts
+import ManagerCardData from '../../../interfaces/managerCardData';
 
 export default function ManagerDashboardPage() {
   const [data, setData] = useState<ManagerCardData[]>([]);

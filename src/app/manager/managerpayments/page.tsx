@@ -6,18 +6,7 @@ import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import mockPayments from '../../../utilscripts/mockPayments.json'; // Local mock data
-
-/* ---------- Types ---------- */
-interface Payment {
-  PaymentID: number;
-  FinanceID: number;
-  Name1: string;
-  Name2: string;
-  PaymentType: 'Mpesa' | 'Cash';
-  PaymentAmount: number;
-  PaymentDate: string; // YYYY-MM-DD
-  PaymentTime: string; // HH:MM:SS
-}
+import Payment from '@/interfaces/payment';
 
 const ManagerPaymentsPage: React.FC = () => {
   /* ---------- State ---------- */

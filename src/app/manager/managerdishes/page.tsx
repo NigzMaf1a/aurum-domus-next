@@ -8,15 +8,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import mockDishes from '../../../utilscripts/mockDishes.json'; // Local mock data
 
-/* ---------- Types ---------- */
-interface Dish {
-  DishID: number;
-  UnitID: number;
-  DishName: string;
-  DishDescription: string;
-  DishPrice: number;
-  Available: 'YES' | 'NO';
-}
+// Interfaces/enums/scripts
+import Dish from '../../../interfaces/dish';
 
 const ManagerDishesPage: React.FC = () => {
   /* ---------- State ---------- */

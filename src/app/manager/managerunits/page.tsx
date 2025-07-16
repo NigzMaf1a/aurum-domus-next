@@ -6,17 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Modal, Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import mockUnits from '../../../utilscripts/mockUnits.json';   //Local mock data
-
-/* ---------- Types ---------- */
-interface Unit {
-  UnitID: number;
-  UnitName: string;
-  UnitEmail: string;
-  UnitPhone: string;
-  UnitLocation: string;
-  UnitBalance: number;
-  Employees: number;
-}
+import Unit from '@/interfaces/unit';
 
 export default function ManagerUnitsPage() {
   /* ---------- State ---------- */

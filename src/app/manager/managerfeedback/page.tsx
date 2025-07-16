@@ -5,6 +5,7 @@ import { useTranslation} from 'react-i18next';
 // import axios from 'axios';                          
 import mockFeedback from '../../../utilscripts/mockFeedback.json'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Feedback from '../../../interfaces/feedback';
 
 declare global {
   interface Window {
@@ -14,15 +15,6 @@ declare global {
   }
 }
 
-/* ----------  Types ---------- */
-interface Feedback {
-  FeedbackID: number;
-  Email: string;
-  Comments: string;
-  Response: string | null;
-  Rating: number;
-  FeedbackDate: string;
-}
 
 const ManagerFeedbackPage: React.FC = () => {
   /* ----------  State ---------- */

@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 // import axios from 'axios';                      // Live API (disabled in mock mode)
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import mockTables from '../../../utilscripts/mockTables.json'; // Local mock data
+import mockTables from '../../../utilscripts/mockTables.json'; 
+import Table from '../../../interfaces/table';
 
 /* ---------- Bootstrap Modal types ---------- */
 declare global {
@@ -14,15 +15,6 @@ declare global {
       Modal: new (el: HTMLElement) => { show: () => void; hide: () => void };
     };
   }
-}
-
-/* ---------- Types ---------- */
-interface Table {
-  TableID: number;
-  UnitID: number;
-  TableName: string;
-  TableCapacity: number;
-  TableStatus: 'Vacant' | 'Occupied';
 }
 
 const ManagerTablesPage: React.FC = () => {

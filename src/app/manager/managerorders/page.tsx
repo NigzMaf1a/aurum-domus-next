@@ -7,19 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import mockOrders from '../../../utilscripts/mockOrders.json'; // Local mock data
 
 /* ---------- Types ---------- */
-interface Order {
-  OrderID: number;
-  DishID: number;
-  DishName: string;
-  DishPrice: number;
-  Plates: number;
-  OrderPrice: number;
-  OrderDescription: string;
-  OrderDate: string;
-  OrderTime: string;
-  PaymentStatus: 'Paid' | 'Not Paid';
-  Served: 'YES' | 'NO';
-}
+import Order from '../../../interfaces/order';
 
 export default function ManagerOrdersPage() {
   /* ---------- State ---------- */

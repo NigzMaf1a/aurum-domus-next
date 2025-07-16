@@ -5,21 +5,8 @@ import { useTranslation } from 'react-i18next';
 // import axios from 'axios';                           //Live API (disabled in mock mode)
 import 'bootstrap/dist/css/bootstrap.min.css';
 import mockReservations from '../../../utilscripts/mockReservations.json'; //Local mock data
+import Reservation from '@/interfaces/reservation';
 
-/* ---------- Types ---------- */
-interface Reservation {
-  ReservationID: number;
-  TableID: number;
-  OrderID: number;
-  DishID: number;
-  DishName: string;
-  Plates: number;
-  OrderPrice: number;
-  PaymentStatus: 'Paid' | 'Not Paid';
-  ReservationDate: string;
-  ReservationTime: string;
-  ReservationStatus: 'Attended' | 'Pending';
-}
 
 export default function ManagerReservationsPage() {
   /* ---------- State ---------- */
