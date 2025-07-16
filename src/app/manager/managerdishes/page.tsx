@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import mockDishes from '../../utilscripts/mockDishes.json'; // Local mock data
+import mockDishes from '../../../utilscripts/mockDishes.json'; // Local mock data
 
 /* ---------- Types ---------- */
 interface Dish {

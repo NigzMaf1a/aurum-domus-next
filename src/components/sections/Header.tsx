@@ -17,7 +17,7 @@ interface User {
   PhoneNo: number;
   Email: string;
   Gender: 'Male' | 'Female';
-  RegType: 'Customer' | 'Manager' | 'Admin';
+  RegType: "Customer" | "Manager" | "Admin" | "Accountant" | "Waiter" | "Chef";
   accStatus: 'Pending' | 'Approved' | 'Inactive';
 }
 
@@ -107,7 +107,11 @@ export default function Header({ user }: HeaderProps) {
       case 'Customer':
         return <CustomerNav />;
       case 'Accountant':
-        return <AccountantNav />
+        return <AccountantNav />;
+      case 'Chef':
+        return <CustomerNav />;
+      case 'Waiter':
+        return <CustomerNav />;
       default:
         return null;
     }

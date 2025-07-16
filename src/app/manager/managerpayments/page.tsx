@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 // import axios from 'axios';                           // Live API (disabled in mock mode)
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import mockPayments from '../../utilscripts/mockPayments.json'; // Local mock data
+import mockPayments from '../../../utilscripts/mockPayments.json'; // Local mock data
 
 /* ---------- Types ---------- */
 interface Payment {

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 // import axios from 'axios'; // ❌ Axios commented out for mock usage
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { approvedUsers as mockApprovedUsers } from '../../utilscripts/mockUsers'; // ✅ Mock data import
+import { approvedUsers as mockApprovedUsers } from '../../../utilscripts/mockUsers'; // ✅ Mock data import
 
 interface ApprovedUser {
   id: number;

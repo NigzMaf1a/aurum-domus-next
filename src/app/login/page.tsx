@@ -3,15 +3,22 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+
+//script imports
+import {RegType} from '../../enums/RegTypeEnum';
 
 //Mock data imports
-import mockUnits from '../utilscripts/mockUnits.json';
-import mockRegistrations from '../utilscripts/mockRegistrations.json';
+import mockUnits from '../../utilscripts/mockUnits.json';
+import mockRegistrations from '../../utilscripts/mockRegistrations.json';
 
-export default function LoginPage() {
+export default function LoginPage({ regtype }: { regtype: RegType }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [branch, setBranch] = useState('');
+  const router = useRouter();
   const { t } = useTranslation();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -19,6 +26,33 @@ export default function LoginPage() {
     // Add your login logic here
     alert(`Logging in with:\nEmail: ${email}\nBranch: ${branch}`);
   };
+
+    useEffect(() => {
+      switch (regtype) {
+        case RegType.Admin:
+          router.push('/admin/dashboard');
+          break;
+        case RegType.Manager:
+          router.push('/manager/managerdashboard');
+          break;
+        case RegType.Customer:
+          router.push('/customer/customerdashboard');
+          break;
+        case RegType.Chef:
+          router.push('/chef/dashboard');
+          break;
+        case RegType.Waiter:
+          router.push('/waiter/dashboard');
+          break;
+        case RegType.Accountant:
+          router.push('/accountant/dashboard');
+          break;
+        default:
+          console.error('Unknown registration type:', regtype);
+          toast.error(`Unsupported user role: ${regtype}`);
+          break;
+      }
+    }, [regtype, router]);
 
   return (
     <div

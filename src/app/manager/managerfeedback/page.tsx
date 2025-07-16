@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation} from 'react-i18next';
 // import axios from 'axios';                          
-import mockFeedback from '../../utilscripts/mockFeedback.json'; 
+import mockFeedback from '../../../utilscripts/mockFeedback.json'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 declare global {

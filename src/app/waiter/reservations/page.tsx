@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 // import axios from 'axios';                           //Live API (disabled in mock mode)
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
-import mockReservations from '../../utilscripts/mockReservations.json'; //Local mock data
+import mockReservations from '../../../utilscripts/mockReservations.json'; //Local mock data
 
 /* ---------- Types ---------- */
 interface Reservation {

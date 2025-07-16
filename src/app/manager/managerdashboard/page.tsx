@@ -34,7 +34,7 @@ export default function ManagerDashboardPage() {
     */
 
     // Set hardcoded JSON data
-    import('../../utilscripts/mockManagerDashboard.json')
+    import('../../../utilscripts/mockManagerDashboard.json')
       .then((module) => setData(module.default))
       .catch((err) => console.error('Failed to load dashboard data', err));
   }, []);

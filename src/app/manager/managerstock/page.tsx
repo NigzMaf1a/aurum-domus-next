@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 // import axios from 'axios';                    //Live API (disabled in mock mode)
 import { Modal, Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import mockStock from '../../utilscripts/mockStock.json'; //Local mock data
+import mockStock from '../../../utilscripts/mockStock.json'; //Local mock data
 
 /* ---------- Types ---------- */
 interface StockItem {

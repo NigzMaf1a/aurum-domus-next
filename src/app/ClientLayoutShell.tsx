@@ -2,8 +2,8 @@
 
 import React, { useEffect } from "react";
 import Header from "@/components/sections/Header";
-import { startColorChange } from "./utilscripts/colorChange";
-import { startThemeCycle } from "./utilscripts/themeSwitcher";
+import { startColorChange } from "../utilscripts/colorChange";
+import { startThemeCycle } from "../utilscripts/themeSwitcher";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import APILinks from '@/app/utilscripts/apiLinks'; // ❌ Commented out for mock usage
 
-import { pendingUsers as mockPendingUsers } from '../../utilscripts/mockUsers'; // ✅ Import mock data
+import { pendingUsers as mockPendingUsers } from '../../../utilscripts/mockUsers'; // ✅ Import mock data
 
 interface PendingUser {
   RegID: number;

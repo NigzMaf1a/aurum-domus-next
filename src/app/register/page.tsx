@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import validateFields from '../utilscripts/validateFields';
+import validateFields from '../../utilscripts/validateFields';
 import { useTranslation } from 'react-i18next';
 
 export default function RegisterPage() {

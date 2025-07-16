@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 // import axios from 'axios';        //  Real API commented out for mock mode
-import managerBioData from '../../utilscripts/mockBio.json'; //  Local mock data
+import managerBioData from '../../../utilscripts/mockBio.json'; //  Local mock data
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ManagerBioPage: React.FC = () => {

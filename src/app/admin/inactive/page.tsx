@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 // import axios from 'axios'; // ❌ Commented out for mock usage
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { inactiveUsers as mockInactiveUsers } from '../../utilscripts/mockUsers'; // ✅ Mock data import
+import { inactiveUsers as mockInactiveUsers } from '../../../utilscripts/mockUsers'; // ✅ Mock data import
 
 interface InactiveUser {
   id: number;

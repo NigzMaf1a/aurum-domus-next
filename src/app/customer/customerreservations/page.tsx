@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button } from 'react-bootstrap';
 
-import reservationsData from '../../utilscripts/mockReservations.json'; // <-- mock data lives here
+import reservationsData from '../../../utilscripts/mockReservations.json'; // <-- mock data lives here
 
 // ---------- Types ----------
 type Reservation = {
