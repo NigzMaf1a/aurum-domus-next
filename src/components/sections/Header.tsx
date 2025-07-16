@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { usePathname } from 'next/navigation';
 import i18n, { locales, defaultLocale } from '@/lib/i18n';
 
-//Navigation components
+// Navigation components
 import AdminNav from '@/components/navs/AdminNav';
 import ManagerNav from '@/components/navs/ManagerNav';
 import CustomerNav from '@/components/navs/CustomerNav';
@@ -30,7 +30,6 @@ export default function Header({ user }: HeaderProps) {
 
   const langBtnRef = useRef<HTMLButtonElement | null>(null);
   const langMenuRef = useRef<HTMLUListElement | null>(null);
-
   const profileBtnRef = useRef<HTMLDivElement | null>(null);
   const profileMenuRef = useRef<HTMLUListElement | null>(null);
 
@@ -108,7 +107,6 @@ export default function Header({ user }: HeaderProps) {
       case 'Accountant':
         return <AccountantNav />;
       case 'Chef':
-        return <CustomerNav />;
       case 'Waiter':
         return <CustomerNav />;
       default:
@@ -117,14 +115,16 @@ export default function Header({ user }: HeaderProps) {
   };
 
   return (
-    <header className="fixed-top shadow-sm" id="top-strip" style={{ zIndex: 1020 }}>
+    <header className="fixed-top shadow-sm d-flex align-items-center" id="top-strip" style={{ zIndex: 1020, height: '80px' }}>
       <div className="container py-3 text-white position-relative">
-        <div className="title mx-auto">
+        {/* 🔥 Brand title only on md+ screens */}
+        <div className="title mx-auto d-none d-md-block">
           <h2 className="m-0 mx-auto text-center">
             {t('brand', { defaultValue: 'Aurum Domus ✨' })}
           </h2>
         </div>
 
+        {/* Language + Profile controls */}
         <div className="position-absolute end-0 top-50 translate-middle-y d-flex align-items-center gap-2 me-2">
           {/* 🌐 Language dropdown */}
           <div className="position-relative">

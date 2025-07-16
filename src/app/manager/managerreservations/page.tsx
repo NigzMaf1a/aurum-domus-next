@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 // import axios from 'axios';                           //Live API (disabled in mock mode)
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'react-bootstrap';
 import mockReservations from '../../../utilscripts/mockReservations.json'; //Local mock data
 
 /* ---------- Types ---------- */
@@ -38,23 +37,6 @@ export default function ManagerReservationsPage() {
     setReservations(mockReservations as Reservation[]);
   };
 
-  /* ---------- Mark as attended ---------- */
-  const markAsAttended = async (reservationId: number) => {
-    /* LIVE ENDPOINT
-    await axios.put(`/api/managerreservations/${reservationId}/attend`);
-    await fetchReservations();
-    */
-
-    // MOCK SUCCESS: update local state only
-    setReservations(prev =>
-      prev.map(r =>
-        r.ReservationID === reservationId
-          ? { ...r, ReservationStatus: 'Attended' }
-          : r
-      )
-    );
-  };
-
   /* ---------- Lifecycle ---------- */
   useEffect(() => {
     fetchReservations();
@@ -80,18 +62,7 @@ export default function ManagerReservationsPage() {
                   <p><strong>{t('paymentStatus')}:</strong> {res.PaymentStatus}</p>
                   <p><strong>{t('reservationDate')}:</strong> {res.ReservationDate}</p>
                   <p><strong>{t('reservationTime')}:</strong> {res.ReservationTime}</p>
-                  <Button
-                    variant={res.ReservationStatus === 'Attended' ? 'success' : 'warning'}
-                    disabled={res.ReservationStatus === 'Attended'}
-                    onClick={() =>
-                      res.ReservationStatus === 'Pending' &&
-                      markAsAttended(res.ReservationID)
-                    }
-                  >
-                    {res.ReservationStatus === 'Attended'
-                      ? t('attended')
-                      : t('markAsAttended')}
-                  </Button>
+
                 </div>
               </div>
             </div>

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 // import axios from 'axios';                     // Live API (disabled in mock mode)
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'react-bootstrap';
 import mockOrders from '../../../utilscripts/mockOrders.json'; // Local mock data
 
 /* ---------- Types ---------- */
@@ -38,19 +37,6 @@ export default function ManagerOrdersPage() {
     setOrders(mockOrders as Order[]);
   };
 
-  /* ---------- Mark as served ---------- */
-  const markAsServed = async (orderId: number) => {
-    /* LIVE ENDPOINT
-    await axios.put(`/api/managerorders/${orderId}/serve`);
-    await fetchOrders();
-    */
-
-    // MOCK SUCCESS: update local state only
-    setOrders(prev =>
-      prev.map(o => (o.OrderID === orderId ? { ...o, Served: 'YES' } : o))
-    );
-  };
-
   /* ---------- Lifecycle ---------- */
   useEffect(() => {
     fetchOrders();
@@ -75,13 +61,6 @@ export default function ManagerOrdersPage() {
                   <p><strong>{t('description')}:</strong> {order.OrderDescription}</p>
                   <p><strong>{t('date')}:</strong> {order.OrderDate} at {order.OrderTime}</p>
                   <p><strong>{t('payStatus')}:</strong> {order.PaymentStatus}</p>
-                  <Button
-                    variant={order.Served === 'YES' ? 'success' : 'warning'}
-                    disabled={order.Served === 'YES'}
-                    onClick={() => order.Served === 'NO' && markAsServed(order.OrderID)}
-                  >
-                    {order.Served === 'YES' ? 'Served' : 'Mark as Served'}
-                  </Button>
                 </div>
               </div>
             </div>
