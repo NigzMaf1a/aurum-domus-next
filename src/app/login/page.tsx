@@ -4,8 +4,13 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
+//Mock data imports
+import mockUnits from '../utilscripts/mockUnits.json';
+import mockRegistrations from '../utilscripts/mockRegistrations.json';
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [branch, setBranch] = useState('');
   const { t } = useTranslation();
 
@@ -35,6 +40,21 @@ export default function LoginPage() {
               placeholder={t('exampleEmail')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              {t('password')}
+            </label>
+            <input
+              type="password"
+              id="password"
+              className="form-control"
+              placeholder={t('examplePassword')}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>

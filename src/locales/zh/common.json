@@ -164,5 +164,6 @@
   "paymentAddedSuccess": "付款添加成功！",
   "add": "添加",
   "rejected": "被拒绝",
-  "paymentStatus": "付款状态"
+  "paymentStatus": "付款状态",
+  "examplePassword": "********"
 }

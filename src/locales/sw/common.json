@@ -164,5 +164,6 @@
   "paymentAddedSuccess": "Malipo yameongezwa kwa mafanikio!",
   "add": "Ongeza",
   "rejected": "Imekataliwa",
-  "paymentStatus": "Hali ya Malipo"
+  "paymentStatus": "Hali ya Malipo",
+  "examplePassword": "********"
 }

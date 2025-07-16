@@ -164,5 +164,6 @@
     "paymentAddedSuccess": "Payment successfully added!",
     "add": "Add",
     "rejected": "Rejected",
-    "paymentStatus": "Payment Status"
+    "paymentStatus": "Payment Status",
+    "examplePassword": "********"
 }
