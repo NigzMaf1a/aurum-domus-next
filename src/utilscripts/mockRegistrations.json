@@ -12,12 +12,12 @@
   },
   {
     "RegID": 2,
-    "Name1": "Jane",
-    "Name2": "Smith",
-    "PhoneNo": 723456789,
+    "Name1": "Nigel",
+    "Name2": "Khasiani",
+    "PhoneNo": 759736096,
     "Email": "manager@gmail.com",
     "Password": "manager123",
-    "Gender": "Female",
+    "Gender": "Male",
     "RegType": "Manager",
     "accStatus": "Approved"
   },

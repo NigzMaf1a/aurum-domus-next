@@ -9,7 +9,80 @@
   width: 17rem;
   border-radius: 0.25rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: slateblue;
 }
 
+/* --- ✅ Body Theme Setup --- */
+body.light {
+  background: linear-gradient(160deg, #ffffff, #ffe066) !important;
+  color: #111827 !important;
+}
 
+body.dark {
+  background: linear-gradient(160deg, #343a40, #23272b) !important;
+  color: #f8f9fa !important;
+}
+
+/* --- ✅ Smooth Transitions --- */
+body,
+.card,
+.btn,
+.dropdown,
+input,
+select,
+textarea {
+  transition: all 0.3s ease;
+}
+
+/* --- ✅ Theme-Responsive Card --- */
+body.light .card {
+  background-color: #ffffff;
+  color: #212529;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+body.dark .card {
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+  box-shadow: 0 1px 3px rgba(255, 255, 255, 0.05);
+}
+
+/* --- ✅ Theme-Responsive Button --- */
+body.light .btn {
+  background-color: #f1f1f1;
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+body.dark .btn {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+/* --- ✅ Theme-Responsive Dropdown --- */
+body.light .dropdown {
+  background-color: #fff;
+  color: #000;
+}
+
+body.dark .dropdown {
+  background-color: #2c2c2c;
+  color: #fafafa;
+}
+
+/* --- ✅ Inputs & Forms --- */
+body.light input,
+body.light select,
+body.light textarea {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea {
+  background-color: #1e1e1e;
+  color: #fff;
+  border: 1px solid #444;
+}

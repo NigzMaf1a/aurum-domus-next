@@ -4,7 +4,7 @@ import pool from '../utils/db'
 import generateToken from '../utils/generateToken'
 import bcrypt from 'bcryptjs'
 
-// User model shape (partial, based on your login response)
+// User model shape (partial, based on login response)
 interface User {
   id: number
   email: string

@@ -5,12 +5,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
-import Footer from '../components/sections/Footer';
+//import Footer from '../components/sections/Footer';
 import ClientLayoutShell from './ClientLayoutShell';
 
 export const metadata = {
   title: 'Aurum Domus',
-  description: 'Luxury redefined 🌟',
+  description: 'Luxury redefined ',
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="d-flex flex-column min-vh-100" id="Site">
         <ClientLayoutShell>{children}</ClientLayoutShell>
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );

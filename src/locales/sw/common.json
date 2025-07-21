@@ -166,5 +166,8 @@
   "rejected": "Imekataliwa",
   "paymentStatus": "Hali ya Malipo",
   "examplePassword": "********",
-  "addNewUnit": "Ongeza Kitengo Kipya"
+  "addNewUnit": "Ongeza Kitengo Kipya",
+  "light": "Nyepesi",
+  "dark": "Nzito",
+  "picture": "Picha"
 }

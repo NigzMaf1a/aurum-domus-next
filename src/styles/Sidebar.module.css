@@ -1,42 +1,51 @@
-/* SIDEBAR — always hidden until .open
-   ---------------------------------- */
-
 .sidebar {
   position: fixed;
   top: 0;
-  left: -220px;                     /* start off‑screen */
+  left: -220px;
   width: 220px;
   height: 100vh;
   overflow-y: auto;
-  background-image: url('/aurum-domus/public/aurum10.jpg');
   background-size: cover;
   background-position: center;
   color: white;
   padding: 1rem;
-  transition: left 0.3s ease-in-out;
-  z-index: 1040;                    /* sits above Header */
+  transition: left 0.3s ease-in-out, background-color 0.3s ease;
+  z-index: 1040;
 }
 
-/* slide into view */
+/* Default (in case none is set) */
+body.light .sidebar {
+  background: linear-gradient(to bottom, #ffffff, #fff9db);
+  color: #111827;
+}
+
+body.dark .sidebar {
+  background-color: #1f1f1f;
+  color: #f8f9fa;
+}
+
+body.picture .sidebar {
+  /* Picture mode handled dynamically in JS via `startThemeCycle()` */
+}
+
+/* Slide into view */
 .open {
   left: 0;
 }
 
-/* overlay backdrop */
 .overlay {
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 1039;                    /* below sidebar */
+  z-index: 1039;
 }
 
-/* ⬆ burger button */
 .toggleBtn {
   position: fixed;
   top: 0.75rem;
   left: 0.75rem;
-  z-index: 1060;                    /* floats over everything */
-  background-color: slateblue;
+  z-index: 1060;
+  background-color: #64748b;
   color: #ffffff;
   border: none;
   padding: 0.5rem 0.75rem;
@@ -48,7 +57,7 @@
 .list {
   list-style: none;
   padding: 0;
-  padding-top: 4rem;                /* clears burger + header */
+  padding-top: 4rem;
 }
 
 .listItem {
@@ -56,7 +65,7 @@
 }
 
 #link {
-  color: white;
+  color: inherit;
   text-decoration: none;
 }
 
@@ -64,7 +73,7 @@
   text-decoration: underline;
 }
 
-/* blue item bar */
+/* Sidebar Divs */
 .sidebarDiv {
   display: flex;
   align-items: center;
@@ -73,5 +82,6 @@
   border-radius: 0.25rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-top: 0.5rem;
-  background-color: slateblue;
+  background-color: #343a40;
+  padding-left: 1rem;
 }

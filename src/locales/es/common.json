@@ -166,5 +166,8 @@
   "rejected": "Rechazado",
   "paymentStatus": "Estado de Pago",
   "examplePassword": "********",
-  "addNewUnit": "Agregar nueva unidad"
+  "addNewUnit": "Agregar nueva unidad",
+  "light": "Claro",
+  "dark": "Oscuro",
+  "picture": "Imagen"
 }

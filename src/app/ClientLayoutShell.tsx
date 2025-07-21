@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import Header from "@/components/sections/Header";
 import { startColorChange } from "../utilscripts/colorChange";
-import { startThemeCycle } from "../utilscripts/themeSwitcher";
+//import { startThemeCycle } from "../utilscripts/themeSwitcher";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -17,19 +17,19 @@ export default function ClientLayoutShell({
 }) {
   useEffect(() => {
     startColorChange();
-    startThemeCycle();
   }, []);
 
-  // 🔐 Replace this with real session logic later
+  // Mock user
   const mockUser: User = {
-    RegID: 1,
+    RegID: 2,
     Name1: "Nigel",
-    Name2: "Aurum",
-    PhoneNo: 123456789,
-    Email: "nigel@aurumdomus.com",
+    Name2: "Khasiani",
+    PhoneNo: 759736096,
+    Email: "manager@gmail.com",
     Gender: "Male",
-    RegType: "Manager", // ← switch this to "Manager" or "Customer"
+    RegType: "Manager",
     accStatus: "Approved",
+    image: "/aurum-domus/public/aurum13.jpg"
   };
 
   return (

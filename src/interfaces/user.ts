@@ -7,4 +7,5 @@ export default interface User {
   Gender: "Male" | "Female";
   RegType: "Customer" | "Manager" | "Admin" | "Accountant" | "Waiter" | "Chef";
   accStatus: "Pending" | "Approved" | "Inactive";
+  image: string;
 }
