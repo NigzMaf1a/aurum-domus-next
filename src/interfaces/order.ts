@@ -1,5 +1,7 @@
 export default interface Order {
   OrderID: number;
+  UnitID?: number;
+  RegID?: number;
   DishID: number;
   DishName: string;
   DishPrice: number;

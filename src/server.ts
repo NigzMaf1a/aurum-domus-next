@@ -1,4 +1,4 @@
-import express, { Request, Response} from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
@@ -7,31 +7,45 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import authRoutes from './server/routes/authRoutes.ts';
-import bioRoutes from './server/routes/bioRoutes.ts';
-import faqsRoutes from './server/routes/faqsRoutes.ts';
+import authRoutes from './server/routes/authRoutes';
+import bioRoutes from './server/routes/bioRoutes';
+import faqsRoutes from './server/routes/faqsRoutes';
 import financeRoutes from './server/routes/financeRoutes';
-import feedbackRoutes from './server/routes/feedbackRoutes.ts';
-import paymentRoutes from './server/routes/paymentRoutes.ts';
-import reservationRoutes from './server/routes/reservationRoutes.ts';
-import rollcallRoutes from './server/routes/rollcallRoutes.ts';
-import salaryRoutes from './server/routes/salaryRoutes.ts';
-import stockRoutes from './server/routes/stockRoutes.ts';
-import tableRoutes from './server/routes/tableRoutes.ts';
-import unitRoutes from './server/routes/unitRoutes.ts';
+import feedbackRoutes from './server/routes/feedbackRoutes';
+import paymentRoutes from './server/routes/paymentRoutes';
+import reservationRoutes from './server/routes/reservationRoutes';
+import rollcallRoutes from './server/routes/rollcallRoutes';
+import salaryRoutes from './server/routes/salaryRoutes';
+import stockRoutes from './server/routes/stockRoutes';
+import tableRoutes from './server/routes/tableRoutes';
+import unitRoutes from './server/routes/unitRoutes';
 
-import authMiddleware from './server/middleware/auth.ts';
-import errorHandler from './server/middleware/errorHandler.ts';
+import authMiddleware from './server/middleware/auth';
+import errorHandler from './server/middleware/errorHandler';
 
 const app = express();
 const PORT: number = Number(process.env.PORT) || 3000;
 
 // Middleware
 app.use(helmet());
-app.use(cors({ origin: process.env.CLIENT_ORIGIN || '*' }));
+
+// Stricter CORS - whitelist your frontend URL or fallback to localhost
+const allowedOrigins = process.env.CLIENT_ORIGIN
+  ? [process.env.CLIENT_ORIGIN]
+  : ['http://localhost:3000'];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+  })
+);
+
 app.use(compression());
 app.use(express.json());
-app.use(morgan('combined'));
+app.use(express.urlencoded({ extended: true }));
+
+// Use dev-friendly logging locally, combined in production
+app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -57,11 +71,24 @@ app.use('*', (req: Request, res: Response) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-
 // Global error handler
 app.use(errorHandler);
 
 // Server start
-app.listen(PORT, () => {
-  console.log(`✅ Aurum Domus backend running at http://localhost:${PORT}`);
+const server = app.listen(PORT, () => {
+  console.log(`Aurum Domus backend running at http://localhost:${PORT}`);
 });
+
+// Graceful shutdown
+async function gracefulShutdown() {
+  console.log('💀 Graceful shutdown initiated');
+  server.close(() => {
+    console.log('HTTP server closed');
+    // If you have a DB pool, close it here (example):
+    // await dbPool.end();
+    process.exit(0);
+  });
+}
+
+process.on('SIGINT', gracefulShutdown);
+process.on('SIGTERM', gracefulShutdown);

@@ -3,10 +3,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-type UnitBio = {
-  unitName: string;
-  description: string;
-};
+//scripts
+import { UnitBio } from '@/types/customer';
+
 
 export default function CustomerBioPage() {
   const [unit, setUnit] = useState<UnitBio | null>(null);

@@ -1,5 +1,5 @@
 // controllers/bioController.ts
-import { Request, Response } from 'express'
+import { Request, Response, RequestHandler } from 'express'
 import Bio from '../models/Bio'
 
 // CREATE - Add bio
@@ -58,15 +58,19 @@ export const updateBio = async (req: Request, res: Response) => {
 }
 
 // DELETE - Delete bio
-export const deleteBio = async (req: Request, res: Response) => {
-  const { bioID } = req.params
-  const bioService = new Bio()
-
+export const deleteBio: RequestHandler = async (req, res, next) => {
   try {
+    const bioID = Number(req.params.bioID)
+    if (isNaN(bioID)) {
+      res.status(400).json({ error: 'Invalid bioID' })  // NO return here
+      return   // just return undefined explicitly to stop further execution
+    }
+
+    const bioService = new Bio()
     const result = await bioService.deleteBio(bioID)
     res.status(200).json(result)
   } catch (err) {
-    console.error('Delete Bio Error:', err)
-    res.status(500).json({ error: 'Failed to delete bio' })
+    next(err)
   }
 }
+

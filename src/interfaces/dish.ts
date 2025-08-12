@@ -1,8 +1,8 @@
 export default interface Dish {
   DishID: number;
-  UnitID: number;
+  UnitID?: number;
   DishName: string;
-  DishDescription: string;
+  DishDescription?: string;
   DishPrice: number;
-  Available: 'YES' | 'NO';
+  Available?: 'YES' | 'NO';
 }

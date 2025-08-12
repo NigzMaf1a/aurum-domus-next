@@ -2,22 +2,21 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaStar } from 'react-icons/fa';
 
-type Feedback = {
-  email: string;
-  comment: string;
-  response: string;
-  rating: number;
-  date: string;
-};
+//scripts
+import Feedback from '@/interfaces/feedback';
+import FeedList from '@/components/cards/FeedList';
+import AddFeed from '@/components/cards/AddFeed';
+import NoteP from '@/components/loading/NoteP';
+import LoadingAnimation from '@/components/loading/LoadingAnimation';
+
 
 export default function CustomerFeedbackPage() {
-  const [feedbackList, setFeedbackList] = useState<Feedback[]>([]);
+  const [feed, setFeedbackList] = useState<Feedback[]>([]);
   const [newComment, setNewComment] = useState('');
   const [newRating, setNewRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     fetchFeedback();
@@ -34,19 +33,19 @@ export default function CustomerFeedbackPage() {
     }
   };
 
-  const submitFeedback = async () => {
+  const submitFeedback = async ({email, comments, response, rating}:Feedback) => {
     if (!newComment || newRating < 1) return alert('Please provide a comment and rating.');
     const newFeedback = {
-      email: 'guest@example.com', // Replace with actual user email from session or input
-      comment: newComment,
-      response: 'Pending...',
-      rating: newRating,
-      date: new Date().toISOString().split('T')[0],
+      email: email, // Replace with actual user email from session or input
+      comments: comments,
+      response: response,
+      rating: rating,
+      feedbackDate: new Date().toISOString().split('T')[0],
     };
 
     try {
       await axios.post('/api/feedback', newFeedback);
-      setFeedbackList([newFeedback, ...feedbackList]);
+      setFeedbackList([newFeedback, ...feed]);
       setNewComment('');
       setNewRating(0);
     } catch {
@@ -55,7 +54,7 @@ export default function CustomerFeedbackPage() {
   };
 
   return (
-    <div className="container py-5">
+    <div className="container py-5 w-100 h-100">
       <h2 className="text-center mb-4 textColorless">Customer Feedback</h2>
 
       {/* Feedback List Section */}
@@ -64,71 +63,23 @@ export default function CustomerFeedbackPage() {
         style={{ maxHeight: '400px', overflowY: 'auto' }}
       >
         {loading ? (
-          <div className="text-center">
-            <div className="spinner-border text-primary" role="status" />
-          </div>
-        ) : feedbackList.length === 0 ? (
-          <p className="text-center text-muted">No feedback yet.</p>
+          <LoadingAnimation/>
+        ) : feed.length === 0 ? (
+          <NoteP text={'No feedback yet.'}/>
         ) : (
-          feedbackList.map((fb, idx) => (
-            <div className="card mb-3 shadow-sm" key={idx}>
-              <div className="card-body">
-                <h6 className="card-subtitle mb-1 text-muted">
-                  {fb.email} • {fb.date}
-                </h6>
-                <p className="card-text">{fb.comment}</p>
-                <p className="card-text">
-                  <strong>Response:</strong> {fb.response}
-                </p>
-                <div className="d-flex align-items-center">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <FaStar
-                      key={i}
-                      color={i < fb.rating ? '#ffc107' : '#e4e5e9'}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
+          feed.map((fb) => (
+            <FeedList key={fb.feedbackID} email={fb.email} feedbackDate={fb.feedbackDate} comments={fb.comments} response={fb.response} rating={fb.rating}/>
           ))
         )}
       </div>
+      <button className="btn btn-primary mx-auto my-auto"
+              onClick={() => setShowForm(prev => !prev)}
+      >
+        Add
+      </button>
 
       {/* Add Feedback Section */}
-      <div className="card p-4 shadow-sm">
-        <h5 className="mb-3">Leave Your Feedback</h5>
-        <div className="mb-3">
-          <textarea
-            className="form-control"
-            rows={3}
-            placeholder="Write your feedback..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Rating</label>
-          <div>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <FaStar
-                key={i}
-                size={24}
-                className="me-1"
-                style={{ cursor: 'pointer' }}
-                color={
-                  (hoverRating ?? newRating) > i ? '#ffc107' : '#e4e5e9'
-                }
-                onMouseEnter={() => setHoverRating(i + 1)}
-                onMouseLeave={() => setHoverRating(null)}
-                onClick={() => setNewRating(i + 1)}
-              />
-            ))}
-          </div>
-        </div>
-        <button className="btn btn-primary" onClick={submitFeedback}>
-          Submit Feedback
-        </button>
-      </div>
+      {showForm && <AddFeed callback={() => submitFeedback()} />}
     </div>
   );
 }

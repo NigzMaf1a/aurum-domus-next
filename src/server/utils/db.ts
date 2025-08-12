@@ -1,19 +1,72 @@
-import mysql from 'mysql2/promise';
+import mysql, { Pool, PoolOptions, RowDataPacket, ResultSetHeader} from 'mysql2/promise';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST as string,
-  user: process.env.DB_USER as string,
-  password: process.env.DB_PASSWORD as string,
-  database: process.env.DB_NAME as string,
+const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME'] as const;
+for (const key of requiredEnvVars) {
+  if (!process.env[key]) {
+    throw new Error(`❌ Missing required environment variable: ${key}`);
+  }
+}
+
+const poolConfig: PoolOptions = {
+  host: process.env.DB_HOST!,
+  user: process.env.DB_USER!,
+  password: process.env.DB_PASSWORD!,
+  database: process.env.DB_NAME!,
   waitForConnections: true,
-  connectionLimit: 10,
+  connectionLimit: Number(process.env.DB_CONN_LIMIT) || 10,
   queueLimit: 0,
+};
+
+const pool: Pool = mysql.createPool(poolConfig);
+
+/**
+ * Query wrapper with overloads for correct return type:
+ * - SELECT returns RowDataPacket[]
+ * - INSERT/UPDATE/DELETE returns ResultSetHeader
+ */
+export async function query<T extends RowDataPacket>(
+  sql: string,
+  params?: ReadonlyArray<unknown>
+): Promise<T[]>;
+
+export async function query(
+  sql: string,
+  params?: ReadonlyArray<unknown>
+): Promise<ResultSetHeader>;
+
+// Implementation
+export async function query<T extends RowDataPacket>(
+  sql: string,
+  params?: ReadonlyArray<unknown>
+): Promise<T[] | ResultSetHeader> {
+  const [rows] = await pool.query(sql, params);
+  return rows as T[] | ResultSetHeader;
+}
+
+async function shutdownPool() {
+  console.log('🔌 Closing MySQL connection pool...');
+  await pool.end();
+  console.log('✅ MySQL pool closed.');
+}
+
+process.on('SIGINT', async () => {
+  await shutdownPool();
+  process.exit(0);
+});
+
+process.on('SIGTERM', async () => {
+  await shutdownPool();
+  process.exit(0);
 });
 
 export default pool;
+
+
+
+
 
 // This module exports a MySQL connection pool for use in the application.
 // It uses environment variables for configuration, allowing for easy changes without modifying code.

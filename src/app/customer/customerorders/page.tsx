@@ -5,27 +5,11 @@ import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-interface Order {
-  OrderID: number;
-  UnitID: number;
-  RegID: number;
-  DishID: number;
-  DishName: string;
-  DishPrice: number;
-  Plates: number;
-  OrderPrice: number;
-  OrderDescription: string;
-  OrderDate: string;
-  OrderTime: string;
-  PaymentStatus: 'Paid' | 'Not Paid';
-  Served: 'YES' | 'NO';
-}
+//scripts
+import Order from '@/interfaces/order';
+import Dish from '@/interfaces/dish';
+import OrderItem from '@/components/cards/OrderItem';
 
-interface Dish {
-  DishID: number;
-  DishName: string;
-  DishPrice: number;
-}
 
 export default function CustomerOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -82,19 +66,19 @@ export default function CustomerOrdersPage() {
       <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
         <div className="row g-3">
           {orders.map(order => (
-            <div key={order.OrderID} className="col-12">
-              <div className="card">
-                <div className="card-body">
-                  <h5>Order ID: {order.OrderID}</h5>
-                  <p><strong>Dish:</strong> {order.DishName} ({order.Plates} plates)</p>
-                  <p><strong>Price:</strong> KES {order.OrderPrice.toFixed(2)}</p>
-                  <p><strong>Description:</strong> {order.OrderDescription}</p>
-                  <p><strong>Date:</strong> {order.OrderDate} at {order.OrderTime}</p>
-                  <p><strong>Payment:</strong> {order.PaymentStatus} | <strong>Served:</strong> {order.Served}</p>
-                </div>
-              </div>
-            </div>
+            <OrderItem
+              key={order.OrderID}
+              DishName={order.DishName}
+              Plates={order.Plates}
+              OrderPrice={order.OrderPrice}
+              OrderDescription={order.OrderDescription}
+              OrderDate={order.OrderDate}
+              OrderTime={order.OrderTime}
+              PaymentStatus={order.PaymentStatus}
+              Served={order.Served}
+            />
           ))}
+          <OrderItem DishName='Murele' Plates={2} OrderPrice={300} OrderDescription='Kukoni' OrderDate='Lelo' OrderTime='Isahinu' PaymentStatus='Paid' Served='YES'/>
         </div>
       </div>
 

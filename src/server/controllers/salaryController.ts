@@ -1,9 +1,9 @@
 // controllers/salaryController.ts
-import { Request, Response } from 'express';
+import { Request, Response, RequestHandler } from 'express';
 import Salary from '../models/Salary';
 
 // CREATE - Add a new salary record
-export const add = async (req: Request, res: Response) => {
+export const addSalary = async (req: Request, res: Response) => {
   const salaryService = new Salary();
 
   try {
@@ -16,7 +16,7 @@ export const add = async (req: Request, res: Response) => {
 };
 
 // READ - Get all salary records
-export const getAll = async (req: Request, res: Response) => {
+export const getSalaries = async (req: Request, res: Response) => {
   const salaryService = new Salary();
 
   try {
@@ -29,42 +29,53 @@ export const getAll = async (req: Request, res: Response) => {
 };
 
 // UPDATE - Update a salary record by ID
-export const update = async (
-  req: Request & { params: { salaryID: string } },
-  res: Response
-) => {
-  const salaryService = new Salary();
-  const { salaryID } = req.params;
-  const updates = req.body;
-
+export const updateSalary: RequestHandler = async (req, res, next) => {
   try {
-    const result = await salaryService.updateSalary(salaryID, updates);
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'Salary record not found or no changes made' });
+    const salaryID = Number(req.params.salaryID);
+    if (isNaN(salaryID)) {
+      res.status(400).json({ error: 'Invalid salaryID' });
+      return;
     }
+
+    const updates = req.body;
+    if (!updates || typeof updates !== 'object') {
+      res.status(400).json({ error: 'Updates object is required' });
+      return;
+    }
+
+    const salaryService = new Salary();
+    const result = await salaryService.updateSalary(salaryID, updates);
+
+    if (result.affectedRows === 0) {
+      res.status(404).json({ message: 'Salary record not found or no changes made' });
+      return;
+    }
+
     res.status(200).json(result);
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    res.status(500).json({ error: 'Failed to update salary', details: message });
+    next(err);
   }
 };
 
 // DELETE - Delete a salary record by ID
-export const remove = async (
-  req: Request & { params: { salaryID: string } },
-  res: Response
-) => {
-  const salaryService = new Salary();
-  const { salaryID } = req.params;
-
+export const deleteSalary: RequestHandler = async (req, res, next) => {
   try {
-    const result = await salaryService.deleteSalary(salaryID);
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'Salary record not found' });
+    const salaryID = Number(req.params.salaryID);
+    if (isNaN(salaryID)) {
+      res.status(400).json({ error: 'Invalid salaryID' });
+      return;
     }
+
+    const salaryService = new Salary();
+    const result = await salaryService.deleteSalary(salaryID);
+
+    if (result.affectedRows === 0) {
+      res.status(404).json({ message: 'Salary record not found' });
+      return;
+    }
+
     res.status(200).json(result);
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    res.status(500).json({ error: 'Failed to delete salary', details: message });
+    next(err);
   }
 };

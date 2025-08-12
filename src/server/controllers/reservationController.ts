@@ -7,10 +7,10 @@ interface AuthenticatedRequest extends Request {
 }
 
 interface AddReservationPayload {
-  tableID: string
-  customerID: string
-  orderID: string
-  dishID: string
+  tableID: number
+  customerID: number
+  orderID: number
+  dishID: number
   dishName: string
   plates: number
   orderPrice: number
@@ -20,7 +20,7 @@ interface AddReservationPayload {
 }
 
 interface UpdateReservationPayload {
-  [key: string]: any // Or more specific keys if you want stricter typing
+  [key: string]: unknown // Or more specific keys if you want stricter typing
 }
 
 // Helper to extract unitID securely

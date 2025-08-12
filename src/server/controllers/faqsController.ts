@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Request, Response, RequestHandler } from 'express'
 import Faqs from '../models/Faqs'
 
 // CREATE - Add new FAQ
@@ -43,15 +43,18 @@ export const updateFaq = async (req: Request, res: Response) => {
 }
 
 // DELETE - Delete a FAQ
-export const deleteFaq = async (req: Request<{ faqID: string }>, res: Response) => {
-  const { faqID } = req.params
-  const faqs = new Faqs()
-
+export const deleteFaq: RequestHandler = async (req, res, next) => {
   try {
+    const faqID = Number(req.params.faqID)
+    if (isNaN(faqID)) {
+      res.status(400).json({ error: 'Invalid faqID' })
+      return
+    }
+
+    const faqs = new Faqs()
     const result = await faqs.deleteFaq(faqID)
     res.status(200).json(result)
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error'
-    res.status(500).json({ error: 'Failed to delete FAQ', details: message })
+    next(err)
   }
 }

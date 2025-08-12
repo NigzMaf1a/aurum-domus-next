@@ -1,4 +1,5 @@
 import React from 'react';
+import CustDash from '@/components/cards/CustDash';
 
 export default function Dashboard() {
   return (
@@ -7,53 +8,16 @@ export default function Dashboard() {
         <div className="row" id="cardCont">
 
             {/* Card 1 */}
-            <div className="col-12 col-sm-6 col-lg-3 mb-4">
-                <div className="card shadow-sm bg-warning h-100">
-                    <div className="card-body">
-                    <h5 className="card-title">Orders</h5>
-                    <p className="card-text"></p>
-                    <p className="card-text"></p>
-                    <p className="card-text"></p>
-                    </div>
-                </div>
-            </div>
+            <CustDash head={"Reservations"} p1={"Now"} p2={"Next"} p3={"After"}/>
 
             {/* Card 2 */}
-            <div className="col-12 col-sm-6 col-lg-3 mb-4">
-                <div className="card shadow-sm bg-success h-100 text-white">
-                    <div className="card-body">
-                    <h5 className="card-title">Reservations</h5>
-                    <p className="card-text"></p>
-                    <p className="card-text"></p>
-                    <p className="card-text"></p>
-                    </div>
-                </div>
-            </div>
+            <CustDash head={"Reservations"} p1={"Now"} p2={"Next"} p3={"After"}/>
 
             {/* Card 3 */}
-            <div className="col-12 col-sm-6 col-lg-3 mb-4">
-                <div className="card shadow-sm bg-danger h-100 text-white">
-                    <div className="card-body">
-                    <h5 className="card-title"></h5>
-                    <p className="card-text"></p>
-                    <p className="card-text"></p>
-                    <p className="card-text"></p>
-                    </div>
-                </div>
-            </div>
+            <CustDash head={"Reservations"} p1={"Now"} p2={"Next"} p3={"After"}/>
 
             {/* Card 4 */}
-            <div className="col-12 col-sm-6 col-lg-3 mb-4">
-                <div className="card shadow-sm bg-info h-100 text-white">
-                    <div className="card-body">
-                    <h5 className="card-title"></h5>
-                    <p className="card-text"></p>
-                    <p className="card-text"></p>
-                    <p className="card-text"></p>
-                    </div>
-                </div>
-            </div>
-
+            <CustDash head={"Reservations"} p1={"Now"} p2={"Next"} p3={"After"}/>
 
         </div>
     </div>

@@ -1,26 +1,26 @@
 // routes/tableRoutes.ts
 import { Router } from 'express'
 import {
-  add,
-  getAll,
-  vacant,
-  occupied,
-  update,
+  addTable,
+  getTables,
+  vacantTables,
+  occupiedTables,
+  updateTable,
   deleteTable
 } from '../controllers/tableController'
 
 const router = Router()
 
 // CREATE
-router.post('/add', add)
+router.post('/add', addTable)
 
 // READ
-router.get('/:unitID/all', getAll)
-router.get('/:unitID/vacant', vacant)
-router.get('/:unitID/occupied', occupied)
+router.get('/:unitID/all', getTables)
+router.get('/:unitID/vacant', vacantTables)
+router.get('/:unitID/occupied', occupiedTables)
 
 // UPDATE
-router.put('/update', update)
+router.put('/update', updateTable)
 
 // DELETE
 router.delete('/delete', deleteTable)

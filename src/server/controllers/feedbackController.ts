@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Request, Response, RequestHandler } from 'express'
 import Feedback from '../models/Feedback'
 
 // CREATE - Add feedback
@@ -16,16 +16,21 @@ export const addFeedback = async (req: Request, res: Response) => {
 }
 
 // READ - Get feedback, optional filter by customerID in query
-export const getFeedback = async (req: Request, res: Response) => {
-  const customerID = req.query.customerID as string | undefined
-  const feedback = new Feedback()
-
+export const getFeedback: RequestHandler = async (req, res, next) => {
   try {
+    // customerID from query is always a string, convert to number if present
+    const customerID = req.query.customerID ? Number(req.query.customerID) : undefined
+
+    if (customerID !== undefined && isNaN(customerID)) {
+      res.status(400).json({ error: 'Invalid customerID' })
+      return
+    }
+
+    const feedback = new Feedback()
     const result = await feedback.getFeedback(customerID)
     res.status(200).json(result)
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error'
-    res.status(500).json({ error: 'Failed to fetch feedback', details: message })
+    next(err)
   }
 }
 
@@ -44,15 +49,18 @@ export const updateFeedback = async (req: Request, res: Response) => {
 }
 
 // DELETE - Delete feedback by ID
-export const deleteFeedback = async (req: Request<{ feedbackID: string }>, res: Response) => {
-  const { feedbackID } = req.params
-  const feedback = new Feedback()
-
+export const deleteFeedback: RequestHandler = async (req, res, next) => {
   try {
+    const feedbackID = Number(req.params.feedbackID)
+    if (isNaN(feedbackID)) {
+      res.status(400).json({ error: 'Invalid feedbackID' })
+      return
+    }
+
+    const feedback = new Feedback()
     const result = await feedback.deleteFeedback(feedbackID)
     res.status(200).json(result)
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error'
-    res.status(500).json({ error: 'Failed to delete feedback', details: message })
+    next(err)
   }
 }

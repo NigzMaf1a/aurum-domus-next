@@ -11,7 +11,7 @@ interface UnitRow extends RowDataPacket {
   Employees: number
 }
 
-interface UnitPayload {
+export interface UnitPayload {
   unitName: string
   unitEmail: string
   unitPhone: string

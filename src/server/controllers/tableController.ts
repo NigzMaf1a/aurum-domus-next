@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 import Table from '../models/Table'
 
 // CREATE - Add new table
-export const add = async (req: Request, res: Response) => {
+export const addTable = async (req: Request, res: Response) => {
   const { unitID, tableName, status } = req.body
   const tableService = new Table(unitID)
 
@@ -17,7 +17,7 @@ export const add = async (req: Request, res: Response) => {
 }
 
 // READ - Get all tables in a unit
-export const getAll = async (req: Request, res: Response) => {
+export const getTables = async (req: Request, res: Response) => {
   const { unitID } = req.params
   const tableService = new Table(unitID)
 
@@ -31,7 +31,7 @@ export const getAll = async (req: Request, res: Response) => {
 }
 
 // READ - Get all vacant tables in a unit
-export const vacant = async (req: Request, res: Response) => {
+export const vacantTables = async (req: Request, res: Response) => {
   const { unitID } = req.params
   const tableService = new Table(unitID)
 
@@ -45,7 +45,7 @@ export const vacant = async (req: Request, res: Response) => {
 }
 
 // READ - Get all occupied tables in a unit
-export const occupied = async (req: Request, res: Response) => {
+export const occupiedTables = async (req: Request, res: Response) => {
   const { unitID } = req.params
   const tableService = new Table(unitID)
 
@@ -59,7 +59,7 @@ export const occupied = async (req: Request, res: Response) => {
 }
 
 // UPDATE - Update a table's info
-export const update = async (req: Request, res: Response) => {
+export const updateTable = async (req: Request, res: Response) => {
   const { unitID, tableID, tableName, status } = req.body
   const tableService = new Table(unitID)
 

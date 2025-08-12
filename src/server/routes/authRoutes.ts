@@ -6,7 +6,7 @@ const router = Router()
 
 router.post('/login', login)
 
-export default router
+export default router;
 
 // This code defines the authentication routes for the Aurum Domus server.
 // It uses Express.js to create a router that handles POST requests to the `/login` endpoint.

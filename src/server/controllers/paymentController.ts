@@ -2,9 +2,9 @@ import { Request, Response } from 'express'
 import Payment from '../models/Payment'
 
 interface AddPaymentPayload {
-  financeID: string
-  customerID: string
-  orderID: string
+  financeID: number
+  customerID: number
+  orderID: number
   name1: string
   name2: string
   paymentType: string

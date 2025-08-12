@@ -1,5 +1,5 @@
 // controllers/authController.ts
-import { Request, Response } from 'express'
+import { RequestHandler } from 'express'
 import pool from '../utils/db'
 import generateToken from '../utils/generateToken'
 import bcrypt from 'bcryptjs'
@@ -12,11 +12,12 @@ interface User {
   role: string
 }
 
-export const login = async (req: Request, res: Response) => {
+export const login: RequestHandler = async (req, res) => {
   const { email, password } = req.body
 
   if (!email || !password) {
-    return res.status(400).json({ error: 'Email and password required' })
+    res.status(400).json({ error: 'Email and password required' })
+    return
   }
 
   try {
@@ -25,12 +26,14 @@ export const login = async (req: Request, res: Response) => {
 
     const user = users[0]
     if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' })
+      res.status(401).json({ error: 'Invalid email or password' })
+      return
     }
 
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid email or password' })
+      res.status(401).json({ error: 'Invalid email or password' })
+      return
     }
 
     const token = generateToken(user)
