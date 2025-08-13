@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
+    "dev": "concurrently \"npm run dev:next\" \"npm run dev:server\"",
+    "dev:next": "next dev --turbopack",
+    "dev:server": "nodemon --watch './src/**/*.ts' --exec ts-node --project tsconfig.server.json src/server.ts",
+    "build:next": "next build",
+    "start:next": "next start",
+    "start:server": "ts-node --project tsconfig.json src/server.ts",
     "lint": "next lint"
   },
   "dependencies": {
@@ -37,16 +40,18 @@
     "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.19",
     "@types/dotenv": "^6.1.1",
-    "@types/express": "^5.0.2",
+    "@types/express": "^5.0.3",
     "@types/helmet": "^0.0.48",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/morgan": "^1.9.10",
-    "@types/node": "^20",
+    "@types/node": "^20.19.10",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "concurrently": "^9.2.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
     "nodemon": "^3.1.10",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   }
 }

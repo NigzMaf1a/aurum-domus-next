@@ -1,12 +1,6 @@
 import db from '../utils/db'
-import { ResultSetHeader, RowDataPacket } from 'mysql2'
-
-interface TableRow extends RowDataPacket {
-  TableID: number
-  UnitID: string
-  TableName: string
-  TableStatus: string
-}
+import { ResultSetHeader} from 'mysql2'
+import TableRow from '../interfaces/table'
 
 export default class Table {
   private unitID: string

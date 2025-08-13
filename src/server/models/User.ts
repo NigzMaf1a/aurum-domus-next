@@ -1,30 +1,6 @@
 import db from '../utils/db'
-import { ResultSetHeader, RowDataPacket } from 'mysql2'
-
-interface UserRow extends RowDataPacket {
-  RegID: number
-  Name1: string
-  Name2: string
-  PhoneNo: string
-  Email: string
-  Password: string
-  Gender: string
-  RegType: string
-  dLocation: string
-  accStatus: string
-}
-
-interface UserPayload {
-  name1: string
-  name2: string
-  phone: string
-  email: string
-  password: string
-  gender: string
-  regtype: string
-  location: string
-  accstatus?: string
-}
+import { ResultSetHeader} from 'mysql2'
+import {UserRow, UserPayload} from '../interfaces/user'
 
 export default class User {
   constructor() {}

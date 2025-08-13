@@ -1,26 +1,6 @@
 import db from '../utils/db'
-import { ResultSetHeader, RowDataPacket } from 'mysql2'
-
-interface SalaryRow extends RowDataPacket {
-  SalaryID: number
-  FinanceID: number
-  RegID: number
-  SalaryAmount: number
-  SalaryPaid: number
-  SalaryReceived: number
-  SalaryDate: string
-  SalaryTime: string
-}
-
-interface SalaryPayload {
-  financeID: number
-  regID: number
-  salaryAmount: number
-  salaryPaid: number
-  salaryReceived: number
-  salaryDate: string
-  salaryTime: string
-}
+import { ResultSetHeader } from 'mysql2'
+import { SalaryRow, SalaryPayload } from '../interfaces/salary'
 
 export default class Salary {
   constructor() {}

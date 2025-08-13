@@ -1,7 +1,7 @@
 // controllers/unitController.ts
 import { Request, Response, RequestHandler } from 'express';
 import Unit from '../models/Unit';
-import { UnitPayload } from '../models/Unit';
+import { UnitPayload } from '../interfaces/unit';
 
 
 const unitService = new Unit();

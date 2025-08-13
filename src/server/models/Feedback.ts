@@ -1,15 +1,6 @@
 import db from '../utils/db'
-import { ResultSetHeader, RowDataPacket } from 'mysql2'
-
-interface FeedbackRow extends RowDataPacket {
-  FeedbackID: number
-  CustomerID: number
-  Email: string
-  Comments: string
-  Rating: number | null
-  Response: string | null
-  FeedbackDate: Date
-}
+import { ResultSetHeader } from 'mysql2'
+import FeedbackRow from '../interfaces/feedback'
 
 export default class Feedback {
   constructor() {}

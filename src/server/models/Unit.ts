@@ -1,24 +1,6 @@
 import db from '../utils/db'
-import { ResultSetHeader, RowDataPacket } from 'mysql2'
-
-interface UnitRow extends RowDataPacket {
-  UnitID: number
-  UnitName: string
-  UnitEmail: string
-  UnitPhone: string
-  UnitLocation: string
-  UnitBalance: number
-  Employees: number
-}
-
-export interface UnitPayload {
-  unitName: string
-  unitEmail: string
-  unitPhone: string
-  unitLocation: string
-  unitBalance: number
-  employees?: number
-}
+import { ResultSetHeader} from 'mysql2'
+import {UnitRow, UnitPayload} from '../interfaces/unit'
 
 export default class Unit {
   constructor() {}

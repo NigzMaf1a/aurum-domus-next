@@ -1,20 +1,6 @@
 import db from '../utils/db'
-import { ResultSetHeader, RowDataPacket } from 'mysql2'
-
-interface StockRow extends RowDataPacket {
-  StockID: number
-  UnitID: number
-  ItemName: string
-  Quantity: number
-  Price: number
-}
-
-interface StockPayload {
-  unitID: number
-  itemName: string
-  quantity: number
-  price: number
-}
+import { ResultSetHeader} from 'mysql2'
+import { StockRow, StockPayload } from '../interfaces/stock'
 
 export default class Stock {
   constructor() {}

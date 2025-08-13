@@ -11,7 +11,6 @@ import Unit from "./unit";
 import { StringOrNumber } from "@/types/customer";
 
 export interface LoggedUser{
-    login: (email: string, password: string) => Promise<boolean>;
     logout: () => Promise<void>;
     getProfile: () => Promise<User>;
     editProfile: (par:User)=>Promise<void>;

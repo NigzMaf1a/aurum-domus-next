@@ -1,16 +1,7 @@
 import db from '../utils/db'
-import { ResultSetHeader, RowDataPacket } from 'mysql2'
+import { ResultSetHeader } from 'mysql2'
+import BioRow from '../interfaces/bio';
 
-interface BioRow extends RowDataPacket {
-  BioID: number
-  UnitID: string
-  Instagram: string
-  Facebook: string
-  Twitter: string
-  UnitPhone: string
-  UnitLocation: string
-  AboutUs: string
-}
 
 export default class Bio {
   constructor() {}

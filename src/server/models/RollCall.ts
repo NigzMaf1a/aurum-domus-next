@@ -1,29 +1,6 @@
 import db from '../utils/db'
-import { ResultSetHeader, RowDataPacket } from 'mysql2'
-
-interface RollcallRow extends RowDataPacket {
-  RollCallID: number
-  RegID: number
-  UnitID: string
-  Name1: string
-  Name2: string
-  PhoneNo: string
-  Email: string
-  RollCallStatus: 'PRESENT' | 'ABSENT' | string
-  RollCallDate: string
-  RollCallTime: string
-}
-
-interface AddRollCallPayload {
-  regID: number
-  name1: string
-  name2: string
-  phoneNo: string
-  email: string
-  status: 'PRESENT' | 'ABSENT' | string
-  date: string
-  time: string
-}
+import { ResultSetHeader } from 'mysql2'
+import { RollcallRow, AddRollCallPayload } from '../interfaces/rollcall'
 
 export default class Rollcall {
   private unitID: string

@@ -8,10 +8,10 @@ import { toast } from 'react-toastify';
 
 // Enums & Scripts
 import { RegType } from '../../enums/RegTypeEnum';
-import { returnUnitNames } from '../../scripts/login';
+import { returnUnitNames, loginUser } from '../../scripts/login';
+import getUnits from '@/scripts/getUnits';
 
 // Mock data
-import mockUnits from '../../utilscripts/mockUnits.json';
 import mockRegistrations from '../../utilscripts/mockRegistrations.json';
 
 export default function LoginPage() {
@@ -25,9 +25,10 @@ export default function LoginPage() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    // Populate branch dropdown
-    const names = returnUnitNames(mockUnits);
-    setUnitNames(names);
+    (async () => {
+      const names = returnUnitNames(await getUnits());
+      setUnitNames(names);
+    })();
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {

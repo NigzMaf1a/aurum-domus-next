@@ -1,11 +1,7 @@
 import db from '../utils/db'
-import { ResultSetHeader, RowDataPacket } from 'mysql2'
+import { ResultSetHeader } from 'mysql2'
+import { FaqRow } from '../interfaces/faqs';
 
-interface FaqRow extends RowDataPacket {
-  FAQID: number
-  Question: string
-  Answer: string
-}
 
 export default class Faqs {
   constructor() {}

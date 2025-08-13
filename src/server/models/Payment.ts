@@ -1,30 +1,6 @@
 import db from '../utils/db'
-import { ResultSetHeader, RowDataPacket } from 'mysql2'
-
-interface PaymentRow extends RowDataPacket {
-  PaymentID: number
-  FinanceID: number
-  CustomerID: number
-  OrderID: number
-  Name1: string
-  Name2: string
-  PaymentType: string
-  PaymentAmount: number
-  PaymentDate: string // or Date if your DB returns date object
-  PaymentTime: string
-}
-
-interface AddPaymentPayload {
-  financeID: number
-  customerID: number
-  orderID: number
-  name1: string
-  name2: string
-  paymentType: string
-  paymentAmount: number
-  paymentDate: string
-  paymentTime: string
-}
+import { ResultSetHeader } from 'mysql2'
+import { PaymentRow, AddPaymentPayload } from '../interfaces/payments'
 
 export default class Payment {
   constructor() {}

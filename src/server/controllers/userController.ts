@@ -1,17 +1,16 @@
 // controllers/userController.ts
 import { Request, Response } from 'express';
 import User from '../models/User';
+import UserPayload from '@/server/interfaces/userPayload';
 
 const userService = new User();
 
 // CREATE - Add a new user
 export const createUser = async (req: Request, res: Response) => {
-  const { name1, name2, phone, email, password, gender, regtype, location, accstatus } = req.body;
+  const user:UserPayload = req.body;
 
   try {
-    const result = await userService.createUser(
-      name1, name2, phone, email, password, gender, regtype, location, accstatus
-    );
+    const result = await userService.createUser(user);
     res.status(201).json(result);
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
@@ -32,16 +31,14 @@ export const readUsers = async (req: Request, res: Response) => {
 
 // UPDATE - Update user by regID
 export const updateUser = async (
-  req: Request & { params: { regID: string } },
+  req: Request & { params: { regID: number } },
   res: Response
 ) => {
   const { regID } = req.params;
-  const { name1, name2, phone, email, password, gender, regtype, location, accstatus } = req.body;
+  const user:UserPayload = req.body;
 
   try {
-    const result = await userService.updateUser(
-      regID, name1, name2, phone, email, password, gender, regtype, location, accstatus
-    );
+    const result = await userService.updateUser(regID,user);
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: 'User not found or no changes made' });
     }
@@ -54,7 +51,7 @@ export const updateUser = async (
 
 // DELETE - Remove user by regID
 export const deleteUser = async (
-  req: Request & { params: { regID: string } },
+  req: Request & { params: { regID: number } },
   res: Response
 ) => {
   const { regID } = req.params;

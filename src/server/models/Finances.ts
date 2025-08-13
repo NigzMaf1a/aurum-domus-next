@@ -1,23 +1,6 @@
 import db from '../utils/db'
-import { ResultSetHeader, RowDataPacket } from 'mysql2'
-
-interface FinanceRow extends RowDataPacket {
-  ID: number
-  UnitID: string
-  Amount: number
-  Total: number
-  Balance: number
-  TransactionType: string
-  TransactionDate: string // or Date if your DB returns it as JS Date
-}
-
-interface FinanceUpdatePayload {
-  Amount?: number
-  Total?: number
-  Balance?: number
-  TransactionType?: string
-  TransactionDate?: string
-}
+import { ResultSetHeader } from 'mysql2'
+import { FinanceRow, FinanceUpdatePayload } from '../interfaces/finances'
 
 export default class Finances {
   constructor() {}

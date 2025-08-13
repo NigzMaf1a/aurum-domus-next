@@ -6,9 +6,6 @@ import User from "@/interfaces/user";
 import { login } from "@/server/controllers/authController";
 
 export default class ThisUser implements LoggedUser{
-    async login():Promise<boolean>{
-        return true;
-    }
     async logout():Promise<void>{}
     async getProfile():Promise<User>{
         const user:User = await login();
