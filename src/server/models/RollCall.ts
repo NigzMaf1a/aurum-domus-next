@@ -3,9 +3,9 @@ import { ResultSetHeader } from 'mysql2'
 import { RollcallRow, AddRollCallPayload } from '../interfaces/rollcall'
 
 export default class Rollcall {
-  private unitID: string
+  private unitID: number
 
-  constructor(unitID: string) {
+  constructor(unitID: number) {
     this.unitID = unitID
   }
 

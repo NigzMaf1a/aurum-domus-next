@@ -4,20 +4,20 @@ import {
   getStock,
   updateStockItem,
   deleteStockItem
-} from '../controllers/stockController.js';
+} from '../controllers/stockController';
 
-const router = express.Router();
+const stock = express.Router();
 
 // Add new stock item
-router.post('/', addStockItem);
+stock.post('/', addStockItem);
 
 // Get all stock items by unitID (unitID as URL param)
-router.get('/:unitID', getStock);
+stock.get('/:unitID', getStock);
 
 // Update stock item by stockID
-router.put('/:stockID', updateStockItem);
+stock.put('/:stockID', updateStockItem);
 
 // Delete stock item by stockID
-router.delete('/:stockID', deleteStockItem);
+stock.delete('/:stockID', deleteStockItem);
 
-export default router;
+export default stock;

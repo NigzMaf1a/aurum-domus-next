@@ -16,7 +16,7 @@ import paymentRoutes from './server/routes/paymentRoutes';
 import reservationRoutes from './server/routes/reservationRoutes';
 import rollcallRoutes from './server/routes/rollcallRoutes';
 import salaryRoutes from './server/routes/salaryRoutes';
-import stockRoutes from './server/routes/stockRoutes';
+import stock from './server/routes/stockRoutes';
 import tableRoutes from './server/routes/tableRoutes';
 import unitRoutes from './server/routes/unitRoutes';
 
@@ -57,7 +57,7 @@ app.use('/api/payment', authMiddleware, paymentRoutes);
 app.use('/api/reservation', authMiddleware, reservationRoutes);
 app.use('/api/rollcall', authMiddleware, rollcallRoutes);
 app.use('/api/salary', authMiddleware, salaryRoutes);
-app.use('/api/stock', authMiddleware, stockRoutes);
+app.use('/api/stock', authMiddleware, stock);
 app.use('/api/table', authMiddleware, tableRoutes);
 app.use('/api/unit', authMiddleware, unitRoutes);
 app.use('/api/unit/public', unitRoutes);

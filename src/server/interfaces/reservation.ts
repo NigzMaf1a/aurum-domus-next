@@ -2,7 +2,7 @@ import { RowDataPacket } from "mysql2";
 
 export interface ReservationRow extends RowDataPacket {
   ReservationID: number
-  UnitID: string
+  UnitID: number
   TableID: number
   CustomerID: number
   OrderID: number

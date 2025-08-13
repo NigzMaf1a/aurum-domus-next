@@ -3,9 +3,8 @@ import { ResultSetHeader} from 'mysql2'
 import { ReservationRow, AddReservationPayload } from '../interfaces/reservation'
 
 export default class Reservation {
-  // UnitID removed from constructor / class property
 
-  async addReservation(unitID: string, data: AddReservationPayload): Promise<{ message: string; id: number }> {
+  async addReservation(unitID: number, data: AddReservationPayload): Promise<{ message: string; id: number }> {
     const sql = `
       INSERT INTO Reservation (
         UnitID, TableID, CustomerID, OrderID, DishID,
@@ -30,14 +29,14 @@ export default class Reservation {
     return { message: 'Reservation added', id: result.insertId }
   }
 
-  async getReservations(unitID: string): Promise<ReservationRow[]> {
+  async getReservations(unitID: number): Promise<ReservationRow[]> {
     const sql = `SELECT * FROM Reservation WHERE UnitID = ?`
     const [rows] = await db.execute<ReservationRow[]>(sql, [unitID])
     return rows
   }
 
   async updateReservation(
-    unitID: string,
+    unitID: number,
     reservationID: number,
     updatedFields: Partial<Omit<ReservationRow, 'ReservationID' | 'UnitID'>>
   ): Promise<{ message: string; affectedRows: number }> {
@@ -54,7 +53,7 @@ export default class Reservation {
     return { message: 'Reservation updated', affectedRows: result.affectedRows }
   }
 
-  async deleteReservation(unitID: string, reservationID: number): Promise<{ message: string; affectedRows: number }> {
+  async deleteReservation(unitID: number, reservationID: number): Promise<{ message: string; affectedRows: number }> {
     const sql = `DELETE FROM Reservation WHERE ReservationID = ? AND UnitID = ?`
     const [result] = await db.execute<ResultSetHeader>(sql, [reservationID, unitID])
     return { message: 'Reservation deleted', affectedRows: result.affectedRows }

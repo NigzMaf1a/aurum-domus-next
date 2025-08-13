@@ -1,12 +1,12 @@
 // controllers/userController.ts
-import { Request, Response } from 'express';
+import { Request, Response, RequestHandler } from 'express';
 import User from '../models/User';
-import UserPayload from '@/server/interfaces/userPayload';
+import { UserPayload } from '../interfaces/user';
 
 const userService = new User();
 
 // CREATE - Add a new user
-export const createUser = async (req: Request, res: Response) => {
+export const createUser:RequestHandler = async (req: Request, res: Response) => {
   const user:UserPayload = req.body;
 
   try {
@@ -30,59 +30,62 @@ export const readUsers = async (req: Request, res: Response) => {
 };
 
 // UPDATE - Update user by regID
-export const updateUser = async (
-  req: Request & { params: { regID: number } },
-  res: Response
-) => {
-  const { regID } = req.params;
-  const user:UserPayload = req.body;
+export const updateUser: RequestHandler<{ regID: string }> = async (req, res) => {
+  const regID = Number(req.params.regID)
+  if (isNaN(regID)) {
+    res.status(400).json({ error: 'Invalid regID' })
+    return
+  }
+
+  const user: UserPayload = req.body
 
   try {
-    const result = await userService.updateUser(regID,user);
+    const result = await userService.updateUser(regID, user)
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'User not found or no changes made' });
+      res.status(404).json({ message: 'User not found or no changes made' })
+      return
     }
-    res.status(200).json(result);
+    res.status(200).json(result)
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    res.status(500).json({ error: 'Failed to update user', details: message });
+    const message = err instanceof Error ? err.message : 'Unknown error'
+    res.status(500).json({ error: 'Failed to update user', details: message })
   }
-};
+}
 
 // DELETE - Remove user by regID
-export const deleteUser = async (
-  req: Request & { params: { regID: number } },
-  res: Response
-) => {
-  const { regID } = req.params;
+export const deleteUser: RequestHandler<{ regID: string }> = async (req, res) => {
+  const regID = Number(req.params.regID)
+  if (isNaN(regID)) {
+    res.status(400).json({ error: 'Invalid regID' })
+    return
+  }
 
   try {
-    const result = await userService.deleteUser(regID);
+    const result = await userService.deleteUser(regID)
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'User not found' });
+      res.status(404).json({ message: 'User not found' })
+      return
     }
-    res.status(200).json(result);
+    res.status(200).json(result)
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    res.status(500).json({ error: 'Failed to delete user', details: message });
+    const message = err instanceof Error ? err.message : 'Unknown error'
+    res.status(500).json({ error: 'Failed to delete user', details: message })
   }
-};
+}
 
 // READ - Get user by email (optional)
-export const getUserByEmail = async (
-  req: Request & { params: { email: string } },
-  res: Response
-) => {
-  const { email } = req.params;
+export const getUserByEmail: RequestHandler<{ email: string }> = async (req, res) => {
+  const { email } = req.params
 
   try {
-    const userData = await userService.getUserData(email);
+    const userData = await userService.getUserData(email)
     if (!userData) {
-      return res.status(404).json({ message: 'User not found' });
+      res.status(404).json({ message: 'User not found' })
+      return
     }
-    res.status(200).json(userData);
+    res.status(200).json(userData)
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    res.status(500).json({ error: 'Failed to fetch user', details: message });
+    const message = err instanceof Error ? err.message : 'Unknown error'
+    res.status(500).json({ error: 'Failed to fetch user', details: message })
   }
-};
+}

@@ -1,20 +1,26 @@
-import { Request, Response } from 'express'
+import { Request, RequestHandler } from 'express'
 import Reservation from '../models/Reservation'
 import { AddReservationPayload } from '../interfaces/reservation'
+import { ReservationRow } from '../interfaces/reservation'
 
+// Extended type for optional unitID
 interface AuthenticatedRequest extends Request {
-  unitID?: string
+  unitID?: number
 }
 
-// Helper to get unitID
-const getUnitID = (req: AuthenticatedRequest): string | undefined => {
-  return req.unitID || req.body.unitID
+// Helper to get unitID as a number
+const getUnitID = (req: Request): number | undefined => {
+  const id = (req as AuthenticatedRequest).unitID || (req.body as ReservationRow).unitID
+  return typeof id === 'number' ? id : Number(id) || undefined
 }
 
-// CREATE
-export const addReservation = async (req: AuthenticatedRequest, res: Response) => {
+// CREATE - Add reservation
+export const addReservation: RequestHandler = async (req, res) => {
   const unitID = getUnitID(req)
-  if (!unitID) return res.status(400).json({ error: 'unitID is required' })
+  if (!unitID) {
+    res.status(400).json({ error: 'unitID is required' })
+    return
+  }
 
   const reservationService = new Reservation()
   const payload = req.body as AddReservationPayload
@@ -28,10 +34,14 @@ export const addReservation = async (req: AuthenticatedRequest, res: Response) =
   }
 }
 
-// READ
-export const getReservations = async (req: AuthenticatedRequest, res: Response) => {
+
+// READ - Get reservations
+export const getReservations: RequestHandler = async (req, res) => {
   const unitID = getUnitID(req)
-  if (!unitID) return res.status(400).json({ error: 'unitID is required' })
+  if (!unitID) {
+    res.status(400).json({ error: 'unitID is required' })
+    return
+  }
 
   const reservationService = new Reservation()
 
@@ -44,13 +54,14 @@ export const getReservations = async (req: AuthenticatedRequest, res: Response) 
   }
 }
 
-// UPDATE
-export const updateReservation = async (
-  req: AuthenticatedRequest & { params: { reservationID: string } },
-  res: Response
-) => {
+
+// UPDATE - Update reservation
+export const updateReservation: RequestHandler<{ reservationID: string }> = async (req, res) => {
   const unitID = getUnitID(req)
-  if (!unitID) return res.status(400).json({ error: 'unitID is required' })
+  if (!unitID) {
+    res.status(400).json({ error: 'unitID is required' })
+    return
+  }
 
   const { reservationID } = req.params
   const updatedFields = req.body
@@ -59,7 +70,10 @@ export const updateReservation = async (
 
   try {
     const result = await reservationService.updateReservation(unitID, Number(reservationID), updatedFields)
-    if (result.affectedRows === 0) return res.status(404).json({ message: 'Reservation not found or no changes made' })
+    if (result.affectedRows === 0) {
+      res.status(404).json({ message: 'Reservation not found or no changes made' })
+      return
+    }
     res.status(200).json(result)
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error'
@@ -67,23 +81,28 @@ export const updateReservation = async (
   }
 }
 
-// DELETE
-export const deleteReservation = async (
-  req: AuthenticatedRequest & { params: { reservationID: string } },
-  res: Response
-) => {
+
+// DELETE - Delete reservation
+export const deleteReservation: RequestHandler<{ reservationID: string }> = async (req, res) => {
   const unitID = getUnitID(req)
-  if (!unitID) return res.status(400).json({ error: 'unitID is required' })
+  if (!unitID) {
+    res.status(400).json({ error: 'unitID is required' })
+    return
+  }
 
   const { reservationID } = req.params
   const reservationService = new Reservation()
 
   try {
     const result = await reservationService.deleteReservation(unitID, Number(reservationID))
-    if (result.affectedRows === 0) return res.status(404).json({ message: 'Reservation not found' })
+    if (result.affectedRows === 0) {
+      res.status(404).json({ message: 'Reservation not found' })
+      return
+    }
     res.status(200).json(result)
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error'
     res.status(500).json({ error: 'Failed to delete reservation', details: message })
   }
 }
+
