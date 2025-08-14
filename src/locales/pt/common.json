@@ -169,5 +169,10 @@
   "addNewUnit": "Adicionar nova unidade",
   "light": "Claro",
   "dark": "Escuro",
-  "picture": "Imagem"
+  "picture": "Imagem",
+  "selectType": "Selecionar tipo de usuário",
+  "chef": "Chef",
+  "waiter": "Garçom",
+  "accountant": "Contador",
+  "owner": "Proprietário"
 }

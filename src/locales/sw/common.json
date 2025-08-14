@@ -169,5 +169,10 @@
   "addNewUnit": "Ongeza Kitengo Kipya",
   "light": "Nyepesi",
   "dark": "Nzito",
-  "picture": "Picha"
+  "picture": "Picha",
+  "selectType": "Chagua Aina ya Mtumiaji",
+  "chef": "Mpishi",
+  "waiter": "Mhudumu",
+  "accountant": "Mhasibu",
+  "owner": "Mmiliki"
 }

@@ -66,7 +66,7 @@ export default function LoginPage() {
     // Use regtype from user OR fallback to query param if present
     let role: RegType | null = user.RegType as RegType;
 
-    // allow regtype to be overridden from URL (not necessary)
+    // allow regtype to be overridden from URL
     const queryRegtype = searchParams ? (searchParams.get('regtype') as RegType) : null;
     if (queryRegtype) role = queryRegtype;
 

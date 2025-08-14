@@ -169,5 +169,10 @@
   "addNewUnit": "添加新单元",
   "light": "亮",
   "dark": "暗",
-  "picture": "图片"
+  "picture": "图片",
+  "selectType": "选择用户类型",
+  "chef": "厨师",
+  "waiter": "服务员",
+  "accountant": "会计",
+  "owner": "老板"
 }
