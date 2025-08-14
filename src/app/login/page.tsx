@@ -6,7 +6,10 @@ import { useTranslation } from 'react-i18next';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 
-// Enums & Scripts
+//components
+import UserType from '@/components/dropdowns/UserType';
+
+//Scripts
 import { RegType } from '../../enums/RegTypeEnum';
 import { returnUnitNames, loginUser } from '../../scripts/login';
 import getUnits from '@/scripts/getUnits';
@@ -135,6 +138,8 @@ export default function LoginPage() {
               required
             />
           </div>
+
+          <UserType/>
 
           {/* Branch Dropdown */}
           <div className="mb-4">
