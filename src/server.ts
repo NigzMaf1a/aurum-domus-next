@@ -19,6 +19,7 @@ import salaryRoutes from './server/routes/salaryRoutes';
 import stock from './server/routes/stockRoutes';
 import tableRoutes from './server/routes/tableRoutes';
 import unitRoutes from './server/routes/unitRoutes';
+import unitPublicRoutes from './server/routes/unitPublicRoutes';
 
 import authMiddleware from './server/middleware/auth';
 import errorHandler from './server/middleware/errorHandler';
@@ -32,7 +33,7 @@ app.use(helmet());
 // Stricter CORS - whitelist your frontend URL or fallback to localhost
 const allowedOrigins = process.env.CLIENT_ORIGIN
   ? [process.env.CLIENT_ORIGIN]
-  : ['http://localhost:5000'];
+  : ['http://localhost:3000','http://localhost:5000'];
 
 app.use(
   cors({
@@ -59,8 +60,8 @@ app.use('/api/rollcall', authMiddleware, rollcallRoutes);
 app.use('/api/salary', authMiddleware, salaryRoutes);
 app.use('/api/stock', authMiddleware, stock);
 app.use('/api/table', authMiddleware, tableRoutes);
+app.use('/api/unit/public', unitPublicRoutes);
 app.use('/api/unit', authMiddleware, unitRoutes);
-app.use('/api/unit/public', unitRoutes);
 
 // Health check
 app.get('/', (req: Request, res: Response) => {
@@ -68,7 +69,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // 404 handler
-app.use('*', (req: Request, res: Response) => {
+app.use((req: Request, res: Response) => {
   res.status(404).json({ error: 'Route not found' });
 });
 

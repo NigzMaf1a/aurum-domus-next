@@ -1,7 +1,7 @@
 // controllers/stockController.ts
 import { Request, Response, RequestHandler } from 'express';
 import Stock from '../models/Stock';
-import StockItem from '@/interfaces/stockItem';
+import {StockRow} from '../interfaces/stock';
 
 const stockService = new Stock();
 
@@ -39,7 +39,7 @@ export const updateStockItem: RequestHandler = async (req, res, next) => {
     }
 
     // Partial updates — only keys user sends
-    const updates: Partial<Omit<StockItem, 'StockID'>> = req.body;
+    const updates: Partial<Omit<StockRow, 'StockID'>> = req.body;
 
     if (!updates || typeof updates !== 'object' || Object.keys(updates).length === 0) {
       res.status(400).json({ error: 'Updates object is required and cannot be empty' });

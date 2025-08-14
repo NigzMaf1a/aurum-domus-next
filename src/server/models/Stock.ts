@@ -27,20 +27,23 @@ export default class Stock {
 
   async updateStockItem(
     stockID: number,
-    data: Pick<StockPayload, 'itemName' | 'quantity' | 'price'>
+    data: Partial<Omit<StockPayload, 'StockID'>>
   ): Promise<{ message: string; affectedRows: number }> {
-    const sql = `
-      UPDATE Stock
-      SET ItemName = ?, Quantity = ?, Price = ?
-      WHERE StockID = ?
-    `
-    const [result] = await db.execute<ResultSetHeader>(sql, [
-      data.itemName,
-      data.quantity,
-      data.price,
-      stockID,
-    ])
-    return { message: 'Stock item updated', affectedRows: result.affectedRows }
+    // Build dynamic SET clause
+    const keys = Object.keys(data);
+    const values = Object.values(data);
+
+    if (keys.length === 0) {
+      return { message: 'No fields to update', affectedRows: 0 };
+    }
+
+    const setClause = keys.map(key => `${key} = ?`).join(', ');
+    const sql = `UPDATE Stock SET ${setClause} WHERE StockID = ?`;
+
+    values.push(stockID);
+    const [result] = await db.execute<ResultSetHeader>(sql, values);
+
+    return { message: 'Stock item updated', affectedRows: result.affectedRows };
   }
 
   async deleteStockItem(stockID: number): Promise<{ message: string; affectedRows: number }> {

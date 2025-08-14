@@ -5,7 +5,7 @@ import {
   updateUser,
   deleteUser,
   getUserByEmail
-} from '../controllers/userController.js';
+} from '../controllers/userController';
 
 const router = express.Router();
 
@@ -15,13 +15,13 @@ router.post('/', createUser);
 // Read all users
 router.get('/', readUsers);
 
+// Optional: Get user by email
+router.get('/email/:email', getUserByEmail);
+
 // Update user by regID
 router.put('/:regID', updateUser);
 
 // Delete user by regID
 router.delete('/:regID', deleteUser);
-
-// Optional: Get user by email
-router.get('/email/:email', getUserByEmail);
 
 export default router;
