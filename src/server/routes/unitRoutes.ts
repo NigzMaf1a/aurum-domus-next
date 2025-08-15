@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/', addUnit);
 
 // Get all units
-router.get('/', getUnits);
+router.get('/get', getUnits);
 
 // Update a unit by ID
 router.put('/:unitID', updateUnit);

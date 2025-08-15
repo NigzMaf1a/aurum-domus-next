@@ -1,3 +1,4 @@
+import { paymentStatus, served } from "@/types/dishes";
 export default interface Order {
   OrderID: number;
   UnitID?: number;
@@ -10,6 +11,6 @@ export default interface Order {
   OrderDescription: string;
   OrderDate: string;
   OrderTime: string;
-  PaymentStatus: 'Paid' | 'Not Paid';
-  Served: 'YES' | 'NO';
+  PaymentStatus: paymentStatus;
+  Served: served;
 }

@@ -8,11 +8,14 @@ import { toast } from 'react-toastify';
 
 //components
 import UserType from '@/components/dropdowns/UserType';
+import LoginInput from '@/components/inputs/LoginInput';
+import Branch from '@/components/dropdowns/Branch';
+import Head1 from '@/components/h/Head1';
 
 //Scripts
 import { RegType } from '../../enums/RegTypeEnum';
-import { returnUnitNames, loginUser } from '../../scripts/login';
-import getUnits from '@/scripts/getUnits';
+import { returnUnitNames, loginUser } from '../../scripts/api/login';
+import getUnits from '@/scripts/api/getUnits';
 
 // Mock data
 import mockRegistrations from '../../utilscripts/mockRegistrations.json';
@@ -20,6 +23,7 @@ import mockRegistrations from '../../utilscripts/mockRegistrations.json';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [type, setType] = useState('');
   const [branch, setBranch] = useState('');
   const [unitNames, setUnitNames] = useState<string[]>([]);
 
@@ -105,64 +109,36 @@ export default function LoginPage() {
         className="card p-4 shadow"
         style={{ minWidth: '320px', maxWidth: '400px', width: '100%' }}
       >
-        <h2 className="mb-4 text-center">{t('login')}</h2>
+        <Head1 text={t('login')}/>
         <form onSubmit={handleSubmit}>
           {/* Email */}
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              {t('emailAddress')}
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="form-control"
-              placeholder={t('exampleEmail')}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+          <LoginInput labelFor={"email"}
+                      label={t('emailAddress')}
+                      type={"email"}
+                      value={email}
+                      placeholder={t('exampleEmail')}
+                      onChange={setEmail}
+          />
 
           {/* Password */}
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              {t('password')}
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="form-control"
-              placeholder={t('examplePassword')}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+          <LoginInput labelFor={"password"}
+                      label={t('password')} 
+                      type={"password"}  
+                      value={password} 
+                      placeholder={t('examplePassword')}
+                      onChange={setPassword}    
+          />
 
-          <UserType/>
+          <UserType value={type} onChange= {setType}/>
 
           {/* Branch Dropdown */}
-          <div className="mb-4">
-            <label htmlFor="branch" className="form-label">
-              {t('selectBranch')}
-            </label>
-            <select
-              id="branch"
-              className="form-select"
-              value={branch}
-              onChange={(e) => setBranch(e.target.value)}
-              required
-            >
-              <option value="" disabled>
-                {t('chooseBranch')}
-              </option>
-              {unitNames.map((unitName, index) => (
-                <option key={index} value={unitName}>
-                  {unitName}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Branch labelFor={"branch"}
+                  label={t('selectBranch')}
+                  value={branch}
+                  optionLabel={t('chooseBranch')}
+                  branches={unitNames}
+                  onChange={setBranch}
+          />
 
           {/* Login Button */}
           <button type="submit" className="btn btn-primary w-100">

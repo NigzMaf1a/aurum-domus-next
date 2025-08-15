@@ -2,8 +2,15 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import validateFields from '../../utilscripts/validateFields';
 import { useTranslation } from 'react-i18next';
+
+//components
+import LoginInput2 from '@/components/inputs/LoginInput2';
+import Gender from '@/components/dropdowns/Gender';
+import RegType from '@/components/dropdowns/RegType';
+
+//scripts
+import validateFields from '../../utilscripts/validateFields';
 
 export default function RegisterPage() {
   const { t } = useTranslation();
@@ -63,123 +70,64 @@ export default function RegisterPage() {
         <h2 className="mb-4 text-center">{t('register')}</h2>
         <form onSubmit={handleSubmit}>
           {/* Name1 */}
-          <div className="mb-3">
-            <label htmlFor="name1" className="form-label">{t('firstName')}</label>
-            <input
-              type="text"
-              id="name1"
-              name="name1"
-              className="form-control"
-              value={formData.name1}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <LoginInput2 labelFor={"name1"}
+                       label={t('firstName')}
+                       type={"text"}
+                       value={formData.name1}
+                       placeholder={t('firstName')}
+                       onChange={handleChange}
+          />
 
           {/* Name2 */}
-          <div className="mb-3">
-            <label htmlFor="name2" className="form-label">{t('lastName')}</label>
-            <input
-              type="text"
-              id="name2"
-              name="name2"
-              className="form-control"
-              value={formData.name2}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <LoginInput2 labelFor={"name2"}
+                       label={t('lastName')}
+                       type={"text"}
+                       value={formData.name2}
+                       placeholder={t('lastName')}
+                       onChange={handleChange}
+          />          
 
           {/* Phone */}
-          <div className="mb-3">
-            <label htmlFor="phone" className="form-label">{t('phoneNo')}</label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              className="form-control"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <LoginInput2 labelFor={"phone"}
+                       label={t('phoneNo')}
+                       type={"tel"}
+                       value={formData.phone}
+                       placeholder={t('phoneNo')}
+                       onChange={handleChange}
+          />  
 
           {/* Email */}
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">{t('emailAddress')}</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="form-control"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <LoginInput2 labelFor={"email"}
+                       label={t('emailAddress')}
+                       type={"email"}
+                       value={formData.email}
+                       placeholder={t('emailAddress')}
+                       onChange={handleChange}
+          />
 
           {/* Password */}
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">{t('password')}</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className="form-control"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <LoginInput2 labelFor={"password"}
+                       label={t('password')}
+                       type={"password"}
+                       value={formData.password}
+                       placeholder={t('password')}
+                       onChange={handleChange}
+          />          
 
           {/* Confirm Password */}
-          <div className="mb-3">
-            <label htmlFor="confirmPassword" className="form-label">{t('confirmPassword')}</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              className="form-control"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <LoginInput2 labelFor={"confirmPassword"}
+                       label={t('confirmPassword')}
+                       type={"password"}
+                       value={formData.confirmPassword}
+                       placeholder={t('confirmPassword')}
+                       onChange={handleChange}
+          /> 
 
           {/* Gender Dropdown */}
-          <div className="mb-3">
-            <label htmlFor="gender" className="form-label">{t('gender')}</label>
-            <select
-              id="gender"
-              name="gender"
-              className="form-select"
-              value={formData.gender}
-              onChange={handleChange}
-              required
-            >
-              <option value="" disabled>{t('selectGender')}</option>
-              <option value="male">{t('male')}</option>
-              <option value="female">{t('female')}</option>
-            </select>
-          </div>
+          <Gender value={formData.gender} onChange={handleChange}/>
 
           {/* RegType Dropdown */}
-          <div className="mb-4">
-            <label htmlFor="regType" className="form-label">{t('registrationType')}</label>
-            <select
-              id="regType"
-              name="regType"
-              className="form-select"
-              value={formData.regType}
-              onChange={handleChange}
-              required
-            >
-              <option value="" disabled>{t('selectRole')}</option>
-              <option value="admin">{t('admin')}</option>
-              <option value="manager">{t('manager')}</option>
-              <option value="customer">{t('customer')}</option>
-            </select>
-          </div>
+          <RegType value={formData.regType} onChange={handleChange}/>
 
           <button type="submit" className="btn btn-success w-100">{t('register')}</button>
           <p className="mt-3 text-center">

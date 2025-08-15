@@ -1,3 +1,4 @@
+import { paymentStatus, reservationStatus } from "@/types/dishes";
 export default interface Reservation {
   ReservationID: number;
   TableID: number;
@@ -6,8 +7,8 @@ export default interface Reservation {
   DishName: string;
   Plates: number;
   OrderPrice: number;
-  PaymentStatus: 'Paid' | 'Not Paid';
+  PaymentStatus: paymentStatus;
   ReservationDate: string;
   ReservationTime: string;
-  ReservationStatus: 'Attended' | 'Pending';
+  ReservationStatus: reservationStatus;
 }

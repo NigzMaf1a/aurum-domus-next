@@ -12,7 +12,7 @@ import { StringOrNumber } from "@/types/customer";
 
 export interface LoggedUser{
     logout: () => Promise<void>;
-    getProfile: () => Promise<User>;
+    getProfile: (user:User) => User;
     editProfile: (par:User)=>Promise<void>;
 }
 

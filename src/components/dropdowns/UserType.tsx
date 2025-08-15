@@ -1,8 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function UserType() {
-    const [value, setValue] = useState('');
+//interface for the props
+interface UserTypeProps {
+  value: string;
+  onChange: (val: string) => void;
+}
+
+export default function UserType({ value, onChange }: UserTypeProps) {
     const { t } = useTranslation();
   return (
     <div className="mb-4">
@@ -12,7 +17,7 @@ export default function UserType() {
         <select id="type"
                 className='form-select'
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => onChange(e.target.value)}
                 required
         >
             <option value="" disabled>
