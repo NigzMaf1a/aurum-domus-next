@@ -17,9 +17,9 @@ export interface LoggedUser{
 }
 
 export interface UserAdmin extends LoggedUser{
-    approveUser:(id:StringOrNumber) => Promise<void>;
-    disableUser:(id:StringOrNumber) => Promise<void>;
-    reactivateUser:(id:StringOrNumber) => Promise<void>;
+    approveUser:(id:StringOrNumber, user:User) => Promise<void>;
+    disableUser:(id:StringOrNumber, user:User) => Promise<void>;
+    reactivateUser:(id:StringOrNumber, user:User) => Promise<void>;
     getPayments:() => Promise<Payment[]>;
     getFeedback:() => Promise<Feedback[]>;
     getBio:(id:string) => Promise<Bio>;
@@ -28,8 +28,8 @@ export interface UserAdmin extends LoggedUser{
 export interface UserOwner extends LoggedUser{
     addUnit:(par:Unit) => Promise<void>;
     getUnits:() => Promise<Unit[]>;
-    editUnit:(par:Unit) => Promise<void>;
-    deleteUnit:(id:StringOrNumber) => Promise<void>;
+    editUnit:(unitID:number, par:Unit) => Promise<void>;
+    deleteUnit:(id:number) => Promise<void>;
     getPayments:() => Promise<Payment[]>;
     getFeedback:() => Promise<Feedback[]>;
 }
@@ -56,31 +56,31 @@ export interface UserManager extends LoggedUser{
 }
 
 export interface UserChef extends LoggedUser{
-    getStock:() => Promise<StockItem[]>;
-    editStock:(id:string) => Promise<void>;
-    getReservations:() => Promise<Reservation[]>;
-    getOrders:() => Promise<Order[]>;
+    getStock:(unitID:number) => Promise<StockItem[]>;
+    editStock:(id:number, stock:StockItem) => Promise<void>;
+    getReservations:(unitID:number) => Promise<Reservation[]>;
+    getOrders:(unitID:number) => Promise<Order[]>;
     addDish:(par:Dish) => Promise<void>;
-    getDishes:() => Promise<Dish[]>;
-    editDish:(id:string) => Promise<void>;
-    deleteDish:(id:string) => Promise<void>;
-    getBio:(id:string) => Promise<Bio>;
+    getDishes:(unitID:number) => Promise<Dish[]>;
+    editDish:(id:number, dish:Dish) => Promise<void>;
+    deleteDish:(id:number) => Promise<void>;
+    getBio:(id:number) => Promise<Bio | null>;
 }
 
 export interface UserWaiter extends LoggedUser{
-    getTables:() => Promise<Table[]>;
-    editTable:(id:string) => Promise<void>;
-    getReservations:() => Promise<Reservation[]>;
-    editReservation:(id:string) => Promise<void>;
-    getOrders:() => Promise<Order[]>;
-    editOrder:(id:string) => Promise<void>;
-    getBio:(id:string) => Promise<Bio>;
+    getTables:(unitID:number) => Promise<Table[]>;
+    editTable:(id:number, table:Table) => Promise<void>;
+    getReservations:(unitID:number) => Promise<Reservation[]>;
+    editReservation:(id:number, res:Reservation) => Promise<void>;
+    getOrders:(unitID:number) => Promise<Order[]>;
+    editOrder:(id:number, order:Order) => Promise<void>;
+    getBio:(id:number) => Promise<Bio | null>;
 }
 
 export interface UserAccountant extends LoggedUser{
     getPayments:() => Promise<Payment[]>;
-    editPayment:(id:StringOrNumber) => Promise<void>;
-    getBio:(id:string) => Promise<Bio>;
+    createPayment:(par:Payment) => Promise<void>;
+    getBio:(id:number) => Promise<Bio | null>;
 }
 
 export interface UserCustomer extends LoggedUser{

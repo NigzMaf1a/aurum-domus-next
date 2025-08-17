@@ -1,7 +1,6 @@
 //interfaces
 import { LoggedUser } from "@/interfaces/classinterfaces";
 import User from "@/interfaces/user";
-// import { StringOrNumber } from "@/types/customer";
 
 //services
 import logout from "../api/logout";

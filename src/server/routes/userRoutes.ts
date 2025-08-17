@@ -13,7 +13,7 @@ const router = express.Router();
 router.post('/', createUser);
 
 // Read all users
-router.get('/', readUsers);
+router.get('/get', readUsers);
 
 // Optional: Get user by email
 router.get('/email/:email', getUserByEmail);
