@@ -36,17 +36,17 @@ export interface UserOwner extends LoggedUser{
 
 export interface UserManager extends LoggedUser{
     addTable: (par:Table) => Promise<void>;
-    getTables:() => Promise<Table[]>;
-    editTable:(id:string) => Promise<void>;
-    deleteTable: (id:string) => Promise<void>;
+    getTables:(unitID:number) => Promise<Table[]>;
+    editTable:(id:number, table:Table) => Promise<void>;
+    deleteTable: (id:number) => Promise<void>;
     addStock: (par:StockItem) => Promise<void>;
-    getStock:() => Promise<StockItem[]>;
-    editStock:(id:string) => Promise<void>;
-    deleteStock:(id:string) => Promise<void>;
-    getReservations:() => Promise<Reservation[]>;
-    getPayments:() => Promise<Payment[]>;
-    getOrders:() => Promise<Order[]>;
-    getFeedback:() => Promise<Feedback[]>;
+    getStock:(unitID:number) => Promise<StockItem[]>;
+    editStock:(id:number, stock:StockItem) => Promise<void>;
+    deleteStock:(id:number) => Promise<void>;
+    getReservations:(unitID:number) => Promise<Reservation[]>;
+    getPayments:(unitID:number) => Promise<Payment[]>;
+    getOrders:(unitID:number) => Promise<Order[]>;
+    getFeedback:(unitID:number) => Promise<Feedback[]>;
     feedbackResponse:(par:string) => Promise<void>;
     getDishes:() => Promise<Dish[]>;
     addBio:(par:Bio) => Promise<void>;

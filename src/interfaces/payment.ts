@@ -1,6 +1,7 @@
 import { paymentType } from "@/types/paymentType";
 export default interface Payment {
   PaymentID: number;
+  UnitID: number;
   FinanceID: number;
   Name1: string;
   Name2: string;
