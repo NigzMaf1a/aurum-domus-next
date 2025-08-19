@@ -23,7 +23,13 @@ export async function readFeedback():Promise<Feedback[]>{
     }
 }
 
-export async function updateFeedback(){} //some missing specificity *add update via ID
+export async function updateFeedback(id:number, feed:Feedback){
+    try{ //Ensure functionality
+        await apiFetch(`/api/feedback/update/${id}/`, {});
+    }catch(err){
+        console.error(`Error ${err} occurred while updating ${id} with ${feed}`);
+    }
+} //some missing specificity *add update via ID
 export async function deleteFeedback(feedID:number){
     try{
         await apiFetch(`/api/feedback/${feedID}/`, {

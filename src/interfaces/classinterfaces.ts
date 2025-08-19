@@ -47,12 +47,12 @@ export interface UserManager extends LoggedUser{
     getPayments:(unitID:number) => Promise<Payment[]>;
     getOrders:(unitID:number) => Promise<Order[]>;
     getFeedback:(unitID:number) => Promise<Feedback[]>;
-    feedbackResponse:(par:string) => Promise<void>;
-    getDishes:() => Promise<Dish[]>;
+    feedbackResponse:(unitID:number, res:Feedback) => Promise<void>;
+    getDishes:(unitID:number) => Promise<Dish[]>;
     addBio:(par:Bio) => Promise<void>;
-    getBio:(id:string) => Promise<Bio>;
-    editBio:(id:string) => Promise<void>;
-    deleteBio:(id:string) => Promise<void>;
+    getBio:(id:number) => Promise<Bio | null>;
+    editBio:(id:number, bio:Bio) => Promise<void>;
+    deleteBio:(id:number) => Promise<void>;
 }
 
 export interface UserChef extends LoggedUser{
@@ -84,19 +84,19 @@ export interface UserAccountant extends LoggedUser{
 }
 
 export interface UserCustomer extends LoggedUser{
-    getTables:() => Promise<Table[]>;
+    getTables:(unitID:number) => Promise<Table[]>;
     addReservation:(par:Reservation) => Promise<void>;
-    getReservations:() => Promise<Reservation[]>;
-    editReservation:(par:Reservation) =>Promise<void>;
-    deleteReservation:(par:StringOrNumber) => Promise<void>;
+    getReservations:(unitID:number) => Promise<Reservation[]>;
+    editReservation:(unitID:number, par:Reservation) =>Promise<void>;
+    deleteReservation:(par:number) => Promise<void>;
     addOrder:(par:Order) => Promise<void>;
-    getOrders:() => Promise<Order[]>;
-    editOrder:(par:StringOrNumber) => Promise<void>;
-    deleteOrder:(par:StringOrNumber) => Promise<void>;
+    getOrders:(unitID:number) => Promise<Order[]>;
+    editOrder:(par:number, order:Order) => Promise<void>;
+    deleteOrder:(par:number) => Promise<void>;
     addPayment:(par:Payment) => Promise<void>;
-    getPayments:(id:StringOrNumber) => Promise<Payment[]>;
+    getPayments:(id:number) => Promise<Payment[]>;
     addFeedback:(par:Feedback) => Promise<void>;
-    getFeedback:(id:StringOrNumber) => Promise<Feedback[]>;
-    editFeedback:(id:StringOrNumber) => Promise<void>;
-    getBio:(id:string) => Promise<Bio>;
+    getFeedback:(unitID:number) => Promise<Feedback[]>;
+    editFeedback:(id:number, feed:Feedback) => Promise<void>;
+    getBio:(id:number) => Promise<Bio | null>;
 }

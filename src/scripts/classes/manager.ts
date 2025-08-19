@@ -1,13 +1,15 @@
-import { UserManager } from "@/interfaces/classinterfaces";
 import ThisUser from "./base";
 
 //interfaces
+import { UserManager } from "@/interfaces/classinterfaces";
 import Table from "@/interfaces/table";
 import StockItem from "@/interfaces/stockItem";
 import Reservation from "@/interfaces/reservation";
 import Payment from "@/interfaces/payment";
 import Order from "@/interfaces/order";
 import Feedback from "@/interfaces/feedback";
+import Dish from "@/interfaces/dish";
+import Bio from "@/interfaces/bio";
 
 //services
 import { createTable, readTablesAll, updateTable, deleteTable } from "../api/table";
@@ -15,7 +17,9 @@ import { createStockItem , readStockItems, updateStockItem, deleteStockItem} fro
 import { readReservations } from "../api/reservation";
 import { getPayments } from "../api/payments";
 import { getOrders } from "../api/order";
-import { readFeedback } from "../api/feedback";
+import { readFeedback, updateFeedback } from "../api/feedback";
+import { getDishes } from "../api/dishes";
+import { getBio, createBio, updateBio, deleteBio } from "../api/bio";
 
 
 export default class Manager extends ThisUser implements UserManager{
@@ -54,7 +58,7 @@ export default class Manager extends ThisUser implements UserManager{
         await updateStockItem(id, stock);
     }
 
-    async deleteStockItem(id:number):Promise<void>{
+    async deleteStock(id:number):Promise<void>{
         await deleteStockItem(id);
     }
 
@@ -102,10 +106,29 @@ export default class Manager extends ThisUser implements UserManager{
         }
     }
     
-    async feedbackResponse(){}
-    async getDishes(){}
-    async addBio(){}
-    async getBio(){}
-    async editBio(){}
-    async deleteBio(){}
+    async feedbackResponse(id:number, feed:Feedback){
+        await updateFeedback(id, feed);
+    }
+    async getDishes(unitID:number):Promise<Dish[]>{
+        try{
+            const dishes = await getDishes();
+            console.log(`${dishes} fetched successfully`);
+            return await dishes.filter(dish => dish.UnitID === unitID);
+        }catch(err){
+            console.error(`Error ${err} occurred while fetching dishes`);
+            return [];
+        }
+    }
+    async addBio(par:Bio):Promise<void>{
+        await createBio(par);
+    }
+    async getBio(unitID:number):Promise<Bio | null>{
+        return await getBio(unitID);
+    }
+    async editBio(id:number, bio:Bio):Promise<void>{
+        await updateBio(id, bio);
+    }
+    async deleteBio(id:number):Promise<void>{
+        await deleteBio(id);
+    }
 }
