@@ -5,6 +5,7 @@ import React from 'react';
 import DashCard from '@/components/cards/DashCard';
 import Strip from '@/components/general/Strip';
 import Stats from '@/components/general/Stats';
+import DashTab from '@/components/table/DashTab';
 
 //interfaces
 import { Bar } from '@/components/general/Stats';
@@ -32,6 +33,12 @@ const pieChart: Pie = {
     value2: 35
   }
 };
+const tableData = [
+  { id: 1, name: "John Doe", age: 28, role: "Manager", dept: "Sales", salary: 60000, status: "Active" },
+  { id: 2, name: "Jane Smith", age: 34, role: "Engineer", dept: "Tech", salary: 75000, status: "Active" },
+  { id: 3, name: "Sam Brown", age: 41, role: "Designer", dept: "UI/UX", salary: 50000, status: "Inactive" },
+];
+
   return (
     <div className="container mt-4 min-vh-100">
         <h1 className="mb-4 textColorless">Dashboard</h1>
@@ -54,8 +61,10 @@ const pieChart: Pie = {
         <Stats bar={barChart} 
                pie={pieChart}
         />
-        <Stats bar={barChart} 
-               pie={pieChart}
+        <DashTab
+          data={tableData}
+          columns={["id", "name", "age", "role", "dept", "salary", "status"]}
+          columnNames={["ID", "Full Name", "Age", "Job Role", "Department", "Salary ($)", "Status"]}
         />
     </div>
   );
