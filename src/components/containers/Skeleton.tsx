@@ -1,0 +1,25 @@
+import React, { ReactNode } from "react";
+
+interface DynamicDivProps {
+  children: ReactNode;
+  onClick?: () => void;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+export default function Skeleton({
+  children,
+  onClick,
+  className = "",
+  style = {},
+}: DynamicDivProps) {
+  return (
+    <div
+      onClick={onClick}
+      className={`container py-4 min-vh-100 min-vw-100 ${className}`}
+      style={style}
+    >
+      {children}
+    </div>
+  );
+}

@@ -61,7 +61,7 @@ export default function CustomerOrdersPage() {
   };
 
   return (
-    <div className="container py-4">
+    <div className="container py-4 min-vh-100">
       <h2 className="text-center mb-4 textColorless">Customer Orders</h2>
       <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
         <div className="row g-3">

@@ -54,7 +54,7 @@ export default function CustomerFeedbackPage() {
   };
 
   return (
-    <div className="container py-5 w-100 h-100">
+    <div className="container py-5 w-100 min-vh-100">
       <h2 className="text-center mb-4 textColorless">Customer Feedback</h2>
 
       {/* Feedback List Section */}
