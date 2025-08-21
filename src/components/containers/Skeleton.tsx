@@ -1,3 +1,4 @@
+"use client";
 import React, { ReactNode } from "react";
 
 interface DynamicDivProps {
@@ -16,7 +17,7 @@ export default function Skeleton({
   return (
     <div
       onClick={onClick}
-      className={`container py-4 min-vh-100 min-vw-100 ${className}`}
+      className={`container py-4 min-vh-100 ${className}`}
       style={style}
     >
       {children}

@@ -2,6 +2,7 @@
 import React from 'react';
 
 //components
+import Skeleton from '../../../components/containers/Skeleton';
 import DashCard from '@/components/cards/DashCard';
 import Strip from '@/components/general/Strip';
 import Stats from '@/components/general/Stats';
@@ -40,7 +41,7 @@ const tableData = [
 ];
 
   return (
-    <div className="container mt-4 min-vh-100">
+    <Skeleton>
         <h1 className="mb-4 textColorless">Dashboard</h1>
         <Strip head='Trialz' det={"today"}/>
         <div className="row mb-1" id="cardCont">
@@ -66,6 +67,6 @@ const tableData = [
           columns={["id", "name", "age", "role", "dept", "salary", "status"]}
           columnNames={["ID", "Full Name", "Age", "Job Role", "Department", "Salary ($)", "Status"]}
         />
-    </div>
+    </Skeleton>
   );
 }

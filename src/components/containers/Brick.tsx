@@ -1,13 +1,14 @@
+"use client";
 import React, { ReactNode } from "react";
 
 interface DynamicDivProps {
-  children: ReactNode;
+  children: ReactNode;         
   onClick?: () => void;
   className?: string;
   style?: React.CSSProperties;
 }
 
-export default function DynamicDiv({
+export default function Brick({
   children,
   onClick,
   className = "",
@@ -16,7 +17,7 @@ export default function DynamicDiv({
   return (
     <div
       onClick={onClick}
-      className={`p-1 border rounded ${className}`}
+      className={`${className}`}
       style={style}
     >
       {children}

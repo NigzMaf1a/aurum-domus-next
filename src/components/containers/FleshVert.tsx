@@ -1,3 +1,4 @@
+"use client";
 import React, { ReactNode } from "react";
 
 interface DynamicDivProps {
@@ -7,7 +8,7 @@ interface DynamicDivProps {
   style?: React.CSSProperties;
 }
 
-export default function FleshHor({
+export default function FleshVert({
   children,
   onClick,
   className = "",
@@ -16,7 +17,7 @@ export default function FleshHor({
   return (
     <div
       onClick={onClick}
-      className={`d-flex flex-column w-auto h-auto ${className}`}
+      className={`d-flex flex-column col-lg-12 col-sm-6 h-auto rounded gap-3 ${className}`}
       style={style}
     >
       {children}
