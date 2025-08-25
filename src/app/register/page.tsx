@@ -7,8 +7,10 @@ import toast from 'react-hot-toast';
 
 
 // components
+import Skeleton from '@/components/containers/Skeleton';
 import LoginInput2 from '@/components/inputs/LoginInput2';
 import Gender from '@/components/dropdowns/Gender';
+import DynamicDiv from '@/components/containers/DynamicDiv';
 
 // scripts
 import validateFields from '../../utilscripts/validateFields';
@@ -72,13 +74,12 @@ export default function RegisterPage() {
   };
 
   return (
-    <div
+    <Skeleton
       className="d-flex justify-content-center align-items-center mt-4"
       style={{ minHeight: '100vh', padding: '1rem' }}
     >
-      <div
+      <DynamicDiv
         className="card shadow p-4"
-        id="register-form"
         style={{
           minWidth: '320px',
           maxWidth: '360px',
@@ -152,7 +153,7 @@ export default function RegisterPage() {
             <Link href="/login">{t('loginHere')}</Link>
           </p>
         </form>
-      </div>
-    </div>
+      </DynamicDiv>
+    </Skeleton>
   );
 }

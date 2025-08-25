@@ -8,7 +8,7 @@ import { accStatus } from "@/types/accStatus";
 interface User {
   Name1?: string;
   Name2?: string;
-  PhoneNo?: string; // changed to string for safer phone handling
+  PhoneNo?: string;
   Email?: string;
   UserPassword: string;
   Gender?: gender;
