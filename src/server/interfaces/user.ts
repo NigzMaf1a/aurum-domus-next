@@ -9,18 +9,20 @@ export interface UserRow extends RowDataPacket {
   Password: string
   Gender: string
   RegType: string
-  dLocation: string
+  dLocation?: string
   accStatus: string
+  Image:string
 }
 
 export interface UserPayload {
-  name1: string
-  name2: string
-  phone: string
-  email: string
-  password: string
-  gender: string
-  regtype: string
-  location: string
-  accstatus?: string
+  Name1: string
+  Name2: string
+  Phone: string
+  Email: string
+  Password: string
+  Gender: string
+  RegType: string
+  dLocation?: string
+  accStatus?: string
+  Image:string
 }

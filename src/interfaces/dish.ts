@@ -6,4 +6,5 @@ export default interface Dish {
   DishDescription?: string;
   DishPrice: number;
   Available?: available;
+  DishImage:string;
 }

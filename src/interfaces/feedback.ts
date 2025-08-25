@@ -1,9 +1,10 @@
 export default interface Feedback {
-  feedbackID?: number;
+  FeedbackID?: number;
   UnitID: number;
-  email: string;
-  comments: string;
-  response: string | null;
-  rating: number;
-  feedbackDate: string;
+  CustomerID:number;
+  Email: string;
+  Comments: string;
+  Response: string | null;
+  Rating: number;
+  FeedbackDate: string;
 }

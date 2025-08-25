@@ -1,8 +1,9 @@
-import mysql, { Pool, PoolOptions, RowDataPacket, ResultSetHeader} from 'mysql2/promise';
+import mysql, { Pool, PoolOptions, RowDataPacket, ResultSetHeader } from 'mysql2/promise';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
+// ---- Validate required env vars ----
 const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME'] as const;
 for (const key of requiredEnvVars) {
   if (!process.env[key]) {
@@ -10,6 +11,7 @@ for (const key of requiredEnvVars) {
   }
 }
 
+// ---- Create the pool ----
 const poolConfig: PoolOptions = {
   host: process.env.DB_HOST!,
   user: process.env.DB_USER!,
@@ -22,11 +24,20 @@ const poolConfig: PoolOptions = {
 
 const pool: Pool = mysql.createPool(poolConfig);
 
-/**
- * Query wrapper with overloads for correct return type:
- * - SELECT returns RowDataPacket[]
- * - INSERT/UPDATE/DELETE returns ResultSetHeader
- */
+console.log(`✅ MySQL pool created for DB: ${process.env.DB_NAME} @ ${process.env.DB_HOST}`);
+
+// ---- Health check ----
+(async () => {
+  try {
+    await pool.query('SELECT 1');
+    console.log('🟢 MySQL pool is healthy and ready.');
+  } catch (err) {
+    console.error('❌ MySQL connection failed:', (err as Error).message);
+    process.exit(1);
+  }
+})();
+
+// ---- Typed query helper ----
 export async function query<T extends RowDataPacket>(
   sql: string,
   params?: ReadonlyArray<unknown>
@@ -37,15 +48,24 @@ export async function query(
   params?: ReadonlyArray<unknown>
 ): Promise<ResultSetHeader>;
 
-// Implementation
 export async function query<T extends RowDataPacket>(
   sql: string,
   params?: ReadonlyArray<unknown>
 ): Promise<T[] | ResultSetHeader> {
-  const [rows] = await pool.query(sql, params);
-  return rows as T[] | ResultSetHeader;
+  try {
+    const [rows] = await pool.query(sql, params);
+    return rows as T[] | ResultSetHeader;
+  } catch (err) {
+    console.error('❌ DB Query Failed:', {
+      sql,
+      params,
+      error: (err as Error).message,
+    });
+    throw err;
+  }
 }
 
+// ---- Graceful shutdown ----
 async function shutdownPool() {
   console.log('🔌 Closing MySQL connection pool...');
   await pool.end();
@@ -63,25 +83,3 @@ process.on('SIGTERM', async () => {
 });
 
 export default pool;
-
-
-
-
-
-// This module exports a MySQL connection pool for use in the application.
-// It uses environment variables for configuration, allowing for easy changes without modifying code.
-// The pool is created using mysql2's promise API for better async/await support.
-// The connection pool allows for efficient management of multiple database connections,
-// improving performance and resource utilization in a production environment.
-// The pool is configured with a maximum of 10 connections, which can be adjusted based on application needs.
-// The `waitForConnections` option ensures that requests wait for a connection to become available,
-// rather than failing immediately when the pool is exhausted.
-// The `queueLimit` is set to 0, meaning there is no limit on the number of queued requests.
-// This setup is suitable for applications that require high concurrency and low latency in database operations.
-// The use of environment variables for database configuration enhances security and flexibility,
-// allowing different configurations for development, testing, and production environments.
-// The pool can be used throughout the application to execute queries, transactions, and other database operations.
-// This modular approach keeps the database configuration separate from the application logic,
-// promoting better organization and maintainability of the codebase.
-// The pool can be imported in other modules as needed, enabling a clean separation of concerns.
-// This code is a foundational part of the Aurum Domus server, providing the necessary database connectivity

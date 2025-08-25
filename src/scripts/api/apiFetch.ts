@@ -5,6 +5,7 @@ export default async function apiFetch<T>(
   options?: RequestInit
 ): Promise<T> {
   const fullUrl = `${BASE_URL.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}`;
+  console.log(`Transacting with URL ${fullUrl}`);
   const res = await fetch(fullUrl, {
     headers: {
       'Content-Type': 'application/json',

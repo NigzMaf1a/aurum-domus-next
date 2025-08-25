@@ -1,5 +1,4 @@
 import {regType} from '../types/users';
-import { gender } from '@/types/gender';
 import { accStatus } from '@/types/accStatus';
 export default interface User {
   RegID: number;
@@ -7,7 +6,7 @@ export default interface User {
   Name2?: string;
   PhoneNo?: number;
   Email?: string;
-  Gender?: gender;
+  Gender?: string;
   RegType?: regType;
   accStatus?: accStatus;
   image?: string;
@@ -16,4 +15,80 @@ export default interface User {
 export interface LogginCreds{
   email:string;
   password:string;
+}
+
+export interface Supplier{
+    SupplierID: number;
+    Name1:string;
+    Name2:string;
+    PhoneNo:string;
+    Email:string;
+    Gender:string;
+}
+
+export interface Admin{
+    AdminUserID: number;
+    Name1:string;
+    Name2:string;
+    PhoneNo:string;
+    Email:string;
+    Gender:string;
+}
+
+export interface HotelOwner{
+    OwnerID: number;
+    Name1:string;
+    Name2:string;
+    PhoneNo:string;
+    Email:string;
+    Gender:string;
+}
+
+export interface Customer{
+    CustomerID: number;
+    Name1:string;
+    Name2:string;
+    PhoneNo:string;
+    Email:string;
+    Gender:string;
+}
+
+export interface Accountant{
+    AccountantID: number;
+    UnitID:number;
+    Name1:string;
+    Name2:string;
+    PhoneNo:string;
+    Email:string;
+    Gender:string;
+}
+
+export interface Waiter{
+    WaiterID: number;
+    UnitID:number;
+    Name1:string;
+    Name2:string;
+    PhoneNo:string;
+    Email:string;
+    Gender:string;
+}
+
+export interface Chef{
+    ChefID: number;
+    UnitID:number;
+    Name1:string;
+    Name2:string;
+    PhoneNo:string;
+    Email:string;
+    Gender:string;
+}
+
+export interface Manager{
+    ManagerID: number;
+    UnitID:number;
+    Name1:string;
+    Name2:string;
+    PhoneNo:string;
+    Email:string;
+    Gender:string;
 }

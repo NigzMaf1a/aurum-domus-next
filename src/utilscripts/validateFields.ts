@@ -6,7 +6,8 @@ export default function validateFields(
   password: string,
   confirmPassword: string,
   gender: string,
-  regType: string
+  regType: string,
+  accStatus:string,
 ): {
   name1: string;
   name2: string;
@@ -15,8 +16,9 @@ export default function validateFields(
   password: string;
   gender: string;
   regType: string;
+  accStatus:string;
 } {
-  if (!name1 || !name2 || !phone || !email || !password || !confirmPassword || !gender || !regType) {
+  if (!name1 || !name2 || !phone || !email || !password || !confirmPassword || !gender || !regType || !accStatus) {
     throw new Error("All fields are required");
   }
 
@@ -48,5 +50,6 @@ export default function validateFields(
     password,
     gender,
     regType,
+    accStatus
   };
 }

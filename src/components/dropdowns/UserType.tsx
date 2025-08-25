@@ -23,13 +23,13 @@ export default function UserType({ value, onChange }: UserTypeProps) {
             <option value="" disabled>
                 {t('selectType')}
             </option>
-            <option value="customer">{t('customer')}</option>
-            <option value="manager">{t('manager')}</option>
-            <option value="chef">{t('chef')}</option>
-            <option value="waiter">{t('waiter')}</option>
-            <option value="admin">{t('admin')}</option>
-            <option value="accountant">{t('accountant')}</option>
-            <option value="owner">{t('owner')}</option>
+            <option value="Customer">{t('customer')}</option>
+            <option value="Manager">{t('manager')}</option>
+            <option value="Chef">{t('chef')}</option>
+            <option value="Waiter">{t('waiter')}</option>
+            <option value="Admin">{t('admin')}</option>
+            <option value="Accountant">{t('accountant')}</option>
+            <option value="Owner">{t('owner')}</option>
         </select>
     </div>
   );

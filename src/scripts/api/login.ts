@@ -1,12 +1,11 @@
 import Unit from '../../interfaces/unit';
 import User from '@/interfaces/user';
-import { StringOrNumber } from '@/types/customer';
 import { LogginCreds } from '@/interfaces/user';
 import apiFetch from './apiFetch';
 
 // utils/auth.ts
 export interface LoginResponse {
-  token: StringOrNumber;
+  token: string;
   user?: User;
 }
 function returnUnitNames(units: Unit[]): string[] {
@@ -15,6 +14,7 @@ function returnUnitNames(units: Unit[]): string[] {
 
 export default async function loginUser(creds: LogginCreds): Promise<LoginResponse> {
   try {
+    console.log('We are really here man');
     return await apiFetch<LoginResponse>('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify(creds),

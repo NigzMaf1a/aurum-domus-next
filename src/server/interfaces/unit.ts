@@ -1,20 +1,26 @@
-import {RowDataPacket } from 'mysql2'
+import { RowDataPacket } from 'mysql2';
 
 export interface UnitRow extends RowDataPacket {
-  UnitID: number
-  UnitName: string
-  UnitEmail: string
-  UnitPhone: string
-  UnitLocation: string
-  UnitBalance: number
-  Employees: number
+  UnitID: number;
+  HotelID: number;
+  OwnerID: number;
+  UnitName: string;
+  UnitEmail: string;
+  UnitPhone: string;
+  UnitLocation: string;
+  UnitBalance: number;
+  Employees: number;
+  UnitImage?: string | null;
 }
 
 export interface UnitPayload {
-  unitName: string
-  unitEmail: string
-  unitPhone: string
-  unitLocation: string
-  unitBalance: number
-  employees?: number
+  hotelID: number;
+  ownerID: number;
+  unitName: string;
+  unitEmail: string;
+  unitPhone: string;
+  unitLocation: string;
+  unitBalance: number;
+  employees?: number;
+  unitImage?: string;
 }

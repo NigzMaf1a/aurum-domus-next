@@ -1,7 +1,4 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 type HotelTable = {
   UnitID: string;
@@ -11,43 +8,13 @@ type HotelTable = {
   TableStatus: string;
 };
 
-export default function CustomerTablesPage() {
-  const [tables, setTables] = useState<HotelTable[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface CustomerTablesProps{
+    tables:HotelTable[];
+    loading:boolean;
+}
 
-  useEffect(() => {
-    const fetchTables = async () => {
-      try {
-        const res = await axios.get('/api/hoteltables');
-        setTables(res.data);
-      } catch {
-        setError('Failed to fetch hotel tables.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTables();
-  }, []);
-
+function CustomerTables({tables, loading}:CustomerTablesProps) {
   return (
-    <div className="container py-5">
-      <h2 className="text-center mb-4 textColorless">Available Hotel Tables</h2>
-
-      {loading && (
-        <div className="text-center my-4">
-          <div className="spinner-border text-primary" role="status" />
-        </div>
-      )}
-
-      {error && <div className="alert alert-danger">{error}</div>}
-
-      {/* Scrollable Container */}
-      <div
-        className="p-3 border rounded shadow-sm"
-        style={{ maxHeight: '500px', overflowY: 'auto' }}
-      >
         <div className="row g-3">
           {tables.map((table, index) => (
             <div key={index} className="col-12 col-md-6 col-lg-4">
@@ -80,7 +47,7 @@ export default function CustomerTablesPage() {
             <p className="text-center text-muted">No tables found.</p>
           )}
         </div>
-      </div>
-    </div>
-  );
+  )
 }
+
+export default CustomerTables

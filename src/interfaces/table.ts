@@ -5,4 +5,5 @@ export default interface Table {
   TableName: string;
   TableCapacity: number;
   TableStatus: tableStatus;
+  TableImage: string;
 }

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 //components
@@ -11,14 +11,13 @@ import UserType from '@/components/dropdowns/UserType';
 import LoginInput from '@/components/inputs/LoginInput';
 import Branch from '@/components/dropdowns/Branch';
 import Head1 from '@/components/h/Head1';
+import Skeleton from '@/components/containers/Skeleton';
 
 //Scripts
 import { RegType } from '../../enums/RegTypeEnum';
-import { returnUnitNames, loginUser } from '../../scripts/api/login';
+import { returnUnitNames, loginUser, LoginResponse } from '../../scripts/api/login';
 import getUnits from '@/scripts/api/getUnits';
 
-// Mock data
-import mockRegistrations from '../../utilscripts/mockRegistrations.json';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -26,9 +25,9 @@ export default function LoginPage() {
   const [type, setType] = useState('');
   const [branch, setBranch] = useState('');
   const [unitNames, setUnitNames] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -38,52 +37,38 @@ export default function LoginPage() {
     })();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    // Simulate login: look for matching user in mockRegistrations
-    const user = mockRegistrations.find((reg) => reg.Email === email);
+  // Validate input
+  if (!email || !password || !type || !branch) {
+    toast.error('All fields are required!');
+    return;
+  }
 
-    if (!user) {
-      toast.error('User not found');
-      return;
-    }
+  // Show cooking toast
+  const toastId = toast.loading('Hold tight G, things are cooking... 🍳');
+  setLoading(true);
 
-    if (user.Password !== password) {
-      toast.error('Incorrect password');
-      return;
-    }
+  try {
+    const logz:LoginResponse = await loginUser({ email, password });
+    const { token, user } = logz;
+    const role = user?.RegType;
 
-    toast.success(`Welcome, ${user.Name1}`);
+    // Save session
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('user', JSON.stringify(user));
 
-    // 🧠 Store user in localStorage WITHOUT the password
-    try {
-      const { Password, ...safeUser } = user;
-      localStorage.setItem('loggedUser', JSON.stringify(safeUser));
-      console.log('[Login] Stored user in localStorage:', safeUser);
-    } catch (err) {
-      console.error('Failed to store user in localStorage:', err);
-      toast.error('Session storage failed');
-      return;
-    }
-
-    // Use regtype from user OR fallback to query param if present
-    let role: RegType | null = user.RegType as RegType;
-
-    // allow regtype to be overridden from URL
-    const queryRegtype = searchParams ? (searchParams.get('regtype') as RegType) : null;
-    if (queryRegtype) role = queryRegtype;
-
-    // Route based on RegType
+    // Route based on role
     switch (role) {
       case RegType.Admin:
         router.push('/admin/dashboard');
         break;
       case RegType.Manager:
-        router.push('/manager/managerdashboard');
+        router.push('/manager/dashboard');
         break;
       case RegType.Customer:
-        router.push('/customer/customerdashboard');
+        router.push('/customer/dashboard');
         break;
       case RegType.Chef:
         router.push('/chef/dashboard');
@@ -95,18 +80,44 @@ export default function LoginPage() {
         router.push('/accountant/dashboard');
         break;
       default:
-        toast.error(`Unsupported user role: ${role}`);
-        break;
+        toast.update(toastId, {
+          render: `Unsupported user role: ${role}`,
+          type: 'error',
+          isLoading: false,
+          autoClose: 3000,
+        });
+        return;
     }
-  };
+
+    // Update toast on success
+    toast.update(toastId, {
+      render: 'Login Successful! 🔥',
+      type: 'success',
+      isLoading: false,
+      autoClose: 3000,
+    });
+
+  } catch (err) {
+    console.error(`Error logging in user:`, err);
+    toast.update(toastId, {
+      render: 'Login Failed ',
+      type: 'error',
+      isLoading: false,
+      autoClose: 3000,
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
-    <div
-      className="d-flex vh-100 justify-content-center align-items-center"
+    <Skeleton
+      className="d-flex justify-content-center align-items-center mt-6"
       style={{ padding: '1rem' }}
     >
       <div
-        className="card p-4 shadow"
+        className="card p-4 shadow "
         style={{ minWidth: '320px', maxWidth: '400px', width: '100%' }}
       >
         <Head1 text={t('login')}/>
@@ -132,13 +143,15 @@ export default function LoginPage() {
           <UserType value={type} onChange= {setType}/>
 
           {/* Branch Dropdown */}
-          <Branch labelFor={"branch"}
-                  label={t('selectBranch')}
-                  value={branch}
-                  optionLabel={t('chooseBranch')}
-                  branches={unitNames}
-                  onChange={setBranch}
-          />
+          {type.toLowerCase() === 'customer' && (
+            <Branch labelFor={"branch"}
+                    label={t('selectBranch')}
+                    value={branch}
+                    optionLabel={t('chooseBranch')}
+                    branches={unitNames}
+                    onChange={setBranch}
+            />
+          )}
 
           {/* Login Button */}
           <button type="submit" className="btn btn-primary w-100">
@@ -150,6 +163,6 @@ export default function LoginPage() {
           </p>
         </form>
       </div>
-    </div>
+    </Skeleton>
   );
 }

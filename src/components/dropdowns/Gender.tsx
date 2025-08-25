@@ -21,8 +21,8 @@ export default function Gender({value, onChange}:GenderProps) {
               required
             >
                 <option value="" disabled>{t('selectGender')}</option>
-                <option value="male">{t('male')}</option>
-                <option value="female">{t('female')}</option>
+                <option value="Male">{t('male')}</option>
+                <option value="Female">{t('female')}</option>
             </select>
     </div>
   )

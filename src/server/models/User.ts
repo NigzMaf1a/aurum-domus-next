@@ -6,22 +6,25 @@ export default class User {
   constructor() {}
 
   async createUser(data: UserPayload): Promise<{ message: string; id: number }> {
-    const sql = `
-      INSERT INTO Registration 
-      (Name1, Name2, PhoneNo, Email, Password, Gender, RegType, dLocation, accStatus) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `
-    const [result] = await db.execute<ResultSetHeader>(sql, [
-      data.name1,
-      data.name2,
-      data.phone,
-      data.email,
-      data.password,
-      data.gender,
-      data.regtype,
-      data.location,
-      data.accstatus ?? 'Pending',
-    ])
+const sql = `
+  INSERT INTO Registration 
+  (Name1, Name2, PhoneNo, Email, Password, Gender, RegType, dLocation, accStatus, image) 
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+`
+
+const [result] = await db.execute<ResultSetHeader>(sql, [
+  data.Name1,
+  data.Name2,
+  data.Phone,
+  data.Email,
+  data.Password,
+  data.Gender,
+  data.RegType,
+  data.dLocation ?? null,
+  data.accStatus ?? 'Pending',
+  data.Image ?? null,
+])
+
     return { message: 'User created', id: result.insertId }
   }
 
@@ -37,19 +40,18 @@ export default class User {
   ): Promise<{ message: string; affectedRows: number }> {
     const sql = `
       UPDATE Registration 
-      SET Name1 = ?, Name2 = ?, PhoneNo = ?, Email = ?, Password = ?, Gender = ?, RegType = ?, dLocation = ?, accStatus = ?
+      SET Name1 = ?, Name2 = ?, PhoneNo = ?, Email = ?, Password = ?, Gender = ?, RegType = ?, accStatus = ?
       WHERE RegID = ?
     `
     const [result] = await db.execute<ResultSetHeader>(sql, [
-      data.name1,
-      data.name2,
-      data.phone,
-      data.email,
-      data.password,
-      data.gender,
-      data.regtype,
-      data.location,
-      data.accstatus ?? 'Pending',
+      data.Name1,
+      data.Name2,
+      data.Phone,
+      data.Email,
+      data.Password,
+      data.Gender,
+      data.RegType,
+      data.accStatus ?? 'Pending',
       regID,
     ])
     return { message: 'User updated', affectedRows: result.affectedRows }

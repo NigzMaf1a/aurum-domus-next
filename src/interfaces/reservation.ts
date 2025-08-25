@@ -3,6 +3,7 @@ export default interface Reservation {
   ReservationID: number;
   UnitID: number;
   TableID: number;
+  CustomerID:number;
   OrderID: number;
   DishID: number;
   DishName: string;

@@ -20,9 +20,17 @@ import stock from './server/routes/stockRoutes';
 import tableRoutes from './server/routes/tableRoutes';
 import unitRoutes from './server/routes/unitRoutes';
 import unitPublicRoutes from './server/routes/unitPublicRoutes';
-import userRoutes from './server/routes/userRoutes';
+// import userRoutes from './server/routes/userRoutes';
+import userPublicRoutes from './server/routes/userPublicRoutes';
 import orderRoutes from './server/routes/orderRoutes';
 import dishRoutes from './server/routes/dishRoutes';
+import accountantRoutes from './server/routes/accountantRoutes';
+import adminRoutes from './server/routes/adminRoutes';
+import chefRoutes from './server/routes/chefRoutes';
+import customerRoutes from './server/routes/customerRoutes';
+import managerRoutes from './server/routes/managerRoutes';
+import ownerRoutes from './server/routes/ownerRoutes';
+import supplierRoutes from './server/routes/supplierRoutes';
 
 import authMiddleware from './server/middleware/auth';
 import errorHandler from './server/middleware/errorHandler';
@@ -52,7 +60,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
 // Routes
-app.use('/api/user/public/', userRoutes);
+app.use('/api/customer/public', customerRoutes);
+app.use('/api/user/public/', userPublicRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/bio', authMiddleware, bioRoutes);
 app.use('/api/faqs', authMiddleware, faqsRoutes);
@@ -66,9 +75,16 @@ app.use('/api/stock', authMiddleware, stock);
 app.use('/api/table', authMiddleware, tableRoutes);
 app.use('/api/unit/public', unitPublicRoutes);
 app.use('/api/unit', authMiddleware, unitRoutes);
-app.use('/api/user', authMiddleware, userRoutes);
+// app.use('/api/user', authMiddleware, userRoutes);
 app.use('/api/order', authMiddleware, orderRoutes);
 app.use('/api/dishes', authMiddleware, dishRoutes);
+app.use('/api/accountant', authMiddleware, accountantRoutes);
+app.use('/api/admin', authMiddleware, adminRoutes);
+app.use('/api/chef', authMiddleware, chefRoutes);
+app.use('/api/customer', authMiddleware, customerRoutes);
+app.use('/api/manager', authMiddleware, managerRoutes);
+app.use('/api/owner', authMiddleware, ownerRoutes);
+app.use('/api/supplier', authMiddleware, supplierRoutes);
 
 // Health check
 app.get('/', (req: Request, res: Response) => {
