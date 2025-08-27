@@ -16,12 +16,12 @@ export default function DynamicHead({
   style = {},
 }: Head1Props) {
   return (
-    <h2
+    <h5
       onClick={onClick}
       className={` ${className}`}
       style={style}
     >
       {text}
-    </h2>
+    </h5>
   );
 }

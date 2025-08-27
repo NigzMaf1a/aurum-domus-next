@@ -7,6 +7,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import mockReservations from '../../../utilscripts/mockReservations.json'; //Local mock data
 import Reservation from '@/interfaces/reservation';
 
+//components
+import Skeleton from '@/components/containers/Skeleton';
+
 
 export default function ManagerReservationsPage() {
   /* ---------- State ---------- */
@@ -31,7 +34,7 @@ export default function ManagerReservationsPage() {
 
   /* ---------- UI ---------- */
   return (
-    <div className="container py-4">
+    <Skeleton className="container py-4">
       <h2 className="text-center mb-4 textColorless">{t('managerReservations')}</h2>
       <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
         <div className="row g-3">
@@ -56,6 +59,6 @@ export default function ManagerReservationsPage() {
           ))}
         </div>
       </div>
-    </div>
+    </Skeleton>
   );
 }

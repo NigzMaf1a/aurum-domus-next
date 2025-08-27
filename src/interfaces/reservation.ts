@@ -13,4 +13,5 @@ export default interface Reservation {
   ReservationDate: string;
   ReservationTime: string;
   ReservationStatus: reservationStatus;
+  Image:File;
 }

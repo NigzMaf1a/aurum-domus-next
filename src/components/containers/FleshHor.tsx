@@ -17,7 +17,7 @@ export default function FleshHor({
   return (
     <div
       onClick={onClick}
-      className={`d-flex flex-row col-lg-12 col-sm-6 h-auto rounded ${className}`}
+      className={`d-flex flex-row col-lg-12 col-sm-6 rounded ${className}`}
       style={style}
     >
       {children}

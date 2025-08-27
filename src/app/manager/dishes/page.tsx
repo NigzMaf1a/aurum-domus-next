@@ -6,7 +6,10 @@ import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import mockDishes from '../../../utilscripts/mockDishes.json'; // Local mock data
+//components
+import Skeleton from '@/components/containers/Skeleton';
+
+import mockDishes from '../../../utilscripts/mockDishes.json';
 
 // Interfaces/enums/scripts
 import Dish from '../../../interfaces/dish';
@@ -94,7 +97,7 @@ const ManagerDishesPage: React.FC = () => {
 
   /* ---------- UI ---------- */
   return (
-    <div className="container py-4">
+    <Skeleton className="container py-4">
       <h2 className="text-center mb-4 textColorless">{t('managerDishes')}</h2>
 
       {loading ? (
@@ -232,7 +235,7 @@ const ManagerDishesPage: React.FC = () => {
           </div>
         </div>
       )}
-    </div>
+    </Skeleton>
   );
 };
 

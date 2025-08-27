@@ -1,13 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-// import axios from 'axios';          // ⬅️ commented out – no real API today
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button } from 'react-bootstrap';
 
 import reservationsData from '../../../utilscripts/mockReservations.json'; // <-- mock data lives here
 
-// ---------- Types ----------
+
+//components
+import Skeleton from '@/components/containers/Skeleton';
+import Ribz from '@/components/containers/Ribz';
+import Reservations from '@/components/cards/reservations/Reservations';
+import DynamicDiv from '@/components/containers/DynamicDiv';
+import DynamicHead from '@/components/h/DynamicHead';
+import DynamicButton from '@/components/buttons/DynamicButton';
+
 type Reservation = {
   ReservationID: number;
   UnitID: number;
@@ -29,7 +35,6 @@ type Dish = {
   DishPrice: number;
 };
 
-// ---------- Mock Dish Catalog ----------
 const mockDishes: Dish[] = [
   { DishID: 1, DishName: 'Beef Burger', DishPrice: 550 },
   { DishID: 2, DishName: 'Sushi Combo', DishPrice: 850 },
@@ -38,14 +43,12 @@ const mockDishes: Dish[] = [
   { DishID: 5, DishName: 'Pasta Alfredo', DishPrice: 600 },
 ];
 
-// ---------- Component ----------
 export default function CustomerReservationsPage() {
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [dishes] = useState<Dish[]>(mockDishes);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
-  // form states
   const [unitID, setUnitID] = useState<number>(0);
   const [tableID, setTableID] = useState<number>(0);
   const [dishID, setDishID] = useState<number>(0);
@@ -54,26 +57,7 @@ export default function CustomerReservationsPage() {
   const [reservationDate, setReservationDate] = useState('');
   const [reservationTime, setReservationTime] = useState('');
 
-  // ---------- Load mock reservations on mount ----------
   useEffect(() => {
-    // 🚫 Real API – taking the day off
-    // const fetchData = async () => {
-    //   try {
-    //     const [resRes, resDish] = await Promise.all([
-    //       axios.get('/api/reservations'),
-    //       axios.get('/api/dishes'),
-    //     ]);
-    //     setReservations(resRes.data);
-    //     setDishes(resDish.data);
-    //   } catch (e) {
-    //     console.error(e);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-    // fetchData();
-
-    // 🪄 Instant mock load
     setReservations(reservationsData as Reservation[]);
     setLoading(false);
   }, []);
@@ -81,17 +65,13 @@ export default function CustomerReservationsPage() {
   const selectedDish = dishes.find(d => d.DishID === dishID);
   const totalPrice = selectedDish ? selectedDish.DishPrice * plates : 0;
 
-  // ---------- Fake reserve handler ----------
   const handleReserve = async () => {
     if (!unitID || !tableID || !dishID || plates < 1 || !reservationDate || !reservationTime) {
       return alert('Please fill all fields.');
     }
 
-    // Pretend the MPESA push + DB save all succeed
-    // await axios.post('/api/pay', { amount: totalPrice });
-
     const newReservation: Reservation = {
-      ReservationID: Date.now(), // quick‑n‑dirty unique ID
+      ReservationID: Date.now(),
       UnitID: unitID,
       TableID: tableID,
       RegID: 0,
@@ -105,61 +85,29 @@ export default function CustomerReservationsPage() {
       ReservationTime: reservationTime,
     };
 
-    // await axios.post('/api/reservations', newReservation);
     setReservations([newReservation, ...reservations]);
     setShowModal(false);
   };
 
-  // ---------- UI ----------
   return (
-    <div className="container py-5">
+    <Skeleton className='gap-3'>
       <h2 className="text-center mb-4 textColorless">Customer Reservations</h2>
+      <Ribz className='d-flex flex-row justify-content-between justify-content-center' style={{height:'100px', backgroundColor:'#25383C'}}>
+          <DynamicDiv className='d-flex flex-column justify-content-center'>
+            <DynamicHead text={"Add Reservation"} className='text-center' style={{marginLeft:'20px'}}/>
+          </DynamicDiv>
+          <DynamicDiv className='d-flex flex-column justify-content-center' style={{width:'100px', height:'100px'}}>
+            <DynamicButton label='Add' onClick={() => setShowModal(true)} style={{width:'50px', height:'30px', backgroundColor:'#AF7817'}}/>
+          </DynamicDiv>
+      </Ribz>
 
       {loading ? (
         <div className="text-center">
           <div className="spinner-border text-primary" role="status" />
         </div>
-      ) : (
-        <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
-          <div className="row g-3">
-            {reservations.map(res => (
-              <div key={res.ReservationID} className="col-12 col-md-6 col-lg-4">
-                <div className="card shadow-sm h-100">
-                  <div className="card-body">
-                    <h2 className="fs-5">Res ID: {res.ReservationID}</h2>
-                    <h3 className="fs-6">Unit: {res.UnitID}</h3>
-                    <h4 className="fs-6">Table: {res.TableID}</h4>
-                    <p>Dish: {res.DishName}</p>
-                    <p>Plates: {res.Plates}</p>
-                    <p>Price: {res.OrderPrice.toFixed(2)}</p>
-                    <p>
-                      Status:{' '}
-                      <span className={res.PaymentStatus === 'Paid' ? 'text-success' : 'text-danger'}>
-                        {res.PaymentStatus}
-                      </span>
-                    </p>
-                    <p>
-                      Date/Time: {res.ReservationDate} {res.ReservationTime}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-            {reservations.length === 0 && (
-              <p className="text-center text-muted w-100">No reservations found.</p>
-            )}
-          </div>
-        </div>
-      )}
+      ) : (<Reservations reservations={reservations}/> )}
 
-      {/* Reserve Button */}
-      <div className="text-center mt-4">
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-          New Reservation
-        </button>
-      </div>
 
-      {/* Reservation Modal */}
       <Modal show={showModal} centered onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>New Reservation</Modal.Title>
@@ -238,6 +186,6 @@ export default function CustomerReservationsPage() {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </Skeleton>
   );
 }

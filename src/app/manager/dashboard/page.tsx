@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 //components
 import Skeleton from '../../../components/containers/Skeleton';
@@ -7,17 +7,32 @@ import DashCard from '@/components/cards/DashCard';
 import Strip from '@/components/general/Strip';
 import Stats from '@/components/general/Stats';
 import DashTab from '@/components/table/DashTab';
-
-//interfaces
 import { Bar } from '@/components/general/Stats';
 import {Pie} from '@/components/general/Stats';
 
+//interfaces
+import User from '@/interfaces/user';
+
+//class import
+import Manager from '@/scripts/classes/manager';
+
 
 export default function Dashboard() {
+  const [thisUser, setThisUser] = useState<User>();
+  async function initializeUser(){
+    const userString = localStorage.getItem("user");
+    const user:User = userString ? JSON.parse(userString) : null;
+    await setThisUser(user);
+    const customer = new Manager(user.RegID);
+  }
+
+  useEffect(()=>{
+    initializeUser();
+  },[thisUser]);
   const barChart: Bar = {
   labels: {
-    label1: "Q1 Sales",
-    label2: "Q2 Sales"
+    label1: "Sugar",
+    label2: "Flour"
   },
   values: {
     value1: 150,
@@ -26,18 +41,18 @@ export default function Dashboard() {
 };
 const pieChart: Pie = {
   labels: {
-    label1: "Online Sales",
-    label2: "In-store Sales"
+    label1: "Orders",
+    label2: "Reservations"
   },
   values: {
-    value1: 65,  // percentage
+    value1: 65,
     value2: 35
   }
 };
 const tableData = [
-  { id: 1, name: "John Doe", age: 28, role: "Manager", dept: "Sales", salary: 60000, status: "Active" },
-  { id: 2, name: "Jane Smith", age: 34, role: "Engineer", dept: "Tech", salary: 75000, status: "Active" },
-  { id: 3, name: "Sam Brown", age: 41, role: "Designer", dept: "UI/UX", salary: 50000, status: "Inactive" },
+  { id: 1, name: "Nigel Khasiani", age: 25, role: "Manager", dept: "Sales", salary: 60000, status: "Active" },
+  { id: 2, name: "Jane Smith", age: 24, role: "Chef", dept: "Kitchen", salary: 75000, status: "Active" },
+  { id: 3, name: "Sam Brown", age: 21, role: "Waiter", dept: "Reception", salary: 50000, status: "Inactive" },
 ];
 
   return (
@@ -61,11 +76,13 @@ const tableData = [
         </div>
         <Stats bar={barChart} 
                pie={pieChart}
+               barTitle='Stock'
+               pieTitle='Sales'
         />
         <DashTab
           data={tableData}
           columns={["id", "name", "age", "role", "dept", "salary", "status"]}
-          columnNames={["ID", "Full Name", "Age", "Job Role", "Department", "Salary ($)", "Status"]}
+          columnNames={["ID", "Full Name", "Age", "Job Role", "Department", "Salary (Kshs)", "Status"]}
         />
     </Skeleton>
   );

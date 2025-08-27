@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next';
 import managerBioData from '../../../utilscripts/mockBio.json'; //  Local mock data
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+//components
+import Skeleton from '@/components/containers/Skeleton';
+
 const ManagerBioPage: React.FC = () => {
   /* ---------- state ----------- */
   const [bio, setBio]             = useState<string>('');               // Displayed bio
@@ -60,7 +63,7 @@ const ManagerBioPage: React.FC = () => {
 
   /* ---------- UI ----------- */
   return (
-    <div className="container mt-5">
+    <Skeleton className="container mt-5">
       <h2 className="text-center mb-4 textColorless">{t('managerBio')}</h2>
 
       {/* Current Bio Preview */}
@@ -102,7 +105,7 @@ const ManagerBioPage: React.FC = () => {
           )}
         </div>
       </div>
-    </div>
+    </Skeleton>
   );
 };
 

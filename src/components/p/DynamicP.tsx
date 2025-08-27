@@ -11,7 +11,7 @@ interface Props {
 
 export default function DynamicP({ text, className = '', style = {} }: Props) {
   return (
-    <p className={`mb-sm-3 ${className}`} style={style}>
+    <p className={` ${className}`} style={style}>
       {text}
     </p>
   );

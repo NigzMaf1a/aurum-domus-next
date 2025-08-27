@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import mockOrders from '../../../utilscripts/mockOrders.json'; // Local mock data
 
+//components
+import Skeleton from '@/components/containers/Skeleton';
+
 /* ---------- Types ---------- */
 import Order from '../../../interfaces/order';
 
@@ -32,7 +35,7 @@ export default function ManagerOrdersPage() {
 
   /* ---------- UI ---------- */
   return (
-    <div className="container py-4">
+    <Skeleton className="container py-4">
       <h2 className="text-center mb-4 textColorless">{t('managerOrders')}</h2>
       <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
         <div className="row g-3">
@@ -55,6 +58,6 @@ export default function ManagerOrdersPage() {
           ))}
         </div>
       </div>
-    </div>
+    </Skeleton>
   );
 }

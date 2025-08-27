@@ -79,7 +79,7 @@ export default function RegisterPage() {
       style={{ minHeight: '100vh', padding: '1rem' }}
     >
       <DynamicDiv
-        className="card shadow p-4"
+        className="card shadow p-4 border"
         style={{
           minWidth: '320px',
           maxWidth: '360px',

@@ -8,6 +8,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import mockTables from '../../../utilscripts/mockTables.json'; 
 import Table from '../../../interfaces/table';
 
+//components
+import Skeleton from '@/components/containers/Skeleton';
+
 /* ---------- Bootstrap Modal types ---------- */
 declare global {
   interface Window {
@@ -112,7 +115,7 @@ const ManagerTablesPage: React.FC = () => {
 
   /* ---------- UI ---------- */
   return (
-    <div className="container my-5">
+    <Skeleton className="container my-5">
       <h2 className="text-center mb-4 textColorless">{t('managerTables')}</h2>
 
       {alertMessage && (
@@ -216,7 +219,7 @@ const ManagerTablesPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Skeleton>
   );
 };
 

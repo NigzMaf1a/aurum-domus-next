@@ -8,6 +8,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import mockPayments from '../../../utilscripts/mockPayments.json'; // Local mock data
 import Payment from '@/interfaces/payment';
 
+//Components
+import Skeleton from '@/components/containers/Skeleton';
+
 const ManagerPaymentsPage: React.FC = () => {
   /* ---------- State ---------- */
   const [payments, setPayments] = useState<Payment[]>([]);
@@ -39,7 +42,7 @@ const ManagerPaymentsPage: React.FC = () => {
 
   /* ---------- UI ---------- */
   return (
-    <div className="container my-5">
+    <Skeleton className="container my-5">
       <h2 className="text-center mb-4 textColorless">{t('managerPayments')}</h2>
 
       {error && (
@@ -89,7 +92,7 @@ const ManagerPaymentsPage: React.FC = () => {
           )}
         </div>
       )}
-    </div>
+    </Skeleton>
   );
 };
 

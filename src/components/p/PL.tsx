@@ -9,7 +9,7 @@ interface Props{
 
 export default function PC({text}:Props) {
   return (
-    <p className='mb-4 fs-5 text-start'>
+    <p className='mb-4 fs-5 text-start text-light'>
         {text}
     </p>
   );

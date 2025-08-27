@@ -13,4 +13,5 @@ export default interface Order {
   OrderTime: string;
   PaymentStatus: paymentStatus;
   Served: served;
+  Image:File;
 }

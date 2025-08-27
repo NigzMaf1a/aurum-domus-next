@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-// import axios from 'axios';                    //Live API (disabled in mock mode)
 import { Modal, Button, Form } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import mockStock from '../../../utilscripts/mockStock.json'; //Local mock data
+import mockStock from '../../../utilscripts/mockStock.json';
 import StockItem from '@/interfaces/stockItem';
 
+//components
+import Skeleton from '@/components/containers/Skeleton';
+import ManagerStock from '@/components/cards/manager/ManagerStock';
+
 export default function ManagerStockPage() {
-  /* ---------- State ---------- */
   const [stock, setStock] = useState<StockItem[]>([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -21,18 +22,7 @@ export default function ManagerStockPage() {
 
   const total = quantity * cost;
 
-  /* ---------- Fetch (mock) ---------- */
   const fetchStock = async () => {
-    /*LIVE ENDPOINT
-    try {
-      const response = await axios.get('/api/managerstock');
-      setStock(response.data);
-    } catch {
-      alert('Failed to fetch stock.');
-    }
-    */
-
-    // 🕹️ MOCK MODE: simply load local JSON
     setStock(mockStock as StockItem[]);
   };
 
@@ -42,20 +32,6 @@ export default function ManagerStockPage() {
 
   /* ---------- Add Stock ---------- */
   const handleAddStock = async () => {
-    /*LIVE ENDPOINT
-    try {
-      const newStock = { ItemName: itemName, ItemDescription: itemDescription,
-                         Quantity: quantity, Cost: cost, Total: total };
-      await axios.post('/api/managerstock', newStock);
-      alert('Stock added successfully!');
-      setShowModal(false);
-      fetchStock();
-    } catch {
-      alert('Failed to add stock.');
-    }
-    */
-
-    //MOCK SUCCESS: update local state only
     const newStock: StockItem = {
       StockID: stock.length ? Math.max(...stock.map(s => s.StockID)) + 1 : 1,
       ItemName: itemName,
@@ -68,29 +44,11 @@ export default function ManagerStockPage() {
     setShowModal(false);
   };
 
-  /* ---------- UI ---------- */
   return (
-    <div className="container py-4">
+    <Skeleton className="container py-4">
       <h2 className="text-center mb-4 textColorless">{t('managerStock')}</h2>
 
-      <div style={{ maxHeight: '500px', overflowY: 'auto' }} className="mb-4">
-        <div className="row g-3">
-          {stock.map(item => (
-            <div key={item.StockID} className="col-12">
-              <div className="card shadow-sm">
-                <div className="card-body">
-                  <h5>{t('stockId')}: {item.StockID}</h5>
-                  <p><strong>{t('itemName')}:</strong> {item.ItemName}</p>
-                  <p><strong>{t('itemDescription')}:</strong> {item.ItemDescription}</p>
-                  <p><strong>{t('quantity')}:</strong> {item.Quantity}</p>
-                  <p><strong>{t('costPerUnit')}:</strong> KES {item.Cost.toFixed(2)}</p>
-                  <p><strong>{t('total')}:</strong> KES {item.Total.toFixed(2)}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <ManagerStock props={stock}/>
 
       <div className="text-center">
         <Button variant="primary" onClick={() => setShowModal(true)}>
@@ -149,6 +107,6 @@ export default function ManagerStockPage() {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </Skeleton>
   );
 }

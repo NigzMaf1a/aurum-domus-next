@@ -8,7 +8,7 @@ interface Head1Props{
 
 export default function Head1({text}:Head1Props) {
   return (
-    <h2 className="mb-2 text-start">
+    <h2 className="mb-2 text-start text-light">
         {text}
     </h2>
   );

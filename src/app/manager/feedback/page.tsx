@@ -7,6 +7,9 @@ import mockFeedback from '../../../utilscripts/mockFeedback.json';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Feedback from '../../../interfaces/feedback';
 
+//components
+import Skeleton from '@/components/containers/Skeleton';
+
 declare global {
   interface Window {
     bootstrap?: {
@@ -89,7 +92,7 @@ const ManagerFeedbackPage: React.FC = () => {
 
   /* ----------  Render ---------- */
   return (
-    <div className="container my-5">
+    <Skeleton className="container my-5">
       <h2 className="text-center mb-4 textColorless">{t('managerFeed')}</h2>
 
       {loading ? (
@@ -176,7 +179,7 @@ const ManagerFeedbackPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Skeleton>
   );
 };
 

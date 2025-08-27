@@ -13,20 +13,21 @@ interface ChartProps {
   value1: number;
   label2: string;
   value2: number;
+  title:string;
 }
 
-const PieChart: React.FC<ChartProps> = ({ label1, value1, label2, value2 }) => {
+const PieChart: React.FC<ChartProps> = ({ label1, value1, label2, value2, title }) => {
   const data = [
     { name: label1, value: value1 },
     { name: label2, value: value2 },
   ];
 
-  const COLORS = ["#0d6efd", "#dc3545"]; // Bootstrap blue & red
+  const COLORS = ["#347C2C", "#FDD017"];
 
   return (
     <div className="col-12 col-sm-6 col-lg-5 mb-4">
       <div className="card p-3 shadow-sm">
-        <h5 className="card-title text-center">Pie Chart</h5>
+        <h5 className="card-title text-center">{title}</h5>
         <ResponsiveContainer width="100%" height={250}>
           <RePieChart>
             <Pie

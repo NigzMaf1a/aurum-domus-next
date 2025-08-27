@@ -30,7 +30,7 @@ const pieChart: Pie = {
     label2: "In-store Sales"
   },
   values: {
-    value1: 65,  // percentage
+    value1: 65, 
     value2: 35
   }
 };
@@ -43,7 +43,7 @@ const tableData = [
   return (
     <Skeleton>
         <h1 className="mb-4 textColorless">Dashboard</h1>
-        <Strip head='Trialz' det={"today"}/>
+        <Strip head='Dashboard'/>
         <div className="row mb-1" id="cardCont">
 
             {/* Card 1 */}

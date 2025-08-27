@@ -16,7 +16,7 @@ export default function DynamicDiv({
   return (
     <div
       onClick={onClick}
-      className={`p-1 border rounded ${className}`}
+      className={` rounded ${className}`}
       style={style}
     >
       {children}

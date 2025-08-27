@@ -8,6 +8,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import mockUnits from '../../../utilscripts/mockUnits.json';   //Local mock data
 import Unit from '@/interfaces/unit';
 
+//components
+import Skeleton from '@/components/containers/Skeleton';
+
 export default function ManagerUnitsPage() {
   /* ---------- State ---------- */
   const [units, setUnits] = useState<Unit[]>([]);
@@ -77,7 +80,7 @@ export default function ManagerUnitsPage() {
 
   /* ---------- UI ---------- */
   return (
-    <div className="container py-4">
+    <Skeleton className="container py-4">
       <h2 className="text-center mb-4 textColorless">{t('managerUnits')}</h2>
 
       <div style={{ maxHeight: '500px', overflowY: 'auto' }} className="mb-4">
@@ -172,6 +175,6 @@ export default function ManagerUnitsPage() {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </Skeleton>
   );
 }

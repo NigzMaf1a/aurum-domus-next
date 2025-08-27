@@ -16,7 +16,7 @@ const DynamicButton: React.FC<ButtonProps> = ({
   return (
     <button
       type="button"
-      className={`btn ${className}`}
+      className={`btn d-flex flex-row align-items-center justify-content-center${className}`}
       style={style}
       onClick={onClick}
     >

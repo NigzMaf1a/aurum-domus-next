@@ -2,39 +2,49 @@ import React, {useState} from 'react';
 import Order from '@/interfaces/order';
 
 //components
+import DynamicDiv from '../containers/DynamicDiv';
 import OrderModal from '../modals/OrderModal';
+import GlobalModal from '../modals/GlobalModal';
+import LabelledP from '../p/LabelledP';
+import DynamicP from '../p/DynamicP';
 
-export default function OrderItem({OrderID, DishName, Plates, OrderPrice, OrderDescription, OrderDate, OrderTime, PaymentStatus, Served}:Order) {
+
+export default function OrderItem({OrderID, DishName, DishPrice, Plates, OrderPrice, OrderDescription, OrderDate, OrderTime, PaymentStatus, Served, Image}:Order) {
   const [showModal, setShowModal] = useState(false);
   const handleClick = () => setShowModal(false);
   return (
-    <div key={OrderID} className="col-12" onClick={()=> setShowModal(true)}>
-        <div className="card">
-            <div className="card-body">
-              <h5>Order ID: {OrderID}</h5>
-              <div className='d-flex flex-row'>
-                <div className='d-flex flex-column'>
-                  <p><strong>Dish:</strong> {DishName} ({Plates} plates)</p>
-                  <p><strong>Description:</strong> {OrderDescription}</p>
-                  <p><strong>Payment:</strong> {PaymentStatus} | <strong>Served:</strong> {Served}</p>
-                </div>
-                <div className='ms-3 d-flex flex-column'>
-                  <p><strong>Price:</strong> KES {OrderPrice.toFixed(2)}</p>
-                  <p><strong>Date:</strong> {OrderDate} at {OrderTime}</p>
-                </div>
-              </div>            
-            </div>
+    <DynamicDiv key={OrderID} className="col-12" onClick={()=> setShowModal(true)}>
+        <DynamicDiv className="d-flex flex-row card justify-content-between align-items-center">
+            <DynamicDiv className="card-body"> 
+               <LabelledP label={"Dish Name:"} text={DishName}/>   
+               <LabelledP label={"Plates:"} text={Plates}/>       
+            </DynamicDiv>
+            <DynamicDiv style={{width:'50px', height:'30px', backgroundColor:'#348781'}}
+                        className='d-flex flex-column justify-content-center align-items-center me-2'
+            >
+               <DynamicP text={Served} className='m-0 text-light'/>
+            </DynamicDiv>
+        </DynamicDiv>
             {showModal && 
-              <div 
-                className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50"
-                onClick={()=>handleClick()}
-              >
-                <div onClick={e => e.stopPropagation()}> 
-                  <OrderModal callback={()=>handleClick()}/>
-                </div>
-              </div>
+              (<GlobalModal>
+                  <div onClick={()=>handleClick()}>
+                    <div onClick={e => e.stopPropagation()}> 
+                      <OrderModal name={DishName} 
+                                  orderPrice={OrderPrice}
+                                  price={DishPrice}
+                                  date={OrderDate}
+                                  time={OrderTime}
+                                  plates={Plates}
+                                  payment={PaymentStatus}
+                                  served={Served}
+                                  image={Image}
+                                  callback={()=>handleClick()}
+                      />
+                    </div>
+                  </div>
+               </GlobalModal>
+              )
             }
-        </div>
-    </div>
+    </DynamicDiv>
   )
 }
