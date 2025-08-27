@@ -3,10 +3,12 @@ export default interface Payment {
   PaymentID: number;
   UnitID: number;
   FinanceID: number;
+  CustomerID:number;
+  OrderID:number;
   Name1: string;
   Name2: string;
   PaymentType: paymentType;
   PaymentAmount: number;
-  PaymentDate: string; // YYYY-MM-DD
-  PaymentTime: string; // HH:MM:SS
+  PaymentDate: string;
+  PaymentTime: string;
 }

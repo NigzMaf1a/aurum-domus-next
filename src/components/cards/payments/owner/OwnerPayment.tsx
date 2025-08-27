@@ -6,6 +6,7 @@ import LabelledP from '../../../p/LabelledP';
 import DynamicDiv from '@/components/containers/DynamicDiv';
 import DynamicP from '@/components/p/DynamicP';
 import OwnerPaymentDetails from './OwnerPaymentDetails';
+import GlobalModal from '@/components/modals/GlobalModal';
 
 interface OwnerPaymentProps{
     unitID:number;
@@ -40,7 +41,7 @@ export default function OwnerPayment({unitID, orderID, name1, name2, paymentType
       >
         <DynamicP text={paymentType} className='text-center text-white'/>
       </DynamicDiv>
-      {showModal && <div className="fixed inset-0 flex items-center justify-center bg-black/40">
+      {showModal && <GlobalModal>
                         <OwnerPaymentDetails unitID={unitID}
                                              orderID={orderID}
                                              name1={name1}
@@ -51,7 +52,7 @@ export default function OwnerPayment({unitID, orderID, name1, name2, paymentType
                                              paymentTime={paymentTime}
                                              callback={closeModal}
                         />
-                    </div>
+                    </GlobalModal>
       }
     </Ribz>
   )

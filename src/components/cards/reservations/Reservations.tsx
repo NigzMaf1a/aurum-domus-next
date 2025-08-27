@@ -21,7 +21,7 @@ export default function Reservations({reservations}:{reservations:Reservation[]}
                         className="col-md-6 col-lg-12 col-sm-3"
           />
 
-          <DynamicDiv style={{ height: '300px', overflowY:'scroll', backgroundColor:'#FFF8C6'}} className='mt-3 rounded'>
+          <DynamicDiv style={{ height: '350px', overflowY:'scroll', backgroundColor:'#FFF8C6'}} className='mt-3 rounded'>
             {reservations.map(res => (
                 <DynamicDiv key={res.ReservationID} className="col-12 col-md-6 col-lg-12 gap-3">
                    <ReservationItem res={res}/>

@@ -24,8 +24,7 @@ export default function ReservationItem({res}:{res:Reservation}) {
     } 
 
   return (
-        <DynamicDiv className="card shadow-sm my-1 mx-1">
-            <FleshHor style={{cursor:'pointer', height:'70px'}} onClick={openModal}>
+            <FleshHor style={{cursor:'pointer', height:'70px', backgroundColor:'#FFFFFF'}} className="shadow-sm my-1 mx-1" onClick={openModal}>
                 <DynamicDiv style={{marginLeft:'10px'}} className='d-flex flex-row justify-content-center align-items-center'>
                     <RoundedImage src={res.Image} style={{width:'50px', height:'50px'}}/>
                     <DynamicDiv className='d-flex flex-row justify-content-between align-items-center'>
@@ -33,8 +32,13 @@ export default function ReservationItem({res}:{res:Reservation}) {
                         <LabelledP label={"Dish Name:"} text={res.DishName}/>
                         <LabelledP label={"Order Price"} text={res.OrderPrice}/>
                       </DynamicDiv>
-                      <DynamicDiv style={{height:'30px', width:'70px'}}>
-                        <DynamicP text={res.ReservationStatus} className='m-0'/>
+                      <DynamicDiv style={{height:'30px', width:'50px', backgroundColor:'#348017'}}
+                                  className='d-flex flex-column justify-content-center align-items-center'
+                      >
+                        <DynamicP text={res.ReservationStatus} 
+                                  className='m-0 text-light' 
+                                  style={{fontSize:'12px', fontFamily:"'Nunito', sans-serif", marginLeft:'auto'}}
+                        />
                       </DynamicDiv>
                     </DynamicDiv>
                 </DynamicDiv>
@@ -59,7 +63,6 @@ export default function ReservationItem({res}:{res:Reservation}) {
                                </GlobalModal>)
                 }
             </FleshHor>
-        </DynamicDiv>
   )
 }
 

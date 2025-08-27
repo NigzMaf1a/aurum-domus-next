@@ -1,75 +1,77 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { useEffect, useState, useMemo } from 'react';
+import { payments } from '@/utilscripts/payments';
 
-type Payment = {
-  PaymentID: number;
-  FinanceID: number;
-  RegID: number;
-  OrderID: number;
-  Name1: string;
-  Name2: string;
-  PaymentType: 'Mpesa' | 'Cash';
-  PaymentAmount: number;
-  PaymentDate: string;
-  PaymentTime: string;
-};
+//interfaces
+import Payment from '@/interfaces/payment';
+
+//components
+import Skeleton from '@/components/containers/Skeleton';
+import DynamicDiv from '@/components/containers/DynamicDiv';
+import DynamicInput from '@/components/inputs/DynamicInput';
+import PaymentItem from '@/components/cards/payments/customer/PaymentItem';
 
 export default function CustomerPaymentsPage() {
-  const [payments, setPayments] = useState<Payment[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [disPayments, setDisPayments] = useState<Payment[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [searchPar, setSearchPar] = useState('');
 
   useEffect(() => {
-    const fetchPayments = async () => {
-      try {
-        const response = await axios.get('/api/customerpayments');
-        setPayments(response.data);
-      } catch (err) {
-        console.error('Error fetching payments:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPayments();
+    setLoading(true);
+    setTimeout(() => {
+      setDisPayments(payments);
+      setLoading(false);
+    }, 1000);
   }, []);
 
+  // Filtered payments with memoization for performance
+  const filteredPayments = useMemo(() => {
+    const query = searchPar.trim().toLowerCase();
+    if (!query) return disPayments;
+
+    return disPayments.filter((pay) => {
+      return (
+        pay.Name1.toLowerCase().includes(query) ||
+        pay.Name2.toLowerCase().includes(query) ||
+        pay.PaymentType.toLowerCase().includes(query) ||
+        pay.PaymentAmount.toString().includes(query) ||
+        pay.PaymentDate.toLowerCase().includes(query)
+      );
+    });
+  }, [searchPar, disPayments]);
+
   return (
-    <div className="container py-5">
+    <Skeleton className="py-5">
       <h2 className="text-center mb-4 textColorless">Customer Payments</h2>
 
+      {/* Search Input */}
+      <DynamicInput
+        value={searchPar}
+        onChange={setSearchPar}
+        placeholder="Search payment"
+        className="col-12 col-sm-6 col-md-6 col-lg-12"
+      />
+
       {loading ? (
-        <div className="text-center">
+        <DynamicDiv className="text-center mt-3">
           <div className="spinner-border text-primary" role="status" />
-        </div>
+        </DynamicDiv>
       ) : (
-        <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
-          <div className="row g-3">
-            {payments.map(payment => (
-              <div key={payment.PaymentID} className="col-12 col-md-6 col-lg-4">
-                <div className="card shadow-sm h-100">
-                  <div className="card-body">
-                    <h5 className="card-title">Payment ID: {payment.PaymentID}</h5>
-                    <p className="card-text mb-1"><strong>Finance ID:</strong> {payment.FinanceID}</p>
-                    <p className="card-text mb-1"><strong>Reg ID:</strong> {payment.RegID}</p>
-                    <p className="card-text mb-1"><strong>Order ID:</strong> {payment.OrderID}</p>
-                    <p className="card-text mb-1"><strong>Name:</strong> {payment.Name1} {payment.Name2}</p>
-                    <p className="card-text mb-1"><strong>Type:</strong> {payment.PaymentType}</p>
-                    <p className="card-text mb-1"><strong>Amount:</strong> KES {payment.PaymentAmount.toFixed(2)}</p>
-                    <p className="card-text mb-1"><strong>Date:</strong> {payment.PaymentDate}</p>
-                    <p className="card-text"><strong>Time:</strong> {payment.PaymentTime}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-            {payments.length === 0 && (
-              <p className="text-center text-muted w-100">No payments found.</p>
-            )}
-          </div>
-        </div>
+        <DynamicDiv
+          style={{ maxHeight: '500px', overflowY: 'auto', marginTop: '10px' }}
+        >
+          {filteredPayments.length > 0 ? (
+            filteredPayments.map((pay) => (
+              <PaymentItem key={pay.PaymentID} pay={pay} />
+            ))
+          ) : (
+            <p className="text-center text-muted w-100">
+              No payments found.
+            </p>
+          )}
+        </DynamicDiv>
       )}
-    </div>
+    </Skeleton>
   );
 }

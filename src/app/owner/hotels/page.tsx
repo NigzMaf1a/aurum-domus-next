@@ -6,6 +6,7 @@ import Skeleton from '@/components/containers/Skeleton';
 import FleshVert from '@/components/containers/FleshVert';
 import DynamicInput from '@/components/inputs/DynamicInput';
 import DynamicDiv from '@/components/containers/DynamicDiv';
+import GlobalModal from '@/components/modals/GlobalModal';
 import Ribz from '@/components/containers/Ribz';
 import DynamicHead from '@/components/h/DynamicHead';
 import DynamicButton from '@/components/buttons/DynamicButton';
@@ -41,9 +42,9 @@ export default function Units() {
           <DynamicDiv className='bg-light'>
               <div className='text-dark'>Blah Blah Blah</div>
           </DynamicDiv>
-          {showModal && <DynamicDiv className="fixed inset-0 flex items-center justify-center bg-black/40">
+          {showModal && <GlobalModal>
                             <NewHotelModal func={closeModal} />
-                        </DynamicDiv>
+                        </GlobalModal>
           }
         </FleshVert>
     </Skeleton>
