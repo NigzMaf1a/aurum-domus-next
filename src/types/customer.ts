@@ -3,7 +3,7 @@ export type UnitBio = {
   description: string;
 };
 
-export type StringOrNumber = string | number;
+export type StringOrNumber = string | number | null | undefined;
 
 export type Feedback = {
   email: string;

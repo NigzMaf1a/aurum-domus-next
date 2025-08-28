@@ -13,8 +13,8 @@ export default interface User {
 }
 
 export interface LogginCreds{
-  email:string;
-  password:string;
+  Email:string;
+  UserPassword:string;
 }
 
 export interface Supplier{

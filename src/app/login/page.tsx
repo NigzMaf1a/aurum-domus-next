@@ -20,8 +20,8 @@ import getUnits from '@/scripts/api/getUnits';
 
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [Email, setEmail] = useState('');
+  const [UserPassword, setPassword] = useState('');
   const [type, setType] = useState('');
   const [branch, setBranch] = useState('');
   const [unitNames, setUnitNames] = useState<string[]>([]);
@@ -41,7 +41,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
   // Validate input
-  if (!email || !password || !type || !branch) {
+  if (!Email || !UserPassword || !type || !branch) {
     toast.error('All fields are required!');
     return;
   }
@@ -51,7 +51,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   setLoading(true);
 
   try {
-    const logz:LoginResponse = await loginUser({ email, password });
+    const logz:LoginResponse = await loginUser({ Email, UserPassword });
     const { token, user } = logz;
     const role = user?.RegType;
 
@@ -126,7 +126,7 @@ const handleSubmit = async (e: React.FormEvent) => {
           <LoginInput labelFor={"email"}
                       label={t('emailAddress')}
                       type={"email"}
-                      value={email}
+                      value={Email}
                       placeholder={t('exampleEmail')}
                       onChange={setEmail}
           />
@@ -135,7 +135,7 @@ const handleSubmit = async (e: React.FormEvent) => {
           <LoginInput labelFor={"password"}
                       label={t('password')} 
                       type={"password"}  
-                      value={password} 
+                      value={UserPassword} 
                       placeholder={t('examplePassword')}
                       onChange={setPassword}    
           />

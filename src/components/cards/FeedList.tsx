@@ -2,26 +2,35 @@ import React from 'react';
 import { FaStar } from 'react-icons/fa';
 import Feedback from '@/interfaces/feedback';
 
-export default function FeedList({email, feedbackDate, comments, response, rating}:Feedback) {
+//components
+import DynamicDiv from '../containers/DynamicDiv';
+import LabelledP from '../p/LabelledP';
+import LabelledP2 from '../p/LabelledP2';
+import RoundedImage from '../images/RoundedImage';
+
+export default function FeedList({Email, FeedbackDate, Comments, Response, Rating}:Feedback) {
   return (
-    <div className="card mb-3 shadow-sm">
-        <div className="card-body">
-            <h6 className="card-subtitle mb-1 text-muted">
-                {email} • {feedbackDate}
-            </h6>
-            <p className="card-text">{comments}</p>
-            <p className="card-text">
-                <strong>Response:</strong> {response}
-            </p>
-            <div className="d-flex align-items-center">
+    <DynamicDiv className="d-flex flex-row justify-content-between align-items-center 
+                           card mb-3 shadow-sm col-lg-12 col-12 col-md-6 my-0
+                          "
+                style={{height:"100px"}}
+    >
+            <DynamicDiv className='d-flex flex-row align-items-center gap-2 ms-2'>
+                <RoundedImage src={"/aurum1.jpg"} style={{width:"50px", height:"50px"}}/>
+                <DynamicDiv className='d-flex flex-column'>
+                    <LabelledP label={"Email:"} text={Email}/>
+                    <LabelledP2 label={"Comments:"} text={Comments}/>
+                    <LabelledP2 label={"Response:"} text={String(Response)}/>
+                </DynamicDiv>
+            </DynamicDiv>
+            <DynamicDiv className="d-flex align-items-center me-3">
                 {Array.from({ length: 5 }).map((_, i) => (
                     <FaStar
                         key={i}
-                        color={i < rating ? '#ffc107' : '#e4e5e9'}
+                        color={i < Rating ? '#ffc107' : '#e4e5e9'}
                     />
                 ))}
-            </div>
-        </div>
-    </div>
+            </DynamicDiv>
+    </DynamicDiv>
   )
 }

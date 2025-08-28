@@ -3,7 +3,6 @@ import User from '@/interfaces/user';
 import { LogginCreds } from '@/interfaces/user';
 import apiFetch from './apiFetch';
 
-// utils/auth.ts
 export interface LoginResponse {
   token: string;
   user?: User;

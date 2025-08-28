@@ -6,7 +6,7 @@ export interface UserRow extends RowDataPacket {
   Name2: string
   PhoneNo: string
   Email: string
-  Password: string
+  UserPassword: string
   Gender: string
   RegType: string
   dLocation?: string
@@ -19,7 +19,7 @@ export interface UserPayload {
   Name2: string
   Phone: string
   Email: string
-  Password: string
+  UserPassword: string
   Gender: string
   RegType: string
   dLocation?: string

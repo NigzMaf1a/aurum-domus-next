@@ -1,7 +1,7 @@
 import React from "react";
 
 interface RoundedImageProps {
-  src: File;
+  src: File | string;
   className?: string;
   style?: React.CSSProperties;
 }

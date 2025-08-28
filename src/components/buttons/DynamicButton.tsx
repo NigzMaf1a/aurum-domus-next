@@ -25,4 +25,4 @@ const DynamicButton: React.FC<ButtonProps> = ({
   );
 };
 
-export default DynamicButton
+export default DynamicButton;

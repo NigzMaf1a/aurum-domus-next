@@ -1,11 +1,22 @@
 'use client';
+import { useEffect, useState, useMemo } from 'react';
 
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+//mock data
+import feedbackList from '@/utilscripts/feedbacklist';
 
-//scripts
+//interfaces
 import Feedback from '@/interfaces/feedback';
+
+//components
+import Skeleton from '@/components/containers/Skeleton';
+import FleshVert from '@/components/containers/FleshVert';
+import Ribz from '@/components/containers/Ribz';
+import DynamicDiv from '@/components/containers/DynamicDiv';
+import GlobalModal from '@/components/modals/GlobalModal';
 import FeedList from '@/components/cards/FeedList';
+import DynamicInput from '@/components/inputs/DynamicInput';
+import DynamicHead from '@/components/h/DynamicHead';
+import DynamicButton from '@/components/buttons/DynamicButton';
 import AddFeed from '@/components/cards/AddFeed';
 import NoteP from '@/components/loading/NoteP';
 import LoadingAnimation from '@/components/loading/LoadingAnimation';
@@ -17,6 +28,14 @@ export default function CustomerFeedbackPage() {
   const [newRating, setNewRating] = useState(0);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [searchPar, setSearchPar] = useState('');
+
+  function displayForm(){
+    setShowForm(true);
+  }
+  function closeForm(){
+    setShowForm(false);
+  }
 
   useEffect(() => {
     fetchFeedback();
@@ -24,8 +43,8 @@ export default function CustomerFeedbackPage() {
 
   const fetchFeedback = async () => {
     try {
-      const res = await axios.get('/api/feedback');
-      setFeedbackList(res.data);
+      setFeedbackList(feedbackList);
+      console.log(`Feedback ${feed}`)
     } catch {
       console.error('Failed to fetch feedback');
     } finally {
@@ -33,13 +52,23 @@ export default function CustomerFeedbackPage() {
     }
   };
 
-  const submitFeedback = async ({email, comments, response, rating}:Feedback) => {
+  const filteredFeedback = useMemo(()=>{
+    const lowerSearchPar = searchPar.toLowerCase().trim();
+    if(!lowerSearchPar) return feed;
+    return feed.filter((f)=> f.Response?.toLowerCase().includes(lowerSearchPar) ||
+                             f.Comments?.toLowerCase().includes(lowerSearchPar) ||
+                             f.Email?.toLowerCase().includes(lowerSearchPar) ||
+                             f.FeedbackDate?.toLowerCase().includes(lowerSearchPar)
+    )
+  }, [feed, searchPar]);
+
+  const submitFeedback = async ({Email, Comments, Response, Rating}:Feedback) => {
     if (!newComment || newRating < 1) return alert('Please provide a comment and rating.');
     const newFeedback = {
-      email: email, // Replace with actual user email from session or input
-      comments: comments,
-      response: response,
-      rating: rating,
+      email: Email,
+      comments: Comments,
+      response: Response,
+      rating: Rating,
       feedbackDate: new Date().toISOString().split('T')[0],
     };
 
@@ -54,32 +83,50 @@ export default function CustomerFeedbackPage() {
   };
 
   return (
-    <div className="container py-5 w-100 min-vh-100">
-      <h2 className="text-center mb-4 textColorless">Customer Feedback</h2>
+    <Skeleton>
+      <FleshVert>
+          <h2 className="text-center mb-4 textColorless">Customer Feedback</h2>
+          <Ribz className='d-flex flex-row justify-content-between justify-content-center' style={{height:'100px', backgroundColor:'#25383C'}}>
+            <DynamicDiv className='d-flex flex-column justify-content-center'>
+              <DynamicHead text={"Add Feedback"} className='text-center' style={{marginLeft:'20px'}}/>
+            </DynamicDiv>
+            <DynamicDiv className='d-flex flex-column justify-content-center' style={{width:'100px', height:'100px'}}>
+              <DynamicButton label='Add' onClick={displayForm} style={{width:'50px', height:'30px', backgroundColor:'#AF7817'}}/>
+            </DynamicDiv>
+          </Ribz>
 
-      {/* Feedback List Section */}
-      <div
-        className="mb-4 p-2"
-        style={{ maxHeight: '400px', overflowY: 'auto' }}
-      >
-        {loading ? (
-          <LoadingAnimation/>
-        ) : feed.length === 0 ? (
-          <NoteP text={'No feedback yet.'}/>
-        ) : (
-          feed.map((fb) => (
-            <FeedList key={fb.feedbackID} email={fb.email} feedbackDate={fb.feedbackDate} comments={fb.comments} response={fb.response} rating={fb.rating}/>
-          ))
-        )}
-      </div>
-      <button className="btn btn-primary mx-auto my-auto"
-              onClick={() => setShowForm(prev => !prev)}
-      >
-        Add
-      </button>
+          <DynamicInput value={searchPar}
+                        onChange={setSearchPar}
+                        placeholder='Search feedback: Email, comments, response'
+                        className='my-2'
+          />
+          <DynamicDiv
+            className="mb-4 p-2 bg-light"
+            style={{ maxHeight: '350px', overflowY: 'auto' }}
+          >
+            {loading ? (
+              <LoadingAnimation/>
+            ) : filteredFeedback.length === 0 ? (
+              <NoteP text={'No feedback yet.'}/>
+            ) : (
+              filteredFeedback.map((fb) => (
+                <FeedList key={fb.FeedbackID} 
+                          Email={fb.Email} 
+                          FeedbackDate={fb.FeedbackDate} 
+                          Comments={fb.Comments} 
+                          Response={fb.Response} 
+                          Rating={fb.Rating}
+                />
+              ))
+            )}
+          </DynamicDiv>
 
-      {/* Add Feedback Section */}
-      {showForm && <AddFeed callback={() => submitFeedback()} />}
-    </div>
+          {/* Add Feedback Section */}
+          {showForm && <GlobalModal>
+                          <AddFeed callback1={closeForm} callback2={() => submitFeedback()} />
+                       </GlobalModal>
+          }
+      </FleshVert>
+    </Skeleton>
   );
 }

@@ -3,15 +3,21 @@ import { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 
 //scripts
-import { NoParamNoReturn } from '@/interfaces/functionInterfaces';
+import { TwoFuncNoParamNoReturn } from '@/interfaces/functionInterfaces';
 
-export default function AddFeed({callback}:NoParamNoReturn) {
+//components
+import DynamicDiv from '../containers/DynamicDiv';
+import DynamicButton from '../buttons/DynamicButton';
+
+export default function AddFeed({callback1, callback2}:TwoFuncNoParamNoReturn) {
   const [newComment, setNewComment] = useState('');
   const [newRating, setNewRating] = useState(0);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   return (
-          <div className="card p-4 shadow-sm">
-            <h5 className="mb-3">Leave Your Feedback</h5>
+    <DynamicDiv className="card p-4 shadow-sm"
+                style={{height:'300px', width:'270px', backgroundColor:'#EDDA74'}}
+    >
+      <h5 className="mb-3">Leave Your Feedback</h5>
             <div className="mb-3">
               <textarea
                 className="form-control"
@@ -40,9 +46,17 @@ export default function AddFeed({callback}:NoParamNoReturn) {
                 ))}
               </div>
             </div>
-            <button className="btn btn-primary" onClick={()=>callback()}>
-              Submit
-            </button>
-          </div>
+      <DynamicDiv className='d-flex flex-row justify-content-between align-items-center'>
+        <DynamicButton label='Close' 
+                       onClick={callback1}
+                       style={{width:'70px', height:'30px', backgroundColor:'#FFFF00'}}
+        />
+        <DynamicButton label='Submit' 
+                       onClick={callback2}
+                       style={{width:'70px', height:'30px', backgroundColor:'#008000'}}
+                       className='text-white'
+        />
+      </DynamicDiv>
+    </DynamicDiv>
   )
 }

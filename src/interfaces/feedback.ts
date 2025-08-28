@@ -1,5 +1,5 @@
 export default interface Feedback {
-  FeedbackID?: number;
+  FeedbackID: number;
   UnitID: number;
   CustomerID:number;
   Email: string;

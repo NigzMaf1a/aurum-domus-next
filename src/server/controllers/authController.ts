@@ -12,7 +12,7 @@ export interface User {
   Name2: string;             
   PhoneNo: string;
   Email: string;
-  Password: string;
+  UserPassword: string;
   Gender: "Male" | "Female";
   RegType: "Customer" | "Manager" | "Accountant" | "Waiter" | "Chef" | "Owner" | "Admin" ;
   dLocation?: string;     
@@ -23,9 +23,9 @@ export interface User {
 
 export const login: RequestHandler = async (req, res) => {
   // Ensure incoming email and password are strings and trimmed
-  const { email, password } = req.body;
-  const trimmedEmail = String(email).trim();
-  const trimmedPassword = String(password).trim();
+  const { Email, UserPassword } = req.body;
+  const trimmedEmail = String(Email).trim();
+  const trimmedPassword = String(UserPassword).trim();
 
   if (!trimmedEmail || !trimmedPassword) {
     res.status(400).json({ error: 'Email and password required' });
@@ -42,7 +42,7 @@ export const login: RequestHandler = async (req, res) => {
       return;
     }
 
-    const isMatch = await bcrypt.compare(trimmedPassword, String(user.Password));
+    const isMatch = await bcrypt.compare(trimmedPassword, String(user.UserPassword));
     if (!isMatch) {
       res.status(401).json({ error: 'Invalid email or password' });
       return;
