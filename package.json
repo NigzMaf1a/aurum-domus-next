@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "concurrently \"npm run dev:next\" \"npm run dev:server\"",
     "dev:next": "next dev --turbopack",
-    "dev:server": "nodemon --watch './src/**/*.ts' --exec ts-node --project tsconfig.server.json src/server.ts",
+    "dev:server": "cross-env NODE_ENV=development JWT_SECRET=supersecuresecret ts-node --project tsconfig.server.json src/server.ts",
     "build:next": "next build",
     "start:next": "next start",
     "start:server": "ts-node --project tsconfig.json src/server.ts",
@@ -51,6 +51,7 @@
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.8",
     "concurrently": "^9.2.0",
+    "cross-env": "^10.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
     "nodemon": "^3.1.10",

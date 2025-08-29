@@ -1,5 +1,6 @@
 "use client";
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+import { useRouter } from 'next/navigation';
 
 //components
 import Skeleton from '../../../components/containers/Skeleton';
@@ -18,21 +19,21 @@ import Customer from '@/scripts/classes/customer';
 
 
 export default function Dashboard() {
-  const [thisUser, setThisUser] = useState<User>();
-  async function initializeUser(){
-    const userString = localStorage.getItem("user");
-    const user:User = userString ? JSON.parse(userString) : null;
-    await setThisUser(user);
-    const customer = new Customer(user.RegID);
-  }
+
+  const router = useRouter();
 
   useEffect(()=>{
-    initializeUser();
-  },[thisUser]);
+    const userString = localStorage.getItem("user");
+    const token = localStorage.getItem("token")
+    console.log(`User String: ${userString} Token:${token}`);
+    const user:User = userString ? JSON.parse(userString) : null;
+    const customer = new Customer(user.RegID);
+    if(!token) router.push('/login');
+  },[router]);
   const barChart: Bar = {
   labels: {
-    label1: "Q1 Sales",
-    label2: "Q2 Sales"
+    label1: "",
+    label2: ""
   },
   values: {
     value1: 150,

@@ -17,15 +17,16 @@ export interface User {
   RegType: "Customer" | "Manager" | "Accountant" | "Waiter" | "Chef" | "Owner" | "Admin" ;
   dLocation?: string;     
   accStatus: 'Pending' | 'Approved' |'Inactive';
-  image?: string; 
+  UserImage?: string; 
   lastAccessed: string;    
 }
 
 export const login: RequestHandler = async (req, res) => {
-  // Ensure incoming email and password are strings and trimmed
   const { Email, UserPassword } = req.body;
   const trimmedEmail = String(Email).trim();
   const trimmedPassword = String(UserPassword).trim();
+
+  console.log('For starters......')
 
   if (!trimmedEmail || !trimmedPassword) {
     res.status(400).json({ error: 'Email and password required' });
@@ -47,6 +48,7 @@ export const login: RequestHandler = async (req, res) => {
       res.status(401).json({ error: 'Invalid email or password' });
       return;
     }
+    console.log('Almost there')
 
     const token = generateToken(user);
     console.log(`Token: ${token}`);

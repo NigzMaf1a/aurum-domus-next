@@ -1,7 +1,11 @@
+//scripts
+import apiFetch from './apiFetch';
+
+//interfaces
 import Unit from '../../interfaces/unit';
 import User from '@/interfaces/user';
+import Hotel from '@/interfaces/hotel';
 import { LogginCreds } from '@/interfaces/user';
-import apiFetch from './apiFetch';
 
 export interface LoginResponse {
   token: string;
@@ -9,6 +13,9 @@ export interface LoginResponse {
 }
 function returnUnitNames(units: Unit[]): string[] {
   return units.map((unit) => unit.UnitName);
+}
+function returnHotelNames(hotels: Hotel[]): string[] {
+  return hotels.map((hotel) => hotel.HotelName);
 }
 
 export default async function loginUser(creds: LogginCreds): Promise<LoginResponse> {
@@ -25,4 +32,4 @@ export default async function loginUser(creds: LogginCreds): Promise<LoginRespon
 }
 
 
-export { returnUnitNames, loginUser};
+export { returnUnitNames, returnHotelNames, loginUser};

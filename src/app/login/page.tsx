@@ -56,7 +56,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     const role = user?.RegType;
 
     // Save session
-    localStorage.setItem('authToken', token);
+    localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
 
     // Route based on role
@@ -91,7 +91,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
     // Update toast on success
     toast.update(toastId, {
-      render: 'Login Successful! 🔥',
+      render: 'Login Successful!',
       type: 'success',
       isLoading: false,
       autoClose: 3000,

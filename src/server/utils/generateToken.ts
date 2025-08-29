@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 
-// ---- Full user record from DB ----
 export interface UserRecord {
   RegID: number;
   Name1: string;
@@ -11,7 +10,7 @@ export interface UserRecord {
   RegType: "Customer" | "Manager" | "Accountant" | "Waiter" | "Chef" | "Owner" | "Admin" ;
   dLocation?: string;
   accStatus: 'Pending' | 'Approved' | 'Inactive';
-  image?: string;
+  UserImage?: string;
   lastAccessed: string;
 }
 
