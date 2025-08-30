@@ -8,7 +8,7 @@ import Feedback from "./feedback";
 import Dish from "./dish";
 import Bio from "./bio";
 import Unit from "./unit";
-import { StringOrNumber } from "@/types/customer";
+// import { StringOrNumber } from "@/types/customer";
 
 export interface LoggedUser{
     logout: () => Promise<void>;
@@ -17,9 +17,9 @@ export interface LoggedUser{
 }
 
 export interface UserAdmin extends LoggedUser{
-    approveUser:(id:StringOrNumber, user:User) => Promise<void>;
-    disableUser:(id:StringOrNumber, user:User) => Promise<void>;
-    reactivateUser:(id:StringOrNumber, user:User) => Promise<void>;
+    getUsers:() => Promise<User[]>;
+    updateUser:(id:number, user:User) => Promise<void>;
+    deleteUser:(id:number) => Promise<void>;
     getPayments:() => Promise<Payment[]>;
     getFeedback:() => Promise<Feedback[]>;
     getBio:(id:string) => Promise<Bio>;

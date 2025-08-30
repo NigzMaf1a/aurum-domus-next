@@ -27,9 +27,9 @@ export default function ClientLayoutShell({
     PhoneNo: 759736096,
     Email: "manager@gmail.com",
     Gender: "Male",
-    RegType: "Manager",
+    RegType: "Admin",
     accStatus: "Approved",
-    image: "/aurum-domus/public/aurum13.jpg"
+    image: "/aurum13.jpg"
   };
 
   return (

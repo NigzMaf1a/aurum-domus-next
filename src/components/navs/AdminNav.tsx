@@ -44,27 +44,9 @@ export default function AdminNav() {
 
           <div className={styles.sidebarDiv}>
             <li className={styles.listItem}>
-              <Link href="/admin/pending" id={styles.link}>
+              <Link href="/admin/accounts" id={styles.link}>
                 <i className="bi bi-hourglass-split me-2 fs-4" />
-                {t("pending")}
-              </Link>
-            </li>
-          </div>
-
-          <div className={styles.sidebarDiv}>
-            <li className={styles.listItem}>
-              <Link href="/admin/approved" id={styles.link}>
-                <i className="bi bi-check-circle me-2 fs-4" />
-                {t("approved")}
-              </Link>
-            </li>
-          </div>
-
-          <div className={styles.sidebarDiv}>
-            <li className={styles.listItem}>
-              <Link href="/admin/inactive" id={styles.link}>
-                <i className="bi bi-person-x me-2 fs-4" />
-                {t("inactive")}
+                {"Accounts: 'Translate me pliz"}
               </Link>
             </li>
           </div>

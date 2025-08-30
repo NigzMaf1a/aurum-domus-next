@@ -17,6 +17,7 @@ import Skeleton from '@/components/containers/Skeleton';
 import { RegType } from '../../enums/RegTypeEnum';
 import { returnUnitNames, loginUser, LoginResponse } from '../../scripts/api/login';
 import getUnits from '@/scripts/api/getUnits';
+import getHotels from '@/scripts/api/getHotels';
 
 
 export default function LoginPage() {
@@ -32,7 +33,10 @@ export default function LoginPage() {
 
   useEffect(() => {
     (async () => {
-      const names = returnUnitNames(await getUnits());
+      const units = await getUnits();
+      const hotels = await getHotels();
+      console.log(`Hotels: ${hotels}`);
+      const names = returnUnitNames(units);
       setUnitNames(names);
     })();
   }, []);
@@ -47,7 +51,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   }
 
   // Show cooking toast
-  const toastId = toast.loading('Hold tight G, things are cooking... 🍳');
+  const toastId = toast.loading('Logging in ....');
   setLoading(true);
 
   try {
@@ -58,6 +62,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     // Save session
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('unit', branch);
 
     // Route based on role
     switch (role) {

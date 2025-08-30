@@ -5,8 +5,14 @@ import { useEffect, useState, useMemo } from 'react';
 // sample data
 import disTables from '@/utilscripts/tables';
 
+//scripts
+import getUnits from '@/scripts/api/getUnits';
+import thisUnit from '@/scripts/utilz/thisUnit';
+
 // interfaces, types
 import Table from '@/interfaces/table';
+import User from '@/interfaces/user';
+import Unit from '@/interfaces/unit';
 
 // components
 import Skeleton from '@/components/containers/Skeleton';
@@ -26,7 +32,14 @@ export default function CustomerTablesPage() {
   // Fetch tables on mount
   useEffect(() => {
     try {
-      setTables(disTables);
+      (async ()=>{
+      const unitName = localStorage.getItem('unit');
+      const units = await getUnits();
+      // const user:User = localStorage.getItem();
+      const unit:Unit | undefined = thisUnit(unitName, units);
+      console.log(`Unit: ${unit}`);
+      setTables(disTables);        
+      })();
     } catch {
       setError('Failed to fetch hotel tables.');
     } finally {

@@ -14,7 +14,7 @@ export async function createUser(user:User){
 }
 export async function readUsers():Promise<User[]>{
     try{
-        const users = await apiFetch<User[]>('/api/user/public/');
+        const users = await apiFetch<User[]>('/api/user/get');
         console.log(`Users fetched successfully: ${users}`);
         return users;
     } catch(err){

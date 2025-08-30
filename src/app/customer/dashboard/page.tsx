@@ -14,6 +14,10 @@ import {Pie} from '@/components/general/Stats';
 //interfaces
 import User from '@/interfaces/user';
 
+//scripts
+import getUnits from '@/scripts/api/getUnits';
+import thisUnit from '@/scripts/utilz/thisUnit';
+
 //class import
 import Customer from '@/scripts/classes/customer';
 
@@ -24,12 +28,14 @@ export default function Dashboard() {
 
   useEffect(()=>{
     const userString = localStorage.getItem("user");
-    const token = localStorage.getItem("token")
-    console.log(`User String: ${userString} Token:${token}`);
+    const token = localStorage.getItem("token");
+    const unitName = localStorage.getItem("unit");
+    console.log(`User String: ${userString} Token:${token}, Unit Name:${unitName}`);
     const user:User = userString ? JSON.parse(userString) : null;
     const customer = new Customer(user.RegID);
     if(!token) router.push('/login');
   },[router]);
+
   const barChart: Bar = {
   labels: {
     label1: "",

@@ -9,11 +9,7 @@ export default interface User {
   Gender?: string;
   RegType?: regType;
   accStatus?: accStatus;
-  image?: string;
-}
-
-export interface LogginCreds{
-  Email:string;
+  UserImage: string | Blob;
   UserPassword:string;
 }
 

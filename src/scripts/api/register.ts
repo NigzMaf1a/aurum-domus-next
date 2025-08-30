@@ -29,7 +29,7 @@ export default async function register(user: User): Promise<RegisterResponse> {
   const apiMap: Record<regType, string> = {
     Customer: '/api/customer/public/add',
     Accountant: '/api/accountant/add',
-    Admin: '/api/admin/add',
+    Admin: '/api/admin/public/add',
     Manager:'/api/manager/add',
     Chef:'/api/chef/add',
     Owner:'/api/owner/add',
