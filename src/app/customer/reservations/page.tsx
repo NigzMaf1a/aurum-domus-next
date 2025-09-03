@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-
-import reservationsData from '../../../utilscripts/mockReservations.json'; // <-- mock data lives here
+import { useRouter } from 'next/navigation';
 
 
 //components
@@ -13,6 +12,13 @@ import Reservations from '@/components/cards/reservations/Reservations';
 import DynamicDiv from '@/components/containers/DynamicDiv';
 import DynamicHead from '@/components/h/DynamicHead';
 import DynamicButton from '@/components/buttons/DynamicButton';
+
+//scripts
+import Customer from '@/scripts/classes/customer';
+
+//interfaces
+import User from '@/interfaces/user';
+import Unit from '@/interfaces/unit';
 
 type Reservation = {
   ReservationID: number;
@@ -56,11 +62,32 @@ export default function CustomerReservationsPage() {
   const [paymentStatus, setPaymentStatus] = useState<'Paid' | 'Not Paid'>('Not Paid');
   const [reservationDate, setReservationDate] = useState('');
   const [reservationTime, setReservationTime] = useState('');
+  const [customer, setCustomer] = useState<Customer>();
+  const router = useRouter();
 
   useEffect(() => {
-    setReservations(reservationsData as Reservation[]);
+    const token = localStorage.getItem('token');
+    const userString = localStorage.getItem('user');
+    const unitString = localStorage.getItem('unit');
+    const user: User | null = userString ? JSON.parse(userString) : null;
+
+    if (!token) {
+      router.push('/login');
+      return;
+    }
+    if(user){
+      const c = new Customer(user.RegID);
+      setCustomer(c);
+    }
+    (async()=>{
+      if(unit){
+        const allReservations = await customer?.getReservations(unit.UnitID);
+        setReservations(allReservations);
+      }
+    })();
+
     setLoading(false);
-  }, []);
+  }, [router, customer]);
 
   const selectedDish = dishes.find(d => d.DishID === dishID);
   const totalPrice = selectedDish ? selectedDish.DishPrice * plates : 0;

@@ -11,6 +11,7 @@ import Skeleton from '@/components/containers/Skeleton';
 import LoginInput2 from '@/components/inputs/LoginInput2';
 import Gender from '@/components/dropdowns/Gender';
 import DynamicDiv from '@/components/containers/DynamicDiv';
+import DynamicButton from '@/components/buttons/DynamicButton';
 
 // scripts
 import validateFields from '../../utilscripts/validateFields';
@@ -145,9 +146,11 @@ export default function RegisterPage() {
             onChange={(e) => setGenderValue(e.target.value as gender)}
           />
 
-          <button type="submit" className="btn btn-success w-100">
-            {t('register')}
-          </button>
+          <DynamicButton type='submit' 
+                         label={t('register')}
+                         className='w-100'
+          />
+
           <p className="mt-3 text-center">
             {t('alreadyHaveAccount')}{' '}
             <Link href="/login">{t('loginHere')}</Link>

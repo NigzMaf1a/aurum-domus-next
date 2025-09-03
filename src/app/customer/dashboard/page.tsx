@@ -1,11 +1,11 @@
 "use client";
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
 
 //components
 import Skeleton from '../../../components/containers/Skeleton';
 import DashCard from '@/components/cards/DashCard';
-import FleshVert from '@/components/containers/FleshVert';
+import DynamicDiv from '@/components/containers/DynamicDiv';
 import Stats from '@/components/general/Stats';
 import DashTab from '@/components/table/DashTab';
 import { Bar } from '@/components/general/Stats';
@@ -13,6 +13,7 @@ import {Pie} from '@/components/general/Stats';
 
 //interfaces
 import User from '@/interfaces/user';
+import Order from '@/interfaces/order';
 
 //scripts
 import thisUnit from '@/scripts/utilz/thisUnit';
@@ -24,6 +25,7 @@ import Customer from '@/scripts/classes/customer';
 export default function Dashboard() {
 
   const router = useRouter();
+  const [orders, setOrders] = useState<Order[]>([]);
 
 useEffect(() => {
   const token = localStorage.getItem('token');
@@ -41,10 +43,14 @@ useEffect(() => {
     if (user) {
       const unit = localStorage.getItem('unit');
       const unitID = await thisUnit(unit);
-      console.log(`Unit: ${unitID}`)
+      console.log(`Unit: ${unitID}`);
       const customer = new Customer(user.RegID);
-      const orders = await customer.getOrders(unitID);
-      console.log(`Orders: ${orders}`)
+
+      if(unitID){
+        const allOrders = await customer.getOrders(unitID);
+        console.log(`Orders: ${allOrders}`);
+        setOrders(allOrders);
+      }
     }
   })();
 }, [router]);
@@ -78,24 +84,25 @@ const tableData = [
   return (
     <Skeleton>
         <h1 className="mb-4 textColorless">Dashboard</h1>
-        <FleshVert
-          style={{ height: "200px", marginBottom: "20px", overflowY: "auto" }}
-          className="border bg-white py-2 px-2"
+        <DynamicDiv
+          className="
+            d-flex flex-column flex-lg-row  
+            gap-3                       
+            w-100                        
+            mb-1
+          "
+          style={{
+            maxHeight: '300px',          
+            overflowY: 'auto',            
+            overflowX: 'auto'              
+          }}
         >
 
-            {/* Card 1 */}
-            <DashCard head={"Reservations"} p1={"Now"} p2={"Next"} p3={"After"}/>
+          {orders.length > 0 ? (
+            orders.map((order)=> <DashCard key={order.OrderID} head={"Reservations"} p1={"Now"} p2={"Next"} p3={"After"}/>)
+          ) : (<DashCard head={"No orders yet"} p1={"Select Reservation"} p2={"Or"} p3={"Select order on the side menu"}/>)}
 
-            {/* Card 2 */}
-            <DashCard head={"Reservations"} p1={"Now"} p2={"Next"} p3={"After"}/>
-
-            {/* Card 3 */}
-            <DashCard head={"Reservations"} p1={"Now"} p2={"Next"} p3={"After"}/>
-
-            {/* Card 4 */}
-            <DashCard head={"Reservations"} p1={"Now"} p2={"Next"} p3={"After"}/>
-
-        </FleshVert>
+        </DynamicDiv>
         <Stats bar={barChart} 
                pie={pieChart}
                barTitle='Sales'

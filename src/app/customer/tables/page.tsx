@@ -1,17 +1,17 @@
 'use client';
 
 import { useEffect, useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // sample data
 import disTables from '@/utilscripts/tables';
 
 //scripts
-import getUnits from '@/scripts/api/getUnits';
 import thisUnit from '@/scripts/utilz/thisUnit';
+import Customer from '@/scripts/classes/customer';
 
 // interfaces, types
 import Table from '@/interfaces/table';
-import User from '@/interfaces/user';
 import Unit from '@/interfaces/unit';
 
 // components
@@ -22,21 +22,41 @@ import FleshVert from '@/components/containers/FleshVert';
 import Ribz from '@/components/containers/Ribz';
 import FleshHor from '@/components/containers/FleshHor';
 import DynamicP from '@/components/p/DynamicP';
+import DynamicDiv from '@/components/containers/DynamicDiv';
+import DynamicHead from '@/components/h/DynamicHead';
+import DynamicButton from '@/components/buttons/DynamicButton';
+import User from '@/interfaces/user';
 
 export default function CustomerTablesPage() {
   const [tables, setTables] = useState<Table[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchPar, setSearchPar] = useState('');
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [customer, setCustomer] = useState<Customer>();
+  const {t} = useTranslation();
+
+  function openModal(){
+    setShowModal(true);
+  }
+
+  function closeModal(){
+    setShowModal(false);
+  }
 
   // Fetch tables on mount
   useEffect(() => {
     try {
       (async ()=>{
       const unitName = localStorage.getItem('unit');
-      const units = await getUnits();
-      // const user:User = localStorage.getItem();
-      const unit:Unit | undefined = thisUnit(unitName, units);
+      const userString = localStorage.getItem('user');
+      const user:User = userString ? JSON.parse(userString) : null;
+
+      const unit:Unit = thisUnit(unitName);
+      if(user){
+        const cust = new Customer(user.RegID);
+        setCustomer(cust);
+      }
       console.log(`Unit: ${unit}`);
       setTables(disTables);        
       })();
@@ -62,7 +82,18 @@ export default function CustomerTablesPage() {
   return (
     <Skeleton className="container py-5">
       <h2 className="text-center mb-4 textColorless">Available Hotel Tables</h2>
-      <Ribz style={{height:'100px', backgroundColor:'#52D017'}}></Ribz>
+        <Ribz className='d-flex flex-row w-full justify-content-between justify-content-center' style={{height:'100px', backgroundColor:'#25383C'}}>
+          <DynamicDiv className='d-flex flex-column justify-content-center w-100'>
+            <DynamicHead text={"Add New User"} className='text-center' style={{marginLeft:'20px'}}/>
+          </DynamicDiv>
+          <DynamicDiv className='d-flex flex-column justify-content-center' style={{width:'100px', height:'100px'}}>
+            <DynamicButton label={t('add')} 
+                           onClick={openModal} 
+                           style={{height:'30px', backgroundColor:'#AF7817'}}
+                           className=''
+            />
+          </DynamicDiv>
+        </Ribz>
 
       {loading && (
         <div className="text-center my-4">
