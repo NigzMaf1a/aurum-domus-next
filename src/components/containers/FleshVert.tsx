@@ -17,7 +17,7 @@ export default function FleshVert({
   return (
     <div
       onClick={onClick}
-      className={`d-flex flex-column col-lg-12 col-sm-6 rounded gap-2 ${className}`}
+      className={`d-flex flex-column col-lg-12 col-12 rounded gap-2 ${className}`}
       style={style}
     >
       {children}

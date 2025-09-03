@@ -13,10 +13,22 @@ export default function DashCard({head, p1, p2, p3} : CustDashProps) {
             style={{backgroundColor:'#306754'}}
         >
             <DynamicDiv className="card-body">
-                <DynamicHead className="card-title" text={head}/>
-                <DynamicP className="card-text" text={p1}/>
-                <DynamicP className="card-text" text={p2}/>
-                <DynamicP className="card-text" text={p3}/>
+                <DynamicHead className="card-title" 
+                             text={head}
+                             style={{ fontFamily: "'Playfair Display', serif", fontSize: '20px', fontWeight: 600 }}
+                />
+                <DynamicP className="card-text" 
+                          text={p1}
+                          style={{ fontFamily: "'Poppins', sans-serif", fontSize: '16px', fontWeight: 500 }}
+                />
+                <DynamicP className="card-text" 
+                          text={p2}
+                          style={{ fontFamily: "'Great Vibes', cursive", fontSize: '18px', color: '#d4af37' }}
+                />
+                <DynamicP className="card-text" 
+                          text={p3}
+                          style={{ fontFamily: "'Nunito', sans-serif", fontSize: '16px', fontWeight: 400 }}
+                />
             </DynamicDiv>
         </DynamicDiv>
     </DynamicDiv>

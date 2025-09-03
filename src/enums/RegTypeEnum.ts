@@ -4,5 +4,6 @@ export enum RegType {
   Customer = "Customer",
   Chef = "Chef",
   Waiter = "Waiter",
-  Accountant = "Accountant"
+  Accountant = "Accountant",
+  Owner = "Owner"
 }

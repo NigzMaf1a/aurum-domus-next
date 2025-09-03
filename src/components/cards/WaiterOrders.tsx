@@ -1,44 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'react-bootstrap';
+
+
+//components
+import DynamicDiv from '../containers/DynamicDiv';
+import WaiterOrderItem from '../WaiterOrderItem';
+import NoteOne from '../notes/NoteOne';
 
 //Interfaces
 import Order from '@/interfaces/order';
-export interface Props{
-    orderz:Order[];
-    callback:(orderID:number)=>void;
+
+export interface Props {
+  orderz: Order[];
 }
 
-export default function WaiterOrders({props}:{props:Props}) {
-  const {t} = useTranslation();
+export default function WaiterOrders({ orderz }: Props) {
+  const { t } = useTranslation();
+  const [orders, setOrders] = useState<Order[]>([]);
+  useEffect(()=>{
+    if(orderz){
+      (async ()=>{
+        await setOrders(orderz);
+        console.log(`Orders: ${orders}`);
+      })();
+    }
+  }, [orderz, orders]);
+
   return (
-    <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
-        <div className="row g-3">
-          {props.orderz.map(order => (
-            <div key={order.OrderID} className="col-12">
-              <div className="card shadow-sm">
-                <div className="card-body">
-                  <h5>{t('orderId')}: {order.OrderID}</h5>
-                  <h6>{t('dishID')}: {order.DishID}</h6>
-                  <p><strong>{t('dishName')}:</strong> {order.DishName}</p>
-                  <p><strong>{t('dishPrice')}:</strong> KES {order.DishPrice.toFixed(2)}</p>
-                  <p><strong>{t('plates')}:</strong> {order.Plates}</p>
-                  <p><strong>{t('orderPrice')}:</strong> KES {order.OrderPrice.toFixed(2)}</p>
-                  <p><strong>{t('description')}:</strong> {order.OrderDescription}</p>
-                  <p><strong>{t('date')}:</strong> {order.OrderDate} at {order.OrderTime}</p>
-                  <p><strong>{t('payStatus')}:</strong> {order.PaymentStatus}</p>
-                  <Button
-                    variant={order.Served === 'YES' ? 'success' : 'warning'}
-                    disabled={order.Served === 'YES'}
-                    onClick={() => order.Served === 'NO' && props.callback(order.OrderID)}
-                  >
-                    {order.Served === 'YES' ? 'Served' : 'Mark as Served'}
-                  </Button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-    </div>
-  )
+    <DynamicDiv style={{ height: '400px', overflowY: 'auto', marginTop:'10px' }}>
+      <DynamicDiv className="col-12 bg-white border gap-2 pb-2 px-2">
+        {orderz.length === 0 ? (
+          <NoteOne text="No current orders" />
+        ) : (
+          orderz.map((order) => (
+            <WaiterOrderItem
+              key={order.OrderID}
+              order={order}
+            />
+          ))
+        )}
+      </DynamicDiv>
+    </DynamicDiv>
+  );
 }

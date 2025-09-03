@@ -8,6 +8,7 @@ import Feedback from "./feedback";
 import Dish from "./dish";
 import Bio from "./bio";
 import Unit from "./unit";
+import Hotel from "./hotel";
 // import { StringOrNumber } from "@/types/customer";
 
 export interface LoggedUser{
@@ -22,7 +23,8 @@ export interface UserAdmin extends LoggedUser{
     deleteUser:(id:number) => Promise<void>;
     getPayments:() => Promise<Payment[]>;
     getFeedback:() => Promise<Feedback[]>;
-    getBio:(id:string) => Promise<Bio>;
+    getHotels:() => Promise<Hotel[]>;
+    getUnits:() => Promise<Unit[]>;
 }
 
 export interface UserOwner extends LoggedUser{

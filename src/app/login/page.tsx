@@ -12,12 +12,14 @@ import LoginInput from '@/components/inputs/LoginInput';
 import Branch from '@/components/dropdowns/Branch';
 import Head1 from '@/components/h/Head1';
 import Skeleton from '@/components/containers/Skeleton';
+import DynamicButton from '@/components/buttons/DynamicButton';
 
 //Scripts
 import { RegType } from '../../enums/RegTypeEnum';
 import { returnUnitNames, loginUser, LoginResponse } from '../../scripts/api/login';
 import getUnits from '@/scripts/api/getUnits';
 import getHotels from '@/scripts/api/getHotels';
+import NoteOne from '@/components/notes/NoteOne';
 
 
 export default function LoginPage() {
@@ -34,6 +36,8 @@ export default function LoginPage() {
   useEffect(() => {
     (async () => {
       const units = await getUnits();
+      const unitString = JSON.stringify(units);
+      localStorage.setItem('units', unitString);
       const hotels = await getHotels();
       console.log(`Hotels: ${hotels}`);
       const names = returnUnitNames(units);
@@ -45,10 +49,11 @@ const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
   // Validate input
-  if (!Email || !UserPassword || !type || !branch) {
+  if (!Email || !UserPassword || !type) {
     toast.error('All fields are required!');
     return;
   }
+
 
   // Show cooking toast
   const toastId = toast.loading('Logging in ....');
@@ -62,7 +67,10 @@ const handleSubmit = async (e: React.FormEvent) => {
     // Save session
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('unit', branch);
+
+    if(branch){
+      localStorage.setItem('unit', branch);
+    }
 
     // Route based on role
     switch (role) {
@@ -84,6 +92,9 @@ const handleSubmit = async (e: React.FormEvent) => {
       case RegType.Accountant:
         router.push('/accountant/dashboard');
         break;
+      case RegType.Owner:
+        router.push('/owner/dashboard');
+        break;
       default:
         toast.update(toastId, {
           render: `Unsupported user role: ${role}`,
@@ -95,12 +106,13 @@ const handleSubmit = async (e: React.FormEvent) => {
     }
 
     // Update toast on success
-    toast.update(toastId, {
-      render: 'Login Successful!',
-      type: 'success',
-      isLoading: false,
-      autoClose: 3000,
-    });
+  toast.update(toastId, {
+    render: t('loginSuccess'),
+    type: 'success',
+    isLoading: false,
+    autoClose: 3000,
+  });
+
 
   } catch (err) {
     console.error(`Error logging in user:`, err);
@@ -121,6 +133,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       className="d-flex justify-content-center align-items-center mt-6"
       style={{ padding: '1rem' }}
     >
+      {loading ? (<NoteOne text={'Loading.....'}/>) : (
       <div
         className="card p-4 shadow "
         style={{ minWidth: '320px', maxWidth: '400px', width: '100%' }}
@@ -158,16 +171,24 @@ const handleSubmit = async (e: React.FormEvent) => {
             />
           )}
 
+          {type.toLowerCase() === 'customer' && (()=>{
+            if(!branch){
+              toast.error('All fields are required!');
+              return;
+            }
+          })}
+
           {/* Login Button */}
-          <button type="submit" className="btn btn-primary w-100">
-            {t('login')}
-          </button>
+          <DynamicButton type="submit" label={t('login')} className="btn btn-primary w-100"/>
+
           <p className="mt-3 text-center">
             {t('dontHaveAccount')}{' '}
             <Link href="/register">{t('registerHere')}</Link>
           </p>
+
         </form>
       </div>
+      )}
     </Skeleton>
   );
 }

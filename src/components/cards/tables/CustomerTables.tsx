@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 //interfaces
 import Table from '@/interfaces/table';
@@ -28,14 +28,15 @@ export default function CustomerTables({ tables}: CustomerTablesProps) {
   }
 
   return (
+    <>
     <FleshVert className='bg-light px-2'
                onClick={openModal}
                style={{overflowY:'scroll', height:'300px', cursor:'pointer'}}
     >
       {tables.map((table) => (
         <DynamicDiv key={table.TableID}
-                    className='d-flex flex-row gap-2 bg-light border'
-                    style={{height:'60px', marginTop:'5px'}}
+                    className='d-flex flex-row bg-light border'
+                    style={{height:'100px', marginTop:''}}
         >
           <DynamicDiv className='d-flex flex-row justify-content-between align-items-center'>
             <DynamicDiv className='d-flex flex-row'>
@@ -60,5 +61,6 @@ export default function CustomerTables({ tables}: CustomerTablesProps) {
         </DynamicDiv>
       ))}
     </FleshVert>
+    </>
   );
 }

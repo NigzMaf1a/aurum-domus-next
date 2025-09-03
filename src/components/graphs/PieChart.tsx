@@ -8,6 +8,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+//components
+import DynamicDiv from "../containers/DynamicDiv";
+import DynamicHead from "../h/DynamicHead";
+
 interface ChartProps {
   label1: string;
   value1: number;
@@ -25,9 +29,10 @@ const PieChart: React.FC<ChartProps> = ({ label1, value1, label2, value2, title 
   const COLORS = ["#347C2C", "#FDD017"];
 
   return (
-    <div className="col-12 col-sm-6 col-lg-5 mb-4">
-      <div className="card p-3 shadow-sm">
-        <h5 className="card-title text-center">{title}</h5>
+    <DynamicDiv style={{width:'300px', height:'300px', overflowX:'auto'}}
+                className="d-flex flex-column justify-content-center align-items-center border bg-white"
+    >
+      <DynamicHead text={title} style={{marginTop:'5px'}}/>
         <ResponsiveContainer width="100%" height={250}>
           <RePieChart>
             <Pie
@@ -47,8 +52,7 @@ const PieChart: React.FC<ChartProps> = ({ label1, value1, label2, value2, title 
             <Legend />
           </RePieChart>
         </ResponsiveContainer>
-      </div>
-    </div>
+</DynamicDiv>
   );
 };
 

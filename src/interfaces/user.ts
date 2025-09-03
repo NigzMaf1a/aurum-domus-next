@@ -4,13 +4,14 @@ export default interface User {
   RegID: number;
   Name1?: string;
   Name2?: string;
-  PhoneNo?: number;
+  PhoneNo?: string;
   Email?: string;
   Gender?: string;
   RegType?: regType;
   accStatus?: accStatus;
   UserImage: string | Blob;
   UserPassword:string;
+  lastAccessed: string | Date;
 }
 
 export interface Supplier{

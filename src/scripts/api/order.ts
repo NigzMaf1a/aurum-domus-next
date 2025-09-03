@@ -15,7 +15,7 @@ export async function addOrder(order:Order):Promise<void>{
 
 export async function getOrders():Promise<Order[]>{
     try{
-        const orders = await apiFetch<Order[]>('/api/order/');
+        const orders = await apiFetch<Order[]>('/api/order/get');
         console.log(`${orders} fetched successfully`);
         return orders;
     }catch(err){

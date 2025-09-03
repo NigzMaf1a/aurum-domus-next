@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 //components
 import Skeleton from '../../../components/containers/Skeleton';
 import DashCard from '@/components/cards/DashCard';
-import Strip from '@/components/general/Strip';
+import FleshVert from '@/components/containers/FleshVert';
 import Stats from '@/components/general/Stats';
 import DashTab from '@/components/table/DashTab';
 import { Bar } from '@/components/general/Stats';
@@ -15,7 +15,6 @@ import {Pie} from '@/components/general/Stats';
 import User from '@/interfaces/user';
 
 //scripts
-import getUnits from '@/scripts/api/getUnits';
 import thisUnit from '@/scripts/utilz/thisUnit';
 
 //class import
@@ -26,15 +25,29 @@ export default function Dashboard() {
 
   const router = useRouter();
 
-  useEffect(()=>{
-    const userString = localStorage.getItem("user");
-    const token = localStorage.getItem("token");
-    const unitName = localStorage.getItem("unit");
-    console.log(`User String: ${userString} Token:${token}, Unit Name:${unitName}`);
-    const user:User = userString ? JSON.parse(userString) : null;
-    const customer = new Customer(user.RegID);
-    if(!token) router.push('/login');
-  },[router]);
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  const userString = localStorage.getItem('user');
+  const user: User | null = userString ? JSON.parse(userString) : null;
+
+
+  // Redirect if token is missing
+  if (!token) {
+    router.push('/login');
+    return;
+  }
+
+  (async () => {
+    if (user) {
+      const unit = localStorage.getItem('unit');
+      const unitID = await thisUnit(unit);
+      console.log(`Unit: ${unitID}`)
+      const customer = new Customer(user.RegID);
+      const orders = await customer.getOrders(unitID);
+      console.log(`Orders: ${orders}`)
+    }
+  })();
+}, [router]);
 
   const barChart: Bar = {
   labels: {
@@ -65,8 +78,10 @@ const tableData = [
   return (
     <Skeleton>
         <h1 className="mb-4 textColorless">Dashboard</h1>
-        <Strip head='Dashboard' det={"today"}/>
-        <div className="row mb-1" id="cardCont">
+        <FleshVert
+          style={{ height: "200px", marginBottom: "20px", overflowY: "auto" }}
+          className="border bg-white py-2 px-2"
+        >
 
             {/* Card 1 */}
             <DashCard head={"Reservations"} p1={"Now"} p2={"Next"} p3={"After"}/>
@@ -80,7 +95,7 @@ const tableData = [
             {/* Card 4 */}
             <DashCard head={"Reservations"} p1={"Now"} p2={"Next"} p3={"After"}/>
 
-        </div>
+        </FleshVert>
         <Stats bar={barChart} 
                pie={pieChart}
                barTitle='Sales'

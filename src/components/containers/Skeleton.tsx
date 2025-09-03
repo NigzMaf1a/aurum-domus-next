@@ -17,7 +17,7 @@ export default function Skeleton({
   return (
     <div
       onClick={onClick}
-      className={`container py-4 min-vh-100 ${className}`}
+      className={`container w-100 py-4 min-vh-100 ${className}`}
       style={style}
     >
       {children}

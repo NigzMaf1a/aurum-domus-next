@@ -2,9 +2,15 @@
 
 import { useEffect, useState, useMemo } from 'react';
 import { payments } from '@/utilscripts/payments';
+import { useRouter } from 'next/navigation';
 
 //interfaces
 import Payment from '@/interfaces/payment';
+import User from '@/interfaces/user';
+
+//scripts
+import Customer from '@/scripts/classes/customer';
+import thisUnit from '@/scripts/utilz/thisUnit';
 
 //components
 import Skeleton from '@/components/containers/Skeleton';
@@ -16,6 +22,7 @@ export default function CustomerPaymentsPage() {
   const [disPayments, setDisPayments] = useState<Payment[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchPar, setSearchPar] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     setLoading(true);
@@ -24,6 +31,30 @@ export default function CustomerPaymentsPage() {
       setLoading(false);
     }, 1000);
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const userString = localStorage.getItem('user');
+    const user: User | null = userString ? JSON.parse(userString) : null;
+
+
+    // Redirect if token is missing
+    if (!token) {
+      router.push('/login');
+      return;
+    }
+
+    (async () => {
+      if (user) {
+        const unit = localStorage.getItem('unit');
+        const unitID = await thisUnit(unit);
+        console.log(`Unit: ${unitID}`)
+        const customer = new Customer(user.RegID);
+        const orders = await customer.getOrders(unitID);
+        console.log(`Orders: ${orders}`)
+      }
+    })();
+  }, [router]);
 
   // Filtered payments with memoization for performance
   const filteredPayments = useMemo(() => {

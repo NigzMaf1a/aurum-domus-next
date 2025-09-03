@@ -23,7 +23,7 @@ export default function DynamicInput({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className={`p-2 rounded ${className}`}
+      className={`ps-3 p-2 rounded-5 ${className}`}
       style={style}
     />
   );

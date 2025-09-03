@@ -5,7 +5,8 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import Image from 'next/image';
 
-import { User, UserProfileCardProps } from '../../interfaces/profile';
+import { UserProfileCardProps } from '../../interfaces/profile';
+import User from '@/interfaces/user';
 
 
 const UserProfileCard: React.FC<UserProfileCardProps> = ({ user }) => {
@@ -23,7 +24,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ user }) => {
           }}
         >
           <Image
-            src={user.image}
+            src={user.UserImage}
             alt={`${user.Name1} ${user.Name2}`}
             className="w-100 h-100"
             style={{ objectFit: 'cover' }}

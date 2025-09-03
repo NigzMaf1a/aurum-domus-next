@@ -2,19 +2,26 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 export default async function apiFetch<T>(
   endpoint: string,
-  options?: RequestInit
+  options: RequestInit = {}
 ): Promise<T> {
   const fullUrl = `${BASE_URL.replace(/\/$/, '')}/${endpoint.replace(/^\//, '')}`;
-  console.log(`Transacting with URL ${fullUrl}`);
+
+  // Get token from localStorage (or cookie, etc.)
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  console.log(`Token from fetch: ${token}`)
+
   const res = await fetch(fullUrl, {
+    ...options,
     headers: {
       'Content-Type': 'application/json',
-      ...(options?.headers || {})
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(options.headers || {}),
     },
-    ...options,
   });
+
   if (!res.ok) {
     throw new Error(`Fetch failed: ${res.status} ${res.statusText}`);
   }
+
   return res.json();
 }

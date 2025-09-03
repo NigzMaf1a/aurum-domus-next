@@ -34,7 +34,8 @@ import managerRoutes from './server/routes/managerRoutes';
 import ownerRoutes from './server/routes/ownerRoutes';
 import supplierRoutes from './server/routes/supplierRoutes';
 import hotelPublicRoutes from './server/routes/hotelPublicRoutes';
-import hotelRoutes from './server/routes/hotelRoutes'
+import hotelRoutes from './server/routes/hotelRoutes';
+import waiterRoutes from './server/routes/waiterRoutes';
 
 import authMiddleware from './server/middleware/auth';
 import errorHandler from './server/middleware/errorHandler';
@@ -97,6 +98,7 @@ app.use('/api/manager', authMiddleware, managerRoutes);
 app.use('/api/owner', authMiddleware, ownerRoutes);
 app.use('/api/supplier', authMiddleware, supplierRoutes);
 app.use('/api/hotel', authMiddleware, hotelRoutes);
+app.use('/api/waiter', authMiddleware, waiterRoutes);
 
 // Health check
 app.get('/', (req: Request, res: Response) => {

@@ -1,4 +1,8 @@
 import React from "react";
+
+//components
+import DynamicDiv from "../containers/DynamicDiv";
+
 interface DashTabProps<T extends object> {
   data: T[];              // array of objects with a known shape
   columns: (keyof T)[];   // keys from that object
@@ -18,7 +22,7 @@ export default function DashTab<T extends object>({
   const displayNames = columnNames.slice(0, 7);
 
   return (
-    <div className="table-responsive">
+    <DynamicDiv className="table-responsive" style={{height:'200px'}}>
       <table className="table table-bordered rounded table-striped table-hover align-middle text-center">
         <thead className="table-light">
           <tr>
@@ -37,6 +41,6 @@ export default function DashTab<T extends object>({
           ))}
         </tbody>
       </table>
-    </div>
+    </DynamicDiv>
   );
 }

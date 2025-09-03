@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import LoginInput2 from '@/components/inputs/LoginInput2';
 import Gender from '@/components/dropdowns/Gender';
 import DynamicDiv from '@/components/containers/DynamicDiv';
+import UserType from '../dropdowns/UserType';
 
 // scripts
 import validateFields from '../../utilscripts/validateFields';
@@ -32,7 +33,7 @@ export default function RegisterUser({callback}:RegisterUserProps) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [genderValue, setGenderValue] = useState('');
-  const [regType] = useState<'Customer'>('Customer');
+  const [regType, setRegtype] = useState('');
   const [accStatus] = useState('Approved');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -59,7 +60,7 @@ export default function RegisterUser({callback}:RegisterUserProps) {
         Email: validated.email,
         UserPassword: await hashPassword(validated.password),
         Gender: validated.gender as gender,
-        RegType: 'Customer',
+        RegType: validated.regType,
         accStatus:'Approved',
         dLocation: null,
         UserImage: null
@@ -144,14 +145,22 @@ export default function RegisterUser({callback}:RegisterUserProps) {
             value={genderValue}
             onChange={(e) => setGenderValue(e.target.value as gender)}
           />
+
+          <UserType value={regType}
+                    onChange={setRegtype}
+          />
+
         <DynamicDiv className='d-flex flex-row justify-content-between align-items-center'>
-          <DynamicButton className="d-flex align-items-center justify-content-center w-20" 
+          <DynamicButton className="d-flex align-items-center justify-content-center border border-warning" 
                          label='Close'
                          onClick={callback}
-          />          
-          <button type="submit" className="btn btn-success w-20">
-            {t('register')}
-          </button>
+                         style={{height:'40px', width:'70px'}}
+          />
+          <DynamicButton type='submit' 
+                         label={t('register')}
+                         style={{height:'40px', width:'70px', backgroundColor:'#4CC417', color:'white'}}
+          />
+
         </DynamicDiv>
           <p className="mt-3 text-center">
             {t('alreadyHaveAccount')}{' '}

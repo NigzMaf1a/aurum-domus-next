@@ -13,7 +13,7 @@ const router = Router()
 router.post('/add', addOrder)
 
 // READ
-router.get('/', getOrders)
+router.get('/get', getOrders)
 
 // UPDATE
 router.put('/:orderID', updateOrder)

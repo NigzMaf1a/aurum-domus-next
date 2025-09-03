@@ -30,6 +30,7 @@ export default function UserType({ value, onChange }: UserTypeProps) {
             <option value="Admin">{t('admin')}</option>
             <option value="Accountant">{t('accountant')}</option>
             <option value="Owner">{t('owner')}</option>
+            <option value="Supplier">{'Supplier'}</option>
         </select>
     </div>
   );

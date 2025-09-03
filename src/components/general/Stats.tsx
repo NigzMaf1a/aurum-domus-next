@@ -45,9 +45,8 @@ interface Props{
 
 export default function Stats({bar, pie, barTitle, pieTitle}:Props) {
   return (
-    <DynamicDiv className='col-lg-12 col-sm-6 h-auto mb-3 px-2 pt-5 gap-5 rounded d-flex flex-column flex-lg-row
-                    align-items-center justify-content-center'
-         style={{height:"400px", backgroundColor: "#F5F5F5"}}
+    <DynamicDiv className='col-lg-12 col-sm-12 col-12 mb-3 px-2 h-auto pt-5 gap-5 rounded d-flex flex-column flex-lg-row
+                    align-items-center justify-content-center py-auto'
     >
         <PieChart label1={pie.labels.label1}
                   label2={pie.labels.label2}

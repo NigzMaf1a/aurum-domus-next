@@ -1,8 +1,18 @@
+//interfaces
 import Unit from "@/interfaces/unit";
 
-export default function thisUnit(name: string | null, units: Unit[]): Unit | undefined {
-    const branch = name?.toLowerCase().trim();
-    if (!branch) return undefined;
+//service for units
+import getUnits from "../api/getUnits";
 
-    return units.find(unit => unit.UnitName.toLowerCase().trim() === branch);
+export default async function thisUnit(name: string | null): Promise<number | undefined> {
+    const units:Unit[] = await getUnits();
+    const branch = name?.toLowerCase().trim();
+    if (!branch) {
+        console.error(`Unit is undefined`);
+    }
+
+    const currentUnit = units.find(unit => unit.UnitName.toLowerCase().trim() === branch);
+    const unitID = currentUnit?.UnitID;
+    console.log(`Current unit: ${unitID}`);
+    return unitID;
 }

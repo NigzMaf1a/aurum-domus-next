@@ -8,29 +8,29 @@ import styles from "@/styles/Sidebar.module.css";
 
 export default function AdminNav() {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname           = usePathname();
-  const { t }              = useTranslation();
+  const pathname = usePathname();
+  const { t } = useTranslation();
 
-  /* auto‑close after route change */
+  // auto-close after route change
   useEffect(() => setIsOpen(false), [pathname]);
 
   const toggle = () => setIsOpen(v => !v);
 
   return (
     <>
-      {/* 🟦 burger button — fixed top‑left, floats above Header */}
+      {/* burger button — fixed top-left */}
       <button
         aria-label={t("menu")}
         className={styles.toggleBtn}
         onClick={toggle}
       >
-        ☰ {t("menu")}
+        <i className="bi bi-list me-2 fs-4"></i> {t("menu")}
       </button>
 
       {/* dim backdrop */}
       {isOpen && <div className={styles.overlay} onClick={toggle} />}
 
-      {/* slide‑in nav */}
+      {/* slide-in nav */}
       <nav id="sidebar" className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
         <ul className={styles.list}>
           <div className={styles.sidebarDiv}>
@@ -45,8 +45,8 @@ export default function AdminNav() {
           <div className={styles.sidebarDiv}>
             <li className={styles.listItem}>
               <Link href="/admin/accounts" id={styles.link}>
-                <i className="bi bi-hourglass-split me-2 fs-4" />
-                {"Accounts: 'Translate me pliz"}
+                <i className="bi bi-people-fill me-2 fs-4" />
+                {t("accounts")}
               </Link>
             </li>
           </div>
@@ -56,6 +56,24 @@ export default function AdminNav() {
               <Link href="/admin/support" id={styles.link}>
                 <i className="bi bi-life-preserver me-2 fs-4" />
                 {t("support")}
+              </Link>
+            </li>
+          </div>
+
+          <div className={styles.sidebarDiv}>
+            <li className={styles.listItem}>
+              <Link href="/admin/payments" id={styles.link}>
+                <i className="bi bi-credit-card me-2 fs-4" />
+                {t("payments")}
+              </Link>
+            </li>
+          </div>
+
+          <div className={styles.sidebarDiv}>
+            <li className={styles.listItem}>
+              <Link href="/admin/feedback" id={styles.link}>
+                <i className="bi bi-chat-dots me-2 fs-4" />
+                {t("feedback")}
               </Link>
             </li>
           </div>

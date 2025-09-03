@@ -11,14 +11,12 @@ export default function CustomerNav() {
   const pathname           = usePathname();
   const { t }              = useTranslation();
 
-  /* close sidebar on route change */
   useEffect(() => setIsOpen(false), [pathname]);
 
   const toggle = () => setIsOpen(v => !v);
 
   return (
     <>
-      {/* burger button (fixed above header) */}
       <button
         aria-label={t("menu")}
         className={styles.toggleBtn}
@@ -27,15 +25,13 @@ export default function CustomerNav() {
         ☰ {t("menu")}
       </button>
 
-      {/* backdrop */}
       {isOpen && <div className={styles.overlay} onClick={toggle} />}
 
-      {/* slide‑in nav */}
       <nav id="sidebar" className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
         <ul className={styles.list}>
           <div className={styles.sidebarDiv}>
             <li className={styles.listItem}>
-              <Link href="/customer/customerreservations" id={styles.link}>
+              <Link href="/customer/reservations" id={styles.link}>
                 {t("reservations")}
               </Link>
             </li>
@@ -43,7 +39,7 @@ export default function CustomerNav() {
 
           <div className={styles.sidebarDiv}>
             <li className={styles.listItem}>
-              <Link href="/customer/customertables" id={styles.link}>
+              <Link href="/customer/tables" id={styles.link}>
                 {t("tables")}
               </Link>
             </li>
@@ -51,7 +47,7 @@ export default function CustomerNav() {
 
           <div className={styles.sidebarDiv}>
             <li className={styles.listItem}>
-              <Link href="/customer/customerorders" id={styles.link}>
+              <Link href="/customer/orders" id={styles.link}>
                 {t("orders")}
               </Link>
             </li>
@@ -59,7 +55,7 @@ export default function CustomerNav() {
 
           <div className={styles.sidebarDiv}>
             <li className={styles.listItem}>
-              <Link href="/customer/customerpayments" id={styles.link}>
+              <Link href="/customer/payments" id={styles.link}>
                 {t("payments")}
               </Link>
             </li>
@@ -67,7 +63,7 @@ export default function CustomerNav() {
 
           <div className={styles.sidebarDiv}>
             <li className={styles.listItem}>
-              <Link href="/customer/customerfeedback" id={styles.link}>
+              <Link href="/customer/feedback" id={styles.link}>
                 {t("feedback")}
               </Link>
             </li>
@@ -75,7 +71,7 @@ export default function CustomerNav() {
 
           <div className={styles.sidebarDiv}>
             <li className={styles.listItem}>
-              <Link href="/customer/customerbio" id={styles.link}>
+              <Link href="/customer/bio" id={styles.link}>
                 {t("bio")}
               </Link>
             </li>

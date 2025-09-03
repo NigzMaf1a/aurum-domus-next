@@ -1,13 +1,16 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@/components/sections/Header";
 import { startColorChange } from "../utilscripts/colorChange";
-//import { startThemeCycle } from "../utilscripts/themeSwitcher";
 import { ToastContainer } from "react-toastify";
+import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 
-// scripts/interfaces/enums
+// services
+import { readUsers } from "@/scripts/api/user";
+
+// interfaces
 import User from "../interfaces/user";
 
 export default function ClientLayoutShell({
@@ -15,26 +18,44 @@ export default function ClientLayoutShell({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userString = localStorage.getItem("user");
+    const storedUser: User | null = userString ? JSON.parse(userString) : null;
+
+    // redirect to login if no token
+    if (!token) {
+      router.push("/login");
+      return;
+    }
+
+    const fetchUserData = async () => {
+      try {
+        const users = await readUsers();
+        if (storedUser?.RegID) {
+          const matchedUser = users.find(
+            (u: User) => u.RegID === storedUser.RegID
+          );
+          setCurrentUser(matchedUser || null);
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [router]);
+
   useEffect(() => {
     startColorChange();
   }, []);
 
-  // Mock user
-  const mockUser: User = {
-    RegID: 2,
-    Name1: "Nigel",
-    Name2: "Khasiani",
-    PhoneNo: 759736096,
-    Email: "manager@gmail.com",
-    Gender: "Male",
-    RegType: "Admin",
-    accStatus: "Approved",
-    image: "/aurum13.jpg"
-  };
-
   return (
     <>
-      <Header user={mockUser} />
+      <Header user={currentUser} />
       <ToastContainer
         position="top-right"
         autoClose={3000}

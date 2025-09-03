@@ -1,6 +1,7 @@
 'use client';
 import React, {useState, useEffect, useMemo} from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 //scripts
 import Admin from '@/scripts/classes/admin';
@@ -27,30 +28,42 @@ export default function Accounts() {
   const [showModal, setShowModal] = useState(false);
   const [searchPar, setSearchPar] = useState('');
   const [users, setUsers] = useState<User[]>([]);
-  const [user] = useState<User>({UserImage:'/aurum1.jpg', Name1:'Nigel', Name2:'Khasiani', RegType:'Admin', accStatus:'Approved'});
   const [values] = useState<string[]>(['Admin','Customer', 'Accountant', 'Chef', 'Waiter', 'Manager', 'Owner', 'Supplier']);
   const router = useRouter();
+  const [type, setType] = useState('');
+  const {t} = useTranslation();
 
-  useEffect(()=>{
-    try{
-    (async ()=> {
-      setLoading(true);
-      const token = localStorage.getItem('token');
-      const user:User = JSON.parse(localStorage.getItem('user') || 'null');
-      if(!token || token === null) router.push('/login');
+useEffect(() => {
+  setLoading(true);
+  const token = localStorage.getItem('token');
+  const userString = localStorage.getItem('user');
+  const user: User | null = userString ? JSON.parse(userString) : null;
+
+
+  // Redirect if token is missing
+  if (!token) {
+    router.push('/login');
+    return;
+  }
+
+  (async () => {
+    if (user) {
       const admin = new Admin(user.RegID);
-      const allUsers:User[] = await admin.getUsers();
-      setUsers(allUsers);
-      console.log(`Users: ${users}`);
-    })();
-    } catch(err){
-      console.error(`Error: ${err} occurred while fetching accounts`);
-    } finally{
-      setLoading(false);
+      const allUsers = await admin.getUsers();
+      console.log('Loaded users:', allUsers);
+      await setUsers(allUsers);
     }
-  }, [router, users]);
+  })();
+  setLoading(false);
+}, [router]);
 
-  const filterBaseType:User[] = useMemo(()=>{}, []);
+const filterBaseType: User[] = useMemo(() => {
+  if (!type.trim()) return users;
+
+  return users.filter(user => 
+    user.RegType?.toLowerCase() === type.toLowerCase()
+  );
+}, [users, type]);
 
   const filteredUsers: User[] = useMemo(() => {
     const searchLower = searchPar.toLowerCase().trim();
@@ -76,36 +89,38 @@ export default function Accounts() {
   return (
     <Skeleton>
       <FleshVert>
-        <h1 className="mb-4 textColorless">Dashboard</h1>
-        <Ribz className='d-flex flex-row justify-content-between justify-content-center' style={{height:'100px', backgroundColor:'#25383C'}}>
-          <DynamicDiv className='d-flex flex-column justify-content-center'>
+        <h1 className="mb-4 textColorless">Accounts</h1>
+        <Ribz className='d-flex flex-row w-full justify-content-between justify-content-center' style={{height:'100px', backgroundColor:'#25383C'}}>
+          <DynamicDiv className='d-flex flex-column justify-content-center w-100'>
             <DynamicHead text={"Add New User"} className='text-center' style={{marginLeft:'20px'}}/>
           </DynamicDiv>
           <DynamicDiv className='d-flex flex-column justify-content-center' style={{width:'100px', height:'100px'}}>
-            <DynamicButton label='Add' onClick={openModal} style={{width:'50px', height:'30px', backgroundColor:'#AF7817'}}/>
+            <DynamicButton label={t('add')} 
+                           onClick={openModal} 
+                           style={{height:'30px', backgroundColor:'#AF7817'}}
+                           className=''
+            />
           </DynamicDiv>
         </Ribz>
         <DynamicDiv className='d-flex flex-row w-100'>
           <DynamicInput value={searchPar}
                         onChange={setSearchPar}
-                        placeholder='Search users: name, type,...'
+                        placeholder={t('searchUsers')}
                         className='w-100 me-2'
                         type='text'
           />
           <DynamicDropdown values={values}
                            style={{width:'100px'}}
+                           onChange={setType}
           />
         </DynamicDiv>
 
         <Ribz className='d-flex flex-row justify-content-between justify-content-center gap-2'>
           {loading? (<NoteOne text={"Loading"}/>) :(
-            <FleshVert style={{backgroundColor:'#FFFFFF', maxHeight:'300px'}} className='px-2 py-2'>
-              {/* {filteredUsers.length === 0? (<NoteOne text={"Sorry, no users matched your search query."}/>):
+            <FleshVert style={{width:'100%', backgroundColor:'#FFFFFF', maxHeight:'300px', overflowY:'scroll'}} className='px-2 py-2 w-100'>
+              {filteredUsers.length === 0? (<NoteOne text={"Sorry, no users matched your search query."}/>):
                 filteredUsers.map(user => <UserCard key={user.RegID} user={user}/>)
-              } */}
-              <UserCard user={user}/>
-              <UserCard user={user}/>
-              <UserCard user={user}/>
+              }
             </FleshVert>
           )}
         </Ribz>

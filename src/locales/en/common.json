@@ -174,5 +174,9 @@
     "chef": "Chef", 
     "waiter": "Waiter",
     "accountant": "Accountant",
-    "owner": "Owner"
+    "owner": "Owner",
+    "noFeedYet":"No Feedback Available",
+    "searchUsers":"Search users: name, type,...",
+    "fullName":"Full Name",
+    "loginSuccess":"Login Successful!"
 }
