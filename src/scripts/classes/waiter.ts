@@ -32,10 +32,9 @@ export default class Waiter extends ThisUser implements UserWaiter{
         await updateReservation(id, res);
     }
 
-    async getOrders(unitID:number):Promise<Order[]>{
-        const allOrders = await getOrders();
-        const unitOrders: Order[] = allOrders.filter(ord => ord.UnitID === unitID);
-        return unitOrders;
+    async getOrders(unitID: number): Promise<Order[]> {
+    const orders = await getOrders(unitID);
+    return orders;
     }
 
     async editOrder(orderID:number, order:Order):Promise<void>{

@@ -3,8 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-//mock data
-import thisOrders from '@/utilscripts/orders';
 
 //components
 import WaiterOrders from '@/components/cards/WaiterOrders';
@@ -19,48 +17,40 @@ import User from '@/interfaces/user';
 
 //scripts
 import Waiter from '@/scripts/classes/waiter';
-import thisUnit from '@/scripts/utilz/thisUnit';
+import { useRouter } from 'next/navigation';
 
 export default function WaiterOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [waiter, setWaiter] = useState<Waiter | null>();
   const [searchPar, setSearchPar] = useState('');
-  const [currentUnitID, setCurrentUnitID] = useState<number>()
+  const router = useRouter();
   const { t } = useTranslation();
 
-  const fetchOrders = async () => {
-    await setOrders(thisOrders as Order[]); 
-  };
-
-
   useEffect(() => {
-    (async () => {
-      const rawUser = localStorage.getItem('user');
-      const unitName:string = 'Skyline View';
-      const unitID = await thisUnit(unitName);
-      setCurrentUnitID(unitID);
+    const token = localStorage.getItem("token");
+    const userString = localStorage.getItem("user");
+    const user: User | null = userString ? JSON.parse(userString) : null;
 
-      if (!rawUser) {
-        console.warn('No user found in localStorage');
-        return;
-      }
+    if (!token) {
+      router.push("/login");
+      return;
+    }
 
-      const user: User = JSON.parse(rawUser);
-
+    if (user) {
       const w = new Waiter(user.RegID);
-      await setWaiter(w)
-      console.log('Waiter instance created:', w);
-    })();
+      setWaiter(w);
+    }
+  }, [router]);
 
+  useEffect(()=>{
     (async ()=>{
-      if(currentUnitID && waiter){
-        const realOrders = await waiter?.getOrders(currentUnitID);
-        console.log(`Real orders: ${realOrders}`)
-      }
+    if(waiter){
+      const allOrders = await waiter.getOrders(1);
+      console.log('All orders:', allOrders);
+      setOrders(allOrders);
+    }
     })();
-
-    fetchOrders();
-  });
+  }, [waiter]);
 
 
 

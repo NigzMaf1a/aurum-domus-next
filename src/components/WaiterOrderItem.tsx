@@ -8,7 +8,7 @@ import LabelledP from './p/LabelledP';
 
 //interfaces
 import Order from '@/interfaces/order';
-import DynamicP from './p/DynamicP';
+// import DynamicP from './p/DynamicP';
 
 interface WaiterOrderItemProps{
     order:Order;
@@ -29,9 +29,9 @@ function WaiterOrderItem({order}:WaiterOrderItemProps) {
                     <LabelledP label={'Price:'} text={order.DishPrice}/>
                 </DynamicDiv>
             </DynamicDiv>
-            <DynamicDiv style={{height:'30px', width:'50px'}}>
+            {/* <DynamicDiv style={{height:'30px', width:'50px'}}>
                 <DynamicP text={order.PaymentStatus}/>
-            </DynamicDiv>
+            </DynamicDiv> */}
 
         </DynamicDiv>
     </Ribz>

@@ -1,24 +1,23 @@
-// routes/ordersRoutes.ts
-import { Router } from 'express'
+import { Router } from 'express';
 import {
   addOrder,
   getOrders,
   updateOrder,
   deleteOrder
-} from '../controllers/orderController'
+} from '../controllers/orderController';
 
-const router = Router()
+const router = Router();
 
 // CREATE
-router.post('/add', addOrder)
+router.post('/add', addOrder);
 
-// READ
-router.get('/get', getOrders)
+// READ (expects unitID in query, e.g. /api/order/get?unitID=2)
+router.get('/get', getOrders);
 
-// UPDATE
-router.put('/:orderID', updateOrder)
+// UPDATE (expects orderID in params, e.g. /api/order/5?unitID=2)
+router.put('/:orderID', updateOrder);
 
-// DELETE
-router.delete('/:orderID', deleteOrder)
+// DELETE (expects orderID in params, e.g. /api/order/5?unitID=2)
+router.delete('/:orderID', deleteOrder);
 
-export default router
+export default router;

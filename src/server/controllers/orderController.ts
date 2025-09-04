@@ -35,22 +35,30 @@ export const addOrder: RequestHandler = async (req, res) => {
 
 // READ - Get orders
 export const getOrders: RequestHandler = async (req, res) => {
-  const unitID = getUnitID(req)
+  // Try to get the unitID from request (query, body, params, headers, etc.)
+  let unitID = Number(req.query.unitID);
+
+  // Default to UnitID = 1 if none provided
   if (!unitID) {
-    res.status(400).json({ error: 'unitID is required' })
-    return
+    console.warn("⚠️ No unitID provided. Defaulting to 1.");
+    unitID = 1;
   }
 
-  const ordersService = new Orders()
+  const ordersService = new Orders();
 
   try {
-    const rows = await ordersService.getOrders(unitID)
-    res.status(200).json(rows)
+    const rows = await ordersService.getOrders(unitID);
+    res.status(200).json(rows);
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error'
-    res.status(500).json({ error: 'Failed to fetch orders', details: message })
+    const message = err instanceof Error ? err.message : "Unknown error";
+    console.error("DB error details:", err);
+    res
+      .status(500)
+      .json({ error: "Failed to fetch orders", details: message });
   }
-}
+};
+
+
 
 // UPDATE - Update order
 export const updateOrder: RequestHandler<{ orderID: string }> = async (req, res) => {

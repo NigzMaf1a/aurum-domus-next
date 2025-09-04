@@ -10,6 +10,8 @@ import AdminNav from '@/components/navs/AdminNav';
 import ManagerNav from '@/components/navs/ManagerNav';
 import CustomerNav from '@/components/navs/CustomerNav';
 import AccountantNav from '@/components/navs/AccountantNav';
+import WaiterNav from '@/components/navs/WaiterNav';
+import ChefNav from '@/components/navs/ChefNav';
 import UserProfileCard from '@/components/sections/Profile';
 import Mode from '@/components/sections/Mode';
 import GlobalModal from '../modals/GlobalModal';
@@ -141,6 +143,8 @@ export default function Header({ user }: HeaderProps) {
     setShowSettingsModal(false);
   };
 
+  console.log("👤 Current user role:", user?.RegType);
+
   const renderNav = () => {
     if (!shouldShowNav) return null;
     switch (user?.RegType) {
@@ -153,8 +157,9 @@ export default function Header({ user }: HeaderProps) {
       case 'Accountant':
         return <AccountantNav />;
       case 'Chef':
+        return <ChefNav />;
       case 'Waiter':
-        return <CustomerNav />;
+        return <WaiterNav />;
       default:
         return null;
     }

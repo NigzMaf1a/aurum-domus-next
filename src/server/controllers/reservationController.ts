@@ -37,22 +37,26 @@ export const addReservation: RequestHandler = async (req, res) => {
 
 // READ - Get reservations
 export const getReservations: RequestHandler = async (req, res) => {
-  const unitID = getUnitID(req)
+  let unitID = Number(req.query.unitID);
+
   if (!unitID) {
-    res.status(400).json({ error: 'unitID is required' })
-    return
+    console.warn("⚠️ No unitID provided. Defaulting to 1.");
+    unitID = 1;
   }
 
-  const reservationService = new Reservation()
+  const reservationService = new Reservation();
 
   try {
-    const rows = await reservationService.getReservations(unitID)
-    res.status(200).json(rows)
+    const rows = await reservationService.getReservations(unitID);
+    res.status(200).json(rows);
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error'
-    res.status(500).json({ error: 'Failed to fetch reservations', details: message })
+    const message = err instanceof Error ? err.message : "Unknown error";
+    console.error("DB error details (getReservations):", err);
+    res
+      .status(500)
+      .json({ error: "Failed to fetch reservations", details: message });
   }
-}
+};
 
 
 // UPDATE - Update reservation

@@ -16,7 +16,7 @@ export default function Ribz({
   return (
     <div
       onClick={onClick}
-      className={`d-flex flex-row col-12 col-lg-12 col-sm-6 rounded ${className}`}
+      className={`d-flex flex-row col-12 col-lg-12 rounded ${className}`}
       style={style}
     >
       {children}

@@ -13,15 +13,15 @@ export async function addOrder(order:Order):Promise<void>{
     }
 }
 
-export async function getOrders():Promise<Order[]>{
-    try{
-        const orders = await apiFetch<Order[]>('/api/order/get');
-        console.log(`${orders} fetched successfully`);
-        return orders;
-    }catch(err){
-        console.error(`Error ${err} occurred while fetching orders`);
-        return [];
-    }
+export async function getOrders(unitID: number): Promise<Order[]> {
+  try {
+    const orders = await apiFetch<Order[]>(`/api/order/get?unitID=${unitID}`);
+    console.log(`Orders for UnitID ${unitID} fetched successfully`);
+    return orders;
+  } catch (err) {
+    console.error(`Error fetching orders for UnitID ${unitID}:`, err);
+    return [];
+  }
 }
 
 export async function updateOrder(orderID:number, order:Order):Promise<void>{
